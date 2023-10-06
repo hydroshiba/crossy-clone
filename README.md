@@ -1,1 +1,3 @@
-# csc10003-crossy-road
+# CSC100003 - Crossy Road clone
+
+Description to be added.
