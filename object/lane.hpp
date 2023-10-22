@@ -1,6 +1,5 @@
 #ifndef LANE_HPP_
 #define LANE_HPP_
-#include <iostream>
 #include <vector>
 #include "vehicle.hpp"
 #include "traffic.hpp"
