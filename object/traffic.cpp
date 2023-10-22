@@ -1,8 +1,9 @@
 #include "traffic.hpp"
 
-void Traffic::render(){
-    cout << sprite;
+void Traffic::render() {
+    std::cout << sprite;
 }
-void Traffic::process(){
-    cout << "Traffic process~";
+
+void Traffic::process() {
+    std::cout << "Traffic process~";
 }

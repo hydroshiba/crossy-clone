@@ -1,8 +1,7 @@
 #include "player.hpp"
-using namespace std;
 
 void Player::move() {
-    cout << "Player moved" << endl;
+    std::cout << "Player moved" << std::endl;
 }
 
 int Player::getPos() {
@@ -10,9 +9,9 @@ int Player::getPos() {
 }
 
 void Player::render() {
-    cout << sprite << endl;
+    std::cout << sprite << std::endl;
 }
 
 void Player::playSound() {
-    cout << sound << endl;
+    std::cout << sound << std::endl;
 }

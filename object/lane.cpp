@@ -1,10 +1,9 @@
 #include "lane.hpp"
-using namespace std;
 
 void Lane::render() {
-    cout << sprite << endl;
+    std::cout << sprite << std::endl;
 }
 
 void Lane::process(int time) {
-    cout << "Lane processed" << endl;
+    std::cout << "Lane processed" << std::endl;
 }
