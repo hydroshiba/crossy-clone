@@ -36,6 +36,4 @@ build
 
 # Visual Studio Code
 .vscode
-
-# Visual Studio
-.vs
+.DS_Store
