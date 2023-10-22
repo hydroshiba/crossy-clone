@@ -5,14 +5,14 @@
 #include "traffic.hpp"
 
 class Lane {
-    private:
-        std::vector<Vehicle> vehicles;
-        Traffic traffic; //traffic light
-        bool direction; //true = left, false = right
-        std::string sprite; //sprite
-    public:
-        void render();
-        void process(int);
+private:
+    std::vector<Vehicle> vehicles;
+    Traffic traffic; //traffic light
+    bool direction; //true = left, false = right
+    std::string sprite; //sprite
+public:
+    void render();
+    void process(int);
 };
 
 #endif
