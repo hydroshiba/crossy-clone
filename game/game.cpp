@@ -1,13 +1,12 @@
 #include "game.hpp"
-#include <iostream>
 
-Game::Game() {
+Game::Game() : title("Crossy Clone") {
     // Get console handle & device context
     console = GetConsoleWindow();
     hdc = GetDC(console);
 
     // Set title
-    SetConsoleTitle("Crossy Clone");
+    SetConsoleTitle(title.c_str());
     
     // Maximize window & disable resizing
     ShowWindow(console, SW_MAXIMIZE);
@@ -34,10 +33,15 @@ Game::Game() {
 
     // Create engine
     engine = new Engine(hdc, width, height);
+
+    // Set epoch time
+    epoch = high_resolution_clock::now();
+    prev = epoch;
 }
 
 void Game::run() {
     int cur = 0, numcur = 1;
+    uint64_t frames = 0;
 	byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
     while (true) {
@@ -54,6 +58,16 @@ void Game::run() {
 		count[cur] += num[cur];
 
         engine->render();
+        ++frames;
+
+        high_resolution_clock::time_point now = high_resolution_clock::now();
+        uint64_t elapsed = duration_cast<microseconds>(now - prev).count();
+
+        if(elapsed >= 1000000) {
+            prev = now;
+            SetConsoleTitle((title + " - FPS: " + std::to_string(frames)).c_str());
+            frames = 0;
+        }
     }
 }
 
