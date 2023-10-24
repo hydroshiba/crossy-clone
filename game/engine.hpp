@@ -14,7 +14,7 @@ private:
     byte* pixels;
 
 public:
-    Engine(HDC hdc, int w, int h);
+    Engine(HDC& hdc, int w, int h);
     ~Engine();
 
     void set(int x, int y, Color color);

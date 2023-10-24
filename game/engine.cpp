@@ -1,6 +1,6 @@
 #include "engine.hpp"
 
-Engine::Engine(HDC hdc, int w, int h) : width(w), height(h), hdc(hdc) {
+Engine::Engine(HDC& hdc, int w, int h) : width(w), height(h), hdc(hdc) {
     ZeroMemory(&mapinfo, sizeof(BITMAPINFO));
 
     mapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
