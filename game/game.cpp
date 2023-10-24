@@ -4,21 +4,20 @@ Game::Game() : title("Crossy Clone") {
     // Get console handle & device context
     console = GetConsoleWindow();
     hdc = GetDC(console);
+    
+    // Maximize window & get window style
+    ShowWindow(console, SW_MAXIMIZE);
+    DWORD style = GetWindowLong(console, GWL_STYLE);
+
+    // Disable maximize button and resizing ability
+    style ^= WS_MAXIMIZEBOX;
+    style ^= WS_SIZEBOX;
+
+    // Set window style
+    SetWindowLong(console, GWL_STYLE, style);
 
     // Set title
     SetConsoleTitle(title.c_str());
-    
-    // Maximize window & disable resizing
-    ShowWindow(console, SW_MAXIMIZE);
-    DWORD style = GetWindowLong(console, GWL_STYLE);
-    style &= ~WS_MAXIMIZEBOX;
-    SetWindowLong(console, GWL_STYLE, style);
-
-    // Get window size
-    RECT size;
-    GetWindowRect(console, &size);
-    width = size.right - size.left;
-    height = size.bottom - size.top;
 
     // Remove cursor
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -30,6 +29,12 @@ Game::Game() : title("Crossy Clone") {
 
     // Disable scrolling
     ShowScrollBar(GetConsoleWindow(), SB_VERT, 0);
+    
+    // Get window size
+    RECT size;
+    GetWindowRect(console, &size);
+    width = size.right - size.left;
+    height = size.bottom - size.top;
 
     // Create engine
     engine = new Engine(hdc, width, height);
@@ -42,7 +47,7 @@ Game::Game() : title("Crossy Clone") {
 void Game::run() {
     int cur = 0, numcur = 1;
     uint64_t frames = 0;
-	byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
+    byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
     while (true) {
         for (int x = 0; x < width; x++)
@@ -50,12 +55,12 @@ void Game::run() {
                 engine->set(x, y, count[2], count[1], count[0]);
 
         if (count[cur] == 0 || count[cur] == 255) {
-			cur += numcur;
-			if (cur == 0 || cur == 2) numcur = -numcur;
-		}
+            cur += numcur;
+            if (cur == 0 || cur == 2) numcur = -numcur;
+        }
 
-		if (count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
-		count[cur] += num[cur];
+        if (count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
+        count[cur] += num[cur];
 
         engine->render();
         ++frames;
