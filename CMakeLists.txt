@@ -13,3 +13,9 @@ include_directories(game)
 include_directories(object)
 
 add_executable(${PROJECT_NAME} ${cpp_files})
+
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -Ofast -Wpedantic)
+endif()
