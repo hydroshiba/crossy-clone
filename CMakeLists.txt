@@ -12,10 +12,12 @@ include_directories(asset)
 include_directories(game)
 include_directories(object)
 
-add_executable(${PROJECT_NAME} ${cpp_files})
+add_executable(${PROJECT_NAME} ${cpp_files} 
+    ${PROJECT_SOURCE_DIR}/game
+    ${PROJECT_SOURCE_DIR}/object)
 
 if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /WX)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Ofast -Wpedantic)
 endif()

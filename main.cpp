@@ -3,16 +3,22 @@
 #include <chrono>
 #include <utility>
 
-using namespace std;
-
+#include "game.hpp"
 #include "scene.hpp"
 #include "player.hpp"
 
 const int w = 1920, h = 1080;
 
-int main() {
+void test() {
 	HWND console = GetConsoleWindow();
 	HDC hdc = GetDC(console); // get device context
+
+	SetConsoleTitle("Crossy Clone"); // Set title
+	ShowWindow(console, SW_MAXIMIZE); // Maximize window
+
+	DWORD style = GetWindowLong(console, GWL_STYLE);
+	style &= ~WS_MAXIMIZEBOX;
+	SetWindowLong(console, GWL_STYLE, style);
 
 	BITMAPINFO toiquagae;
 	ZeroMemory(&toiquagae, sizeof(BITMAPINFO));
@@ -25,18 +31,17 @@ int main() {
 	int frame = 0, time = 0;
 
 	int cur = 0, numcur = 1;
-	int count[3] = { 1, 1, 1 };
-	int num[3] = { 1, 1, 1 };
+	byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
-	void* bits;
-	HBITMAP bitmap = CreateDIBSection(hdc, &toiquagae, DIB_RGB_COLORS, &bits, nullptr, 0);
+	byte* bits;
+	HBITMAP bitmap = CreateDIBSection(hdc, &toiquagae, DIB_RGB_COLORS, (void**)&bits, nullptr, 0);
 
 	auto start = std::chrono::high_resolution_clock::now();
 
 	while (true) {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-				BYTE* pixels = (BYTE*)bits + (x + y * w) * 4;
+				byte* pixels = bits + (x + y * w) * 4;
 
 				pixels[0] = count[0]; // B
 				pixels[1] = count[1]; // G
@@ -74,4 +79,8 @@ int main() {
 
 	ReleaseDC(console, hdc); // release device context
 	DeleteDC(hdc);
+}
+
+int main() {
+	Game game;
 }

@@ -14,7 +14,7 @@ private:
 
 public:
     void render();
-    void process(int);
+    void process(int time);
 };
 
 #endif
