@@ -14,7 +14,8 @@ private:
     HDC hdc;
     Engine* engine;
 
-    int width, height;
+    int width, height, fps;
+	double scale;
     std::string title;
     high_resolution_clock::time_point epoch, prev;
 
@@ -23,6 +24,8 @@ private:
 
     Game& operator=(const Game&) = delete;
     Game& operator=(Game&&) = delete;
+
+	std::string debugInfo();
 
 public:
     Game();

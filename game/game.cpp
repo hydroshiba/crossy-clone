@@ -1,19 +1,15 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone") {
+Game::Game() : title("Crossy Clone"), fps(0) {
     // Get console handle & device context
     console = GetConsoleWindow();
     hdc = GetDC(console);
     
-    // Maximize window & get window style
+    // Maximize window & disable resizing
     ShowWindow(console, SW_MAXIMIZE);
     DWORD style = GetWindowLong(console, GWL_STYLE);
-
-    // Disable maximize button and resizing ability
     style ^= WS_MAXIMIZEBOX;
     style ^= WS_SIZEBOX;
-
-    // Set window style
     SetWindowLong(console, GWL_STYLE, style);
 
     // Set title
@@ -22,7 +18,6 @@ Game::Game() : title("Crossy Clone") {
     // Remove cursor
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cursorInfo;
-
     GetConsoleCursorInfo(out, &cursorInfo);
     cursorInfo.bVisible = false; // Set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
@@ -36,6 +31,32 @@ Game::Game() : title("Crossy Clone") {
     width = size.right - size.left;
     height = size.bottom - size.top;
 
+    // Get DPI
+    scale = []() -> double {
+        auto activeWindow = GetActiveWindow();
+        HMONITOR monitor = MonitorFromWindow(activeWindow, MONITOR_DEFAULTTONEAREST);
+
+        // Get the logical width of the monitor
+        MONITORINFOEX monitorInfoEx;
+        monitorInfoEx.cbSize = sizeof(monitorInfoEx);
+        GetMonitorInfo(monitor, &monitorInfoEx);
+        auto logicWidth = monitorInfoEx.rcMonitor.right - monitorInfoEx.rcMonitor.left;
+
+        // Get the physical width of the monitor
+        DEVMODE devMode;
+        devMode.dmSize = sizeof(devMode);
+        devMode.dmDriverExtra = 0;
+        EnumDisplaySettings(monitorInfoEx.szDevice, ENUM_CURRENT_SETTINGS, &devMode);
+        auto physicWidth = devMode.dmPelsWidth;
+
+        // Calculate the scaling factor
+        return double(physicWidth) / double(logicWidth);
+    }();
+
+    // Correct window size
+    width *= scale;
+    height *= scale;
+
     // Create engine
     engine = new Engine(hdc, width, height);
 
@@ -44,9 +65,18 @@ Game::Game() : title("Crossy Clone") {
     prev = epoch;
 }
 
+std::string Game::debugInfo() {
+    std::string text;
+
+    text += " - FPS: " + std::to_string(fps) + " ";
+    text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height) + " ";
+    text += " - Scale: " + std::to_string(scale) + " ";
+
+    return text;
+}
+
 void Game::run() {
     int cur = 0, numcur = 1;
-    uint64_t frames = 0;
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
     while (true) {
@@ -63,15 +93,15 @@ void Game::run() {
         count[cur] += num[cur];
 
         engine->render();
-        ++frames;
+        ++fps;
 
         high_resolution_clock::time_point now = high_resolution_clock::now();
         uint64_t elapsed = duration_cast<microseconds>(now - prev).count();
 
         if(elapsed >= 1000000) {
+            SetConsoleTitle((title + debugInfo()).c_str());
             prev = now;
-            SetConsoleTitle((title + " - FPS: " + std::to_string(frames) + " - Resolution: " + std::to_string(width) + "x" + std::to_string(height)).c_str());
-            frames = 0;
+            fps = 0;
         }
     }
 }
