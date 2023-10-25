@@ -2,14 +2,28 @@
 #define COLOR_HPP_
 
 using byte = unsigned char;
+using word = unsigned int;
 
 class Color {
-public:
-    byte R, G, B, A;
+private:
+    word val;
 
-    Color() : R(0), G(0), B(0), A(255) {}
-    Color(unsigned int hex) : R((hex >> 16) & 0xFF), G((hex >> 8) & 0xFF), B(hex & 0xFF), A((hex >> 24) &0xFF) {}
-    Color(byte r, byte g, byte b, byte a = 0xFF) : R(r), G(g), B(b), A(a) {}
+public:
+    Color();
+    Color(word value);
+    Color(byte r, byte g, byte b);
+    Color(byte a, byte r, byte g, byte b);
+
+    word const& value() const;
+    byte R() const;
+    byte G() const;
+    byte B() const;
+    byte A() const;
+
+    Color operator+(const Color& other) const;
+    Color operator+=(const Color& other);
+
+    friend class Engine;
 };
 
 #endif

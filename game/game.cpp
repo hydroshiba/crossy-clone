@@ -52,7 +52,7 @@ void Game::run() {
     while (true) {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                engine->set(x, y, count[2], count[1], count[0]);
+                engine->set(x, y, count[2] << 16 | count[1] << 8 | count[0]);
 
         if (count[cur] == 0 || count[cur] == 255) {
             cur += numcur;
@@ -70,7 +70,7 @@ void Game::run() {
 
         if(elapsed >= 1000000) {
             prev = now;
-            SetConsoleTitle((title + " - FPS: " + std::to_string(frames)).c_str());
+            SetConsoleTitle((title + " - FPS: " + std::to_string(frames) + " - Resolution: " + std::to_string(width) + "x" + std::to_string(height)).c_str());
             frames = 0;
         }
     }

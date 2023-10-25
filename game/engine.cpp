@@ -12,17 +12,19 @@ Engine::Engine(HDC& hdc, int w, int h) : width(w), height(h), hdc(hdc) {
     bitmap = CreateDIBSection(hdc, &mapinfo, DIB_RGB_COLORS, (void**)&pixels, nullptr, 0);
 }
 
-void Engine::set(int x, int y, Color color) {
-    set(x, y, color.R, color.G, color.B);
+void Engine::set(int x, int y, word value) {
+    byte* pixel = pixels + (x + y * width) * 4;
+    memset(pixel++, value & 0xFF, 1);
+    memset(pixel++, (value >> 8) & 0xFF, 1);
+    memset(pixel, (value >> 16) & 0xFF, 1);
+}
+
+void Engine::set(int x, int y, const Color& color) {
+    set(x, y, color.val);
 }
 
 void Engine::set(int x, int y, byte r, byte g, byte b) {
-    byte* pixel = pixels + (x + y * width) * 4;
-
-    pixel[0] = b;
-    pixel[1] = g;
-    pixel[2] = r;
-    pixel[3] = 0;
+    set(x, y, (word(r) << 16) | (word(g) << 8) | b);
 }
 
 void Engine::render() {

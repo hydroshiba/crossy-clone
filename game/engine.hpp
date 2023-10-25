@@ -17,7 +17,8 @@ public:
     Engine(HDC& hdc, int w, int h);
     ~Engine();
 
-    void set(int x, int y, Color color);
+	void set(int x, int y, word value);
+    void set(int x, int y, const Color& color);
     void set(int x, int y, byte r, byte g, byte b);
 
     void render();
