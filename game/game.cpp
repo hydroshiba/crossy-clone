@@ -31,7 +31,7 @@ Game::Game() : title("Crossy Clone"), fps(0) {
     width = size.right - size.left;
     height = size.bottom - size.top;
 
-    // Get DPI
+    // Get scale
     scale = []() -> double {
         auto activeWindow = GetActiveWindow();
         HMONITOR monitor = MonitorFromWindow(activeWindow, MONITOR_DEFAULTTONEAREST);
