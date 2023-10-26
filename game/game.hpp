@@ -14,8 +14,8 @@ private:
     HDC hdc;
     Engine* engine;
 
-    int width, height, fps;
-	double scale;
+    int width, height, frames;
+	int scale;
     std::string title;
     high_resolution_clock::time_point epoch, prev;
 
@@ -26,6 +26,10 @@ private:
     Game& operator=(Game&&) = delete;
 
 	std::string debugInfo();
+
+	void render();
+	void process();
+	void playsound();
 
 public:
     Game();

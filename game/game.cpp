@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), fps(0) {
+Game::Game() : title("Crossy Clone"), frames(0) {
     // Get console handle & device context
     console = GetConsoleWindow();
     hdc = GetDC(console);
@@ -32,7 +32,7 @@ Game::Game() : title("Crossy Clone"), fps(0) {
     height = size.bottom - size.top;
 
     // Get scale
-    scale = []() -> double {
+    scale = []() -> int {
         auto activeWindow = GetActiveWindow();
         HMONITOR monitor = MonitorFromWindow(activeWindow, MONITOR_DEFAULTTONEAREST);
 
@@ -50,12 +50,12 @@ Game::Game() : title("Crossy Clone"), fps(0) {
         auto physicWidth = devMode.dmPelsWidth;
 
         // Calculate the scaling factor
-        return double(physicWidth) / double(logicWidth);
+        return (physicWidth * 100) / logicWidth;
     }();
 
     // Correct window size
-    width *= scale;
-    height *= scale;
+    width *= scale; width /= 100;
+    height *= scale; height /= 100;
 
     // Create engine
     engine = new Engine(hdc, width, height);
@@ -68,21 +68,19 @@ Game::Game() : title("Crossy Clone"), fps(0) {
 std::string Game::debugInfo() {
     std::string text;
 
-    text += " - FPS: " + std::to_string(fps) + " ";
-    text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height) + " ";
-    text += " - Scale: " + std::to_string(scale) + " ";
+    text += " - FPS: " + std::to_string(frames);
+    text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height);
+    text += " - Scale: " + std::to_string(scale) + "%";
 
     return text;
 }
 
-void Game::run() {
+void Game::render() {
     int cur = 0, numcur = 1;
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
     while (true) {
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-                engine->set(x, y, count[2] << 16 | count[1] << 8 | count[0]);
+        engine->fill(count[2] << 16 | count[1] << 8 | count[0]);
 
         if (count[cur] == 0 || count[cur] == 255) {
             cur += numcur;
@@ -93,17 +91,26 @@ void Game::run() {
         count[cur] += num[cur];
 
         engine->render();
-        ++fps;
+        ++frames;
 
         high_resolution_clock::time_point now = high_resolution_clock::now();
         uint64_t elapsed = duration_cast<microseconds>(now - prev).count();
 
         if(elapsed >= 1000000) {
+            frames = int(float(elapsed / 1000000.0) * frames);
             SetConsoleTitle((title + debugInfo()).c_str());
             prev = now;
-            fps = 0;
+            frames = 0;
         }
     }
+}
+
+void Game::playsound() {
+    
+}
+
+void Game::run() {
+    render();
 }
 
 Game::~Game() {

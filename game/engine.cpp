@@ -27,6 +27,48 @@ void Engine::set(int x, int y, byte r, byte g, byte b) {
     set(x, y, (word(r) << 16) | (word(g) << 8) | b);
 }
 
+void Engine::fill(word value) {
+    //auto fillQuater = [this, value](int x, int y) {
+    //    for(int j = 0; j < height / 2; ++j) {
+    //        byte* row = pixels + (j + y) * width * 4;
+    //        for(int i = 0; i < width / 2; ++i) {
+    //            byte* pixel = row + (i + x) * 4;
+    //            memset(pixel++, value & 0xFF, 1);
+    //            memset(pixel++, (value >> 8) & 0xFF, 1);
+    //            memset(pixel, (value >> 16) & 0xFF, 1);
+    //        }
+    //    }
+    //};
+
+    //std::thread t1(fillQuater, 0, 0);
+    //std::thread t2(fillQuater, width / 2, 0);
+    //std::thread t3(fillQuater, 0, height / 2);
+    //std::thread t4(fillQuater, width / 2, height / 2);
+
+    //t1.join();
+    //t2.join();
+    //t3.join();
+    //t4.join();
+
+    for (int y = 0; y < height; y++) {
+        byte* row = pixels + y * width * 4;
+        for (int x = 0; x < width; x++) {
+            byte* pixel = row + x * 4;
+            memset(pixel++, value & 0xFF, 1);
+            memset(pixel++, (value >> 8) & 0xFF, 1);
+            memset(pixel, (value >> 16) & 0xFF, 1);
+        }
+    }
+}
+
+void Engine::fill(const Color& color) {
+    fill(color.val);
+}
+
+void Engine::fill(byte r, byte g, byte b) {
+    fill((word(r) << 16) | (word(g) << 8) | b);
+}
+
 void Engine::render() {
     HDC memDC = CreateCompatibleDC(hdc);
     HBITMAP oldBit = (HBITMAP)SelectObject(memDC, bitmap);

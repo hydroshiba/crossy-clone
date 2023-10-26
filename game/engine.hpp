@@ -2,6 +2,8 @@
 #define ENGINE_HPP_
 
 #include <windows.h>
+#include <thread>
+#include <future>
 #include "color.hpp"
 
 class Engine {
@@ -20,6 +22,10 @@ public:
 	void set(int x, int y, word value);
     void set(int x, int y, const Color& color);
     void set(int x, int y, byte r, byte g, byte b);
+
+    void fill(word value);
+    void fill(const Color& color);
+    void fill(byte r, byte g, byte b);
 
     void render();
 };
