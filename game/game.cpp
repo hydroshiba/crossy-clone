@@ -69,6 +69,7 @@ std::string Game::debugInfo() {
     std::string text;
 
     text += " - FPS: " + std::to_string(frames);
+    text += " - Average FPS: " + std::to_string(framesAVG);
     text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height);
     text += " - Scale: " + std::to_string(scale) + "%";
 
@@ -80,7 +81,7 @@ void Game::render() {
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
     while (true) {
-        engine->fill(count[2] << 16 | count[1] << 8 | count[0]);
+        engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
 
         if (count[cur] == 0 || count[cur] == 255) {
             cur += numcur;
@@ -95,9 +96,15 @@ void Game::render() {
 
         high_resolution_clock::time_point now = high_resolution_clock::now();
         uint64_t elapsed = duration_cast<microseconds>(now - prev).count();
+        uint64_t totalElapsed = duration_cast<microseconds>(now - epoch).count();
 
         if(elapsed >= 1000000) {
+            int num = int(totalElapsed) / 1000000;
+
             frames = int(float(elapsed / 1000000.0) * frames);
+            framesAVG -= framesAVG / num;
+            framesAVG += float(frames) / num;
+
             SetConsoleTitle((title + debugInfo()).c_str());
             prev = now;
             frames = 0;
