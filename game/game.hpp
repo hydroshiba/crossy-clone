@@ -14,8 +14,9 @@ private:
     HDC hdc;
     Engine* engine;
 
-    int width, height, frames;
-	int scale;
+    int width, height, scale;
+    int frames;
+    float framesAVG;
     std::string title;
     high_resolution_clock::time_point epoch, prev;
 
