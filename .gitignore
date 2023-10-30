@@ -41,3 +41,6 @@ build
 # Visual Studio
 .vs
 CMakeSettings.json
+
+# Asset
+backup
