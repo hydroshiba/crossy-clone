@@ -34,13 +34,15 @@
 # CMake
 build
 
-# Visual Studio Code
+# Visual Studio (Code) stuffs
 .vscode
 .DS_Store
-
-# Visual Studio
 .vs
 CMakeSettings.json
+
+# Testing
+test*
+testing*
 
 # Asset
 backup
