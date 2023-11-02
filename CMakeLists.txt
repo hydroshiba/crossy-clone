@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 17)
 
-project(crossy-clone)
+project(crossy)
 
 file(GLOB_RECURSE cpp_files
     ${PROJECT_SOURCE_DIR}/main.cpp
