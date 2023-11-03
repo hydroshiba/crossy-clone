@@ -16,8 +16,8 @@ The game is about us, the character, who wants to cross roads and rivers to get 
 
 - A Windows environment, preferably Windows 10 and above.
 - For building project from source:
-	- [C++17 compliant compiler](https://en.cppreference.com/w/cpp/compiler_support/17)
-	- [CMake 3.20](https://cmake.org/download/) or newer.
+	- [C++17 compliant](https://en.cppreference.com/w/cpp/compiler_support/17) compiler
+	- [CMake 3.20](https://cmake.org/download/) or newer
 
 ## Building this project
 
