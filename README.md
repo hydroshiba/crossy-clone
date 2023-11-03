@@ -15,10 +15,13 @@ The game is about us, the character, who wants to cross roads and rivers to get 
 ## Requirements
 
 - A Windows environment, preferably Windows 10 and above.
-- Compiler with [C++17 support](https://en.cppreference.com/w/cpp/compiler_support/17).
-- [CMake 3.20](https://cmake.org/download/) or newer.
+- For building project from source:
+	- [C++17 compliant compiler](https://en.cppreference.com/w/cpp/compiler_support/17)
+	- [CMake 3.20](https://cmake.org/download/) or newer.
 
 ## Building this project
+
+This section is for building the project from source files. A compiled executable of the project can be found in the [Releases](#releases) section alternatively.
 
 ### Manually
 
@@ -42,7 +45,7 @@ These IDEs can automatically configure the project from CMake files, simply clon
 	- Replace `IDE name` with the name of your IDE as shown in the list, e.g. `cmake -S . -B ./build -G "Visual Studio 16 2019"` for Visual Studio 2019.
 - A project file for your IDE will be generated in the `build` folder, launch the project and build from there.
 
-## Release
+## Releases
 
 To be added
 
