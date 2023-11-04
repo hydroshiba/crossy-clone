@@ -24,10 +24,10 @@ This is a list of tasks for each individual to complete for each week. Please ch
 - [ ] Road lane texture
 - [ ] Truck sprite
 - [ ] Credit avatars (3T + 4 members)
-- [ ] Crashing SFX
-- [ ] Button clicking SFX
-- [ ] Player moving SFX
-- [ ] Honking SFX
+- [x] Crashing SFX
+- [x] Button clicking SFX
+- [x] Player moving SFX
+- [x] Honking SFX
 
 ### Nguyễn Ngọc Anh Tú
 
