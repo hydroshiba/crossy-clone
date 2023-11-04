@@ -38,5 +38,5 @@ This is a list of tasks for each individual to complete for each week. Please ch
 ### Bùi Tá Phát
 
 - [x] Game title image
-- [ ] Button texture (unclicked, clicked)
+- [x] Button texture (unclicked, clicked)
 - [ ] Background for game intro menu (using object sprites)
