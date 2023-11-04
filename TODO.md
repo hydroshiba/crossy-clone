@@ -32,7 +32,7 @@ This is a list of tasks for each individual to complete for each week. Please ch
 ### Nguyễn Ngọc Anh Tú
 
 - [x] Chicken sprite
-- [ ] Cat sprite
+- [x] Cat sprite
 - [ ] Car sprite
 
 ### Bùi Tá Phát
