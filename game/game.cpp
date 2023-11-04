@@ -2,6 +2,9 @@
 
 Game::Game() : title("Crossy Clone"), frames(0) {
     // Get console handle & device context
+    FreeConsole();
+    AllocConsole();
+    
     console = GetConsoleWindow();
     hdc = GetDC(console);
     
@@ -23,7 +26,7 @@ Game::Game() : title("Crossy Clone"), frames(0) {
     SetConsoleCursorInfo(out, &cursorInfo);
 
     // Disable scrolling
-    ShowScrollBar(GetConsoleWindow(), SB_VERT, 0);
+    ShowScrollBar(console, SB_VERT, 0);
     
     // Get window size
     RECT size;
@@ -77,21 +80,26 @@ std::string Game::debugInfo() {
 }
 
 void Game::render() {
-    int cur = 0, numcur = 1;
-    byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
+    engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
 
-    while (true) {
-        engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
+    if (count[cur] == 0 || count[cur] == 255) {
+        cur += numcur;
+        if (cur == 0 || cur == 2) numcur = -numcur;
+    }
 
-        if (count[cur] == 0 || count[cur] == 255) {
-            cur += numcur;
-            if (cur == 0 || cur == 2) numcur = -numcur;
-        }
+    if (count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
+    count[cur] += num[cur];
 
-        if (count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
-        count[cur] += num[cur];
+    engine->render();
+}
 
-        engine->render();
+void Game::playsound() {
+    
+}
+
+void Game::run() {
+    while(true) {
+        render();
         ++frames;
 
         high_resolution_clock::time_point now = high_resolution_clock::now();
@@ -112,16 +120,11 @@ void Game::render() {
     }
 }
 
-void Game::playsound() {
-    
-}
-
-void Game::run() {
-    render();
-}
-
 Game::~Game() {
     delete engine;
     ReleaseDC(console, hdc);
     DeleteDC(hdc);
+
+    FreeConsole();
+    AttachConsole(ATTACH_PARENT_PROCESS);
 }

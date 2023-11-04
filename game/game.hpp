@@ -26,6 +26,9 @@ private:
     Game& operator=(const Game&) = delete;
     Game& operator=(Game&&) = delete;
 
+    int cur = 0, numcur = 1;
+    byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
+
 	std::string debugInfo();
 
 	void render();
