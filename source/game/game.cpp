@@ -1,9 +1,12 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {  
+Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
+    // Get path
+    path = std::filesystem::current_path();
+
     // Initialize new window
     initialize();
-    hdc = GetDC(window); 
+    hdc = GetDC(window);
 
     // Create engine
     engine = new Engine(hdc, width, height);
@@ -18,7 +21,7 @@ void Game::initialize() {
     WNDCLASS winclass = {};
     winclass.hInstance = GetModuleHandle(NULL);
     winclass.lpszClassName = title.c_str();
-    winclass.hIcon = (HICON)LoadImage(NULL, "C:\\Users\\hydroshiba\\Desktop\\Code\\crossy-clone\\asset\\icon.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+    winclass.hIcon = (HICON)LoadImageW(NULL, (path + L"\\asset\\icon.ico").c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
 
     winclass.lpfnWndProc = [](HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT {
 		if(msg == WM_CLOSE) return PostQuitMessage(0), 0;
@@ -29,13 +32,13 @@ void Game::initialize() {
 
     // Create the window
     window = CreateWindow(
-        title.c_str(), 
-        title.c_str(), 
-        WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX ^ WS_SIZEBOX,
+        title.c_str(),
+        title.c_str(),
+        WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-		NULL, 
-		NULL, 
-		GetModuleHandle(NULL), 
+		NULL,
+		NULL,
+		GetModuleHandle(NULL),
 		NULL
 	);
 
@@ -73,8 +76,7 @@ void Game::initialize() {
     SetWindowText(window, title.c_str());
 }
 
-std::string Game::debugInfo()
-{
+std::string Game::debugInfo() {
     std::string text;
 
     text += " - FPS: " + std::to_string(frames);
@@ -107,7 +109,7 @@ void Game::run() {
     while(true) {
         MSG msg = {};
 
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+        if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
             if (msg.message == WM_QUIT) break;
             TranslateMessage(&msg);
             DispatchMessage(&msg);

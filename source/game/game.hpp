@@ -4,9 +4,12 @@
 #include <windows.h>
 #include <chrono>
 #include <string>
+#include <filesystem>
 
 #include "engine.hpp"
+
 using namespace std::chrono;
+using widestring = std::wstring;
 
 class Game {
 private:
@@ -14,10 +17,11 @@ private:
     HDC hdc;
     Engine* engine;
 
-    int width, height, scale;
-    int frames;
+    int width, height, scale, frames;
     float framesAVG;
+
     std::string title;
+    widestring path;
     high_resolution_clock::time_point epoch, prev;
     
     int cur = 0, numcur = 1;

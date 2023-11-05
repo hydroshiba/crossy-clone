@@ -4,15 +4,17 @@
 #include <windows.h>
 #include <mmsystem.h>
 
+#include "sound.hpp"
+
 class AudioDevice {
 private:
-    HWAVEOUT device;
-    WAVEFORMATEX format;
-    WAVEHDR header;
 
 public:
     AudioDevice();
     ~AudioDevice();
+
+    void play(Sound* sound);
+    void stop(Sound* sound);
 };
 
 #endif
