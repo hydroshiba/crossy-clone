@@ -66,7 +66,6 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 ### Bùi Tá Phát
 
-- [x] Game title image
 - [x] Button texture (unclicked, clicked)
 - [ ] `gamestate.dat` file format
 - [ ] Menu scene
