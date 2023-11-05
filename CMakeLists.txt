@@ -15,7 +15,7 @@ include_directories(object)
 add_executable(${PROJECT_NAME} ${cpp_files})
 
 if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /WX)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /WX /O2)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Ofast -Wpedantic)
 endif()
