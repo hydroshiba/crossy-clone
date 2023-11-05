@@ -40,3 +40,33 @@ This is a list of tasks for each individual to complete for each week. Please ch
 - [x] Game title image
 - [x] Button texture (unclicked, clicked)
 - [ ] Background for game intro menu (using object sprites)
+
+## Week 6 (05/11/2023 - 10/11/2023)
+
+### Phan Hải Minh
+
+- [ ] Audio device
+- [ ] Text rendering with font
+- [ ] Bitmap texture rendering
+- [x] Scene planning
+
+### Đặng Thanh Tú
+
+- [ ] Finish drawing grass blocks
+- [ ] Road lane texture
+- [ ] Truck sprite
+- [ ] 3T credit avatar
+- [ ] `setting.dat` file format
+
+### Nguyễn Ngọc Anh Tú
+
+- [x] Cat sprite
+- [ ] Car sprite
+- [ ] Setting singleton class (load & save `setting.dat`, accessible from every struct)
+
+### Bùi Tá Phát
+
+- [x] Game title image
+- [x] Button texture (unclicked, clicked)
+- [ ] `gamestate.dat` file format
+- [ ] Menu scene
