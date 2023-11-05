@@ -6,13 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB_RECURSE cpp_files
-    ${PROJECT_SOURCE_DIR}/main.cpp
-    ${PROJECT_SOURCE_DIR}/game/*.cpp
-    ${PROJECT_SOURCE_DIR}/object/*.cpp)
-
-include_directories(asset)
-include_directories(game)
-include_directories(object)
+    ${PROJECT_SOURCE_DIR}/source/*.cpp)
+    
+include_directories(source/game)
+include_directories(source/object)
+include_directories(source/scene)
 
 add_executable(${PROJECT_NAME} ${cpp_files})
 target_link_libraries(${PROJECT_NAME} winmm.lib)

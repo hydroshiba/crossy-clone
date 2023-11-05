@@ -7,7 +7,7 @@
 #include "player.hpp"
 
 void test() {
-	std::string path = "C:\\Users\\hydroshiba\\Desktop\\Code\\crossy-clone\\asset\\sound\\background.wav";
+	std::string path = std::filesystem::current_path().string() + "\\asset\\sound\\background.wav";
 	std::string temp = "type waveaudio alias background";
 
 	//mciSendString(("open " + path + " " + temp).c_str(), NULL, 0, NULL);
