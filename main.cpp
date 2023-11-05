@@ -1,7 +1,6 @@
 #include <windows.h>
+#include <filesystem>
 #include <mmsystem.h>
-
-#pragma comment (lib, "Winmm.lib")
 
 #include "game.hpp"
 #include "scene.hpp"
@@ -19,6 +18,8 @@ void test() {
 }
 
 int main() {
+	std::cout << std::filesystem::current_path();
+
 	//std::thread t(test);
 	test();
 
