@@ -10,7 +10,7 @@ using namespace std::chrono;
 
 class Game {
 private:
-    HWND console;
+    HWND window;
     HDC hdc;
     Engine* engine;
 
@@ -19,21 +19,21 @@ private:
     float framesAVG;
     std::string title;
     high_resolution_clock::time_point epoch, prev;
-
-    Game(const Game&) = delete;
-    Game(Game&&) = delete;
-
-    Game& operator=(const Game&) = delete;
-    Game& operator=(Game&&) = delete;
-
+    
     int cur = 0, numcur = 1;
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 
-	std::string debugInfo();
+    Game(const Game&) = delete;
+    Game(Game&&) = delete;
+    Game& operator=(Game&&) = delete;
+    Game& operator=(const Game&) = delete;
 
+    void initialize();
 	void render();
 	void process();
 	void playsound();
+	
+    std::string debugInfo();
 
 public:
     Game();

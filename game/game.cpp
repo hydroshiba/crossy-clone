@@ -1,38 +1,45 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), frames(0) {
-    // Get console handle & device context
-    FreeConsole();
-    AllocConsole();
-    
-    console = GetConsoleWindow();
-    hdc = GetDC(console);
-    
-    // Maximize window & disable resizing
-    ShowWindow(console, SW_MAXIMIZE);
-    DWORD style = GetWindowLong(console, GWL_STYLE);
-    style ^= WS_MAXIMIZEBOX;
-    style ^= WS_SIZEBOX;
-    SetWindowLong(console, GWL_STYLE, style);
+Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {  
+    // Initialize new window
+    initialize();
+    hdc = GetDC(window); 
 
-    // Set title
-    SetConsoleTitle(title.c_str());
+    // Create engine
+    engine = new Engine(hdc, width, height);
 
-    // Remove cursor
-    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_CURSOR_INFO cursorInfo;
-    GetConsoleCursorInfo(out, &cursorInfo);
-    cursorInfo.bVisible = false; // Set the cursor visibility
-    SetConsoleCursorInfo(out, &cursorInfo);
+    // Set epoch time
+    epoch = high_resolution_clock::now();
+    prev = epoch;
+}
 
-    // Disable scrolling
-    ShowScrollBar(console, SB_VERT, 0);
-    
-    // Get window size
-    RECT size;
-    GetWindowRect(console, &size);
-    width = size.right - size.left;
-    height = size.bottom - size.top;
+void Game::initialize() {
+    // Register window class
+    WNDCLASS winclass = {};
+    winclass.hInstance = GetModuleHandle(NULL);
+    winclass.lpszClassName = title.c_str();
+    winclass.hIcon = (HICON)LoadImage(NULL, "C:\\Users\\hydroshiba\\Desktop\\Code\\crossy-clone\\asset\\icon.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+
+    winclass.lpfnWndProc = [](HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT {
+		if(msg == WM_CLOSE) return PostQuitMessage(0), 0;
+		return DefWindowProc(hwnd, msg, wParam, lParam);
+	};
+
+    RegisterClass(&winclass);
+
+    // Create the window
+    window = CreateWindow(
+        title.c_str(), 
+        title.c_str(), 
+        WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX ^ WS_SIZEBOX,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+		NULL, 
+		NULL, 
+		GetModuleHandle(NULL), 
+		NULL
+	);
+
+    ShowWindow(window, SW_MAXIMIZE);
 
     // Get scale
     scale = []() -> int {
@@ -56,19 +63,18 @@ Game::Game() : title("Crossy Clone"), frames(0) {
         return (physicWidth * 100) / logicWidth;
     }();
 
-    // Correct window size
-    width *= scale; width /= 100;
-    height *= scale; height /= 100;
+    // Get window size
+    RECT size;
+    GetWindowRect(window, &size);
+    width = size.right - size.left; width *= scale; width /= 100;
+    height = size.bottom - size.top; height *= scale; height /= 100;
 
-    // Create engine
-    engine = new Engine(hdc, width, height);
-
-    // Set epoch time
-    epoch = high_resolution_clock::now();
-    prev = epoch;
+    // Set title
+    SetWindowText(window, title.c_str());
 }
 
-std::string Game::debugInfo() {
+std::string Game::debugInfo()
+{
     std::string text;
 
     text += " - FPS: " + std::to_string(frames);
@@ -99,6 +105,14 @@ void Game::playsound() {
 
 void Game::run() {
     while(true) {
+        MSG msg = {};
+
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+            if (msg.message == WM_QUIT) break;
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
         render();
         ++frames;
 
@@ -113,7 +127,7 @@ void Game::run() {
             framesAVG -= framesAVG / num;
             framesAVG += float(frames) / num;
 
-            SetConsoleTitle((title + debugInfo()).c_str());
+            SetWindowText(window, (title + debugInfo()).c_str());
             prev = now;
             frames = 0;
         }
@@ -122,9 +136,6 @@ void Game::run() {
 
 Game::~Game() {
     delete engine;
-    ReleaseDC(console, hdc);
+    ReleaseDC(window, hdc);
     DeleteDC(hdc);
-
-    FreeConsole();
-    AttachConsole(ATTACH_PARENT_PROCESS);
 }
