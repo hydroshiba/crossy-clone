@@ -12,11 +12,16 @@ include_directories(source/game)
 include_directories(source/object)
 include_directories(source/scene)
 
-add_executable(${PROJECT_NAME} ${cpp_files})
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    enable_language("RC")
+    set (resources ${CMAKE_CURRENT_SOURCE_DIR}/asset/icon.rc)
+endif()
+
+add_executable(${PROJECT_NAME} WIN32 ${cpp_files} ${resources})
 target_link_libraries(${PROJECT_NAME} winmm.lib)
 
 if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /WX /O2)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W3 /O2)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Ofast -Wpedantic)
 endif()

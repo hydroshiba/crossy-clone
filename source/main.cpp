@@ -18,13 +18,17 @@ void test() {
 }
 
 int main() {
-	std::cout << std::filesystem::current_path();
+	widestring path = std::filesystem::current_path();
+	std::cout << std::string(path.begin(), path.end()) << std::endl;
 
 	//std::thread t(test);
-	test();
+	//test();
+
+	//Sound sound((path + L"\\asset\\sound\\background.wav").c_str(), "background");
+	//Sound sound2((path + L"\\asset\\sound\\sfx\\long-honk.wav").c_str(), "background2");
+
+	//sound2.play();
 
 	Game game;
 	game.run();
-
-	//t.join();
 }
