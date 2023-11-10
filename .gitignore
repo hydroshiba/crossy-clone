@@ -46,6 +46,7 @@ CMakeSettings.json
 # Testing
 test*
 testing*
+daothit
 
 # Asset
 backup
