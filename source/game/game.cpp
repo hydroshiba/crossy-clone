@@ -21,7 +21,7 @@ void Game::initialize() {
     WNDCLASS winclass = {};
     winclass.hInstance = GetModuleHandle(NULL);
     winclass.lpszClassName = title.c_str();
-    winclass.hIcon = (HICON)LoadImageW(NULL, (path + L"\\asset\\icon.ico").c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+    winclass.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(icon));
 
     winclass.lpfnWndProc = [](HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT {
 		if(msg == WM_CLOSE) return PostQuitMessage(0), 0;

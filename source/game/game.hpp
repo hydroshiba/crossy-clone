@@ -9,6 +9,7 @@
 
 #include "engine.hpp"
 #include "sound.hpp"
+#include "resource.hpp"
 
 using namespace std::chrono;
 using widestring = std::wstring;
