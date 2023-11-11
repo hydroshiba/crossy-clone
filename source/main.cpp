@@ -1,34 +1,35 @@
 #include <windows.h>
 #include <filesystem>
-#include <mmsystem.h>
 
+#include "resource.h"
 #include "game.hpp"
 #include "scene.hpp"
 #include "player.hpp"
+#include "sound.hpp"
 
-void test() {
-	std::string path = std::filesystem::current_path().string() + "\\asset\\sound\\background.wav";
-	std::string temp = "type waveaudio alias background";
-
-	//mciSendString(("open " + path + " " + temp).c_str(), NULL, 0, NULL);
-	//mciSendString("play background repeat", NULL, 0, NULL);
-	//mciSendString("close background", NULL, 0, NULL);
-
-	sndPlaySound(path.c_str(), SND_FILENAME | SND_ASYNC | SND_LOOP);
-}
+#include <mmsystem.h>
 
 int main() {
-	widestring path = std::filesystem::current_path();
-	std::cout << std::string(path.begin(), path.end()) << std::endl;
+	// Assuming you have a resource ID for your WAV file in the resource file.
+    int wavResourceID = background;
 
-	//std::thread t(test);
-	//test();
+    // Find the module handle of your application.
+    HMODULE hModule = GetModuleHandle(NULL);
 
-	//Sound sound((path + L"\\asset\\sound\\background.wav").c_str(), "background");
-	//Sound sound2((path + L"\\asset\\sound\\sfx\\long-honk.wav").c_str(), "background2");
+    // Load the WAV resource.
+    HRSRC hResInfo = FindResource(hModule, MAKEINTRESOURCE(wavResourceID), RT_RCDATA);
+    HGLOBAL hResData = LoadResource(hModule, hResInfo);
+    LPVOID lpRes = LockResource(hResData);
+    DWORD dataSize = SizeofResource(hModule, hResInfo);
 
-	//sound2.play();
+	// Play the WAV resource.
+	sndPlaySoundW((LPCWSTR)lpRes, SND_MEMORY | SND_ASYNC | SND_LOOP);
 
+    // Release resources.
+    FreeResource(hResData);
+	
 	Game game;
 	game.run();
+
+    return 0;
 }

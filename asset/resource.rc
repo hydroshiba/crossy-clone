@@ -1,0 +1,4 @@
+#include "resource.h"
+
+icon ICON "icon.ico"
+background WAVE "sound/background.wav"

@@ -5,8 +5,10 @@
 #include <chrono>
 #include <string>
 #include <filesystem>
+#include <thread>
 
 #include "engine.hpp"
+#include "sound.hpp"
 
 using namespace std::chrono;
 using widestring = std::wstring;

@@ -76,6 +76,11 @@ void Game::initialize() {
     SetWindowText(window, title.c_str());
 }
 
+void Game::process() {
+    // Process input
+    if (GetAsyncKeyState(VK_ESCAPE)) PostQuitMessage(0);
+}
+
 std::string Game::debugInfo() {
     std::string text;
 
@@ -115,6 +120,7 @@ void Game::run() {
             DispatchMessage(&msg);
         }
 
+        process();
         render();
         ++frames;
 
