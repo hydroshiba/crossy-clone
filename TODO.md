@@ -56,7 +56,7 @@ This is a list of tasks for each individual to complete for each week. Please ch
 - [ ] Road lane texture
 - [ ] Truck sprite
 - [ ] 3T credit avatar
-- [ ] `setting.dat` file format
+- [x] `setting.dat` file format
 
 ### Nguyễn Ngọc Anh Tú
 
