@@ -1,4 +1,4 @@
-#include "setting.h"
+#include "setting.hpp"
 
 WORD Setting::volumeMusic = 50;
 WORD Setting::volumeEffect = 50;

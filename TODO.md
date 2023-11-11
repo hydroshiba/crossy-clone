@@ -67,5 +67,5 @@ This is a list of tasks for each individual to complete for each week. Please ch
 ### Bùi Tá Phát
 
 - [x] Button texture (unclicked, clicked)
-- [ ] `gamestate.dat` file format
-- [ ] Menu scene
+- [x] `gamestate.dat` file format
+- [x] Menu scene
