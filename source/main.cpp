@@ -1,35 +1,33 @@
 #include <windows.h>
 #include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
 
-#include "resource.h"
+#include "resource.hpp"
 #include "game.hpp"
 #include "scene.hpp"
 #include "player.hpp"
 #include "sound.hpp"
 
 #include <mmsystem.h>
+#include <vector>
 
 int main() {
-	// Assuming you have a resource ID for your WAV file in the resource file.
-    int wavResourceID = background;
+	std::cout << std::filesystem::current_path().string() << std::endl;
 
-    // Find the module handle of your application.
-    HMODULE hModule = GetModuleHandle(NULL);
+	//playSoundFromResource();
 
-    // Load the WAV resource.
-    HRSRC hResInfo = FindResource(hModule, MAKEINTRESOURCE(wavResourceID), RT_RCDATA);
-    HGLOBAL hResData = LoadResource(hModule, hResInfo);
-    LPVOID lpRes = LockResource(hResData);
-    DWORD dataSize = SizeofResource(hModule, hResInfo);
-
-	// Play the WAV resource.
-	sndPlaySoundW((LPCWSTR)lpRes, SND_MEMORY | SND_ASYNC | SND_LOOP);
-
-    // Release resources.
-    FreeResource(hResData);
+	std::string path = "asset\\sound\\background.mp3";
 	
+	mciSendStringA(("open \"" + path + "\" type mpegvideo alias background").c_str(), NULL, 0, NULL);
+	mciSendStringA("setaudio background volume to -1", NULL, 0, NULL);
+	mciSendStringA("play background", NULL, 0, NULL);
+
 	Game game;
 	game.run();
 
-    return 0;
+	mciSendStringA("close background", NULL, 0, NULL);
+
+	return 0;
 }
