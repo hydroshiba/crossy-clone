@@ -1,23 +1,45 @@
-#ifndef SETTING_H_
-#define SETTING_H_
+#ifndef SETTING_HPP_
+#define SETTING_HPP_
+
 #include <iostream>
-#include <windows.h>
 #include <fstream>
+#include <windows.h>
+#include <utility>
 
-class Setting{
-    static WORD volumeMusic, volumeEffect;
-    static bool controlMode;
-    Setting(){};
-public:
-    static void loadSetting();
-    static void saveSetting();
-
-    static bool getControlMode();
-    static WORD getVolumeMusic();
-    static WORD getVolumeEffect();
-
-    static void setControlMode(bool mode);
-    static void setVolumeMusic(WORD volume);
-    static void setVolumeEffect(WORD volume);
+enum Volume {
+    min = 0,
+    low = 250,
+    medium = 500,
+    high = 750,
+    max = 1000
 };
+
+enum Sprite {
+    duck, chicken, cat
+};
+
+class Setting {
+private:
+    int score[3];
+    Volume music, sfx;
+    Sprite sprite;
+
+    bool load();
+    void save();
+
+public:
+    Setting();
+    ~Setting();
+
+    int highscore(int rank);
+    Volume volMusic();
+    Volume volSFX();
+    Sprite spriteID();
+
+    void setScore(int score);
+    void setMusic(Volume volume);
+    void setSFX(Volume volume);
+    void setSprite(Sprite sprite);
+};
+
 #endif

@@ -1,56 +1,86 @@
 #include "setting.hpp"
 
-WORD Setting::volumeMusic = 50;
-WORD Setting::volumeEffect = 50;
-bool Setting::controlMode = true;
+void Setting::save(){
+    std::ofstream file("settings.dat", std::ios::binary);
 
-void Setting::loadSetting(){
+    // Volumes + sprite + magic number padding (4 byte)
+
+    // 0000 0000  0000 0000  0000 0000  000 000 00
+    // ---- ----  ---- ----  ---- ----  --- --- --
+    // D    E     C    A     D    E     MUS SFX SP
+
+    int packed = (music / 250) << 5 | (sfx / 250) << 2 | sprite;
+    packed |= (0xDECADE << 8); // Magic number padding
+    file.write(reinterpret_cast<char*>(&packed), sizeof(packed));
+
+    // Highscores (3 * 4 bytes)
+    file.write(reinterpret_cast<char*>(score), 3 * sizeof(int));
+    file.close();
+
+    // Total: 16 bytes
+}
+
+bool Setting::load() {
     std::ifstream ifs("setting.dat", std::ios::binary);
-    if(!ifs.good()) return;
+    if(!ifs.good()) return false;
 
-    char marker;
-    ifs.read(&marker, sizeof(marker));
-    if(marker != 's') {
-        ifs.close();
-        return;
-    }
-    ifs.read(reinterpret_cast<char*>(&controlMode), sizeof(bool));
-    ifs.read(reinterpret_cast<char*>(&volumeMusic), sizeof(WORD));
-    ifs.read(reinterpret_cast<char*>(&volumeEffect), sizeof(WORD));
+    int package = 0;
+    ifs.read(reinterpret_cast<char*>(&package), sizeof(package));
+    if((package >> 8) != 0xDECADE) return false;
+
+    package &= 0xFF;
+    music = static_cast<Volume>((package >> 5) & 0b11);
+    sfx = static_cast<Volume>((package >> 2) & 0b11);
+    sprite = static_cast<Sprite>(package & 0b11);
+
+    ifs.read(reinterpret_cast<char*>(score), 3 * sizeof(int));
     ifs.close();
 }
 
-void Setting::saveSetting(){
-    std::ofstream ofs("setting.dat", std::ios::binary);
-    if(!ofs.good()) return;
-    char marker = 's';
-    ofs.write(&marker, sizeof(marker));
-    ofs.write(reinterpret_cast<char*>(&controlMode), sizeof(bool));
-    ofs.write(reinterpret_cast<char*>(&volumeMusic), sizeof(WORD));
-    ofs.write(reinterpret_cast<char*>(&volumeEffect), sizeof(WORD));
-    ofs.close();
+Setting::Setting() {
+    if(!load()) {
+        music = Volume::medium;
+        sfx = Volume::medium;
+        sprite = Sprite::duck;
+        *score = 0;
+        save();
+    }
 }
 
-bool Setting::getControlMode(){
-    return controlMode;
+Setting::~Setting() {
+    save();
 }
 
-WORD Setting::getVolumeMusic(){
-    return volumeMusic;
+int Setting::highscore(int rank) {
+    return score[rank];
 }
 
-WORD Setting::getVolumeEffect(){
-    return volumeEffect;
+Volume Setting::volMusic() {
+    return music;
 }
 
-void Setting::setControlMode(bool mode){
-    controlMode = mode;
+Volume Setting::volSFX() {
+    return sfx;
 }
 
-void Setting::setVolumeMusic(WORD volume){
-    if(volume <= 100) volumeMusic = volume;
+Sprite Setting::spriteID() {
+    return sprite;
 }
 
-void Setting::setVolumeEffect(WORD volume){
-    if(volume <= 100) volumeEffect = volume;
+void Setting::setScore(int score) {
+    for(int i = 2; i >= 0; --i)
+        if(score > this->score[i])
+            std::swap(score, this->score[i]);
+}
+
+void Setting::setMusic(Volume volume) {
+    music = volume;
+}
+
+void Setting::setSFX(Volume volume) {
+    sfx = volume;
+}
+
+void Setting::setSprite(Sprite sprite) {
+    this->sprite = sprite;
 }
