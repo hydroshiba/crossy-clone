@@ -35,6 +35,7 @@ bool Setting::load() {
 
     ifs.read(reinterpret_cast<char*>(score), 3 * sizeof(int));
     ifs.close();
+    return true;
 }
 
 Setting::Setting() {
