@@ -1,7 +1,7 @@
 #include "setting.hpp"
 
 void Setting::save(){
-    std::ofstream file("settings.dat", std::ios::binary);
+    std::ofstream file("setting.dat", std::ios::binary);
 
     // Volumes + sprite + magic number padding (4 byte)
 
