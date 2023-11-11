@@ -1,4 +1,3 @@
-#include "resource.h"
+#include "resource.hpp"
 
 icon ICON "icon.ico"
-background WAVE "sound/background.wav"
