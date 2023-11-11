@@ -8,16 +8,16 @@
 
 ## Data: unknown bytes
 
-### Lanes: 4*nL+1 bytes
+### Lanes: 4\*nL+1 bytes
 - Number of lanes nL: 1 bytes
-- Coordinate y: 4*nL bytes
+- Coordinate y: 4\*nL bytes
 
 ### Player: 8 or 5 bytes
 - Address of corresponding lane (or the numerical order of lane): 4 bytes (or 1 bytes)
 - Coordinate x: 4 bytes
 
-### Cars, trucks, e.t.c: 8*nC+1 or 5*nC+1 bytes
+### Cars, trucks, e.t.c: 8\*nC+1 or 5\*nC+1 bytes
 - Number of cars (or other) nC: 1 bytes
-- Objects data: 8*nC bytes (or 5*nC bytes)
+- Objects data: 8\*nC bytes (or 5\*nC bytes)
     - Address of corresponding lane (or the numerical order of lane): 4 bytes (or 1 bytes)
     - Coordinate x: 4 bytes
