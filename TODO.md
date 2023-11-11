@@ -61,8 +61,8 @@ This is a list of tasks for each individual to complete for each week. Please ch
 ### Nguyễn Ngọc Anh Tú
 
 - [x] Cat sprite
-- [ ] Car sprite
-- [ ] Setting singleton class (load & save `setting.dat`, accessible from every struct)
+- [x] Car sprite
+- [x] Setting singleton class (load & save `setting.dat`, accessible from every struct)
 
 ### Bùi Tá Phát
 
