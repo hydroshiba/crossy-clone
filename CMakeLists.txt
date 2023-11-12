@@ -8,7 +8,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 file(GLOB_RECURSE cpp_files ${PROJECT_SOURCE_DIR}/source/*.cpp)
     
 include_directories(asset)
-include_directories(source/game)
+include_directories(source/internal)
 include_directories(source/object)
 include_directories(source/scene)
 
