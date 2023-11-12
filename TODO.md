@@ -45,7 +45,7 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 ### Phan Hải Minh
 
-- [ ] Audio device
+- [x] Audio device
 - [ ] Text rendering with font
 - [ ] Bitmap texture rendering
 - [x] Scene planning

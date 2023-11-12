@@ -9,14 +9,24 @@
 
 class Sound {
 private:
+    bool sfx;
     std::string alias;
 
 public:
     Sound(std::string path);
-    ~Sound();
-
-    void play();
-    void stop();
+    bool operator==(const Sound& sound) const;
+    
+    friend class AudioDevice;
+    friend struct std::hash<Sound>;
 };
+
+namespace std {
+    template<>
+    struct hash<Sound> {
+        size_t operator()(const Sound& sound) const {
+            return hash<string>()(sound.alias);
+        }
+    };
+}
 
 #endif

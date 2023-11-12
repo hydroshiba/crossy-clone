@@ -1,16 +1,14 @@
 #include "game.hpp"
 
 Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
-    // Get path
-    path = std::filesystem::current_path();
-
     // Initialize new window
     initialize();
     hdc = GetDC(window);
 
     // Devices initialization
-    engine = new Engine(hdc, width, height);
     setting = new Setting();
+    audio = new AudioDevice(setting);
+    engine = new Engine(hdc, width, height);
 
     // Set epoch time
     epoch = high_resolution_clock::now();
@@ -79,7 +77,10 @@ void Game::initialize() {
 
 void Game::process() {
     // Process input
-    if (GetAsyncKeyState(VK_ESCAPE)) PostQuitMessage(0);
+    if(GetAsyncKeyState(VK_ESCAPE)) PostQuitMessage(0);
+
+    if(GetAsyncKeyState(VK_UP)) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
+    if(GetAsyncKeyState(VK_DOWN)) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
 }
 
 std::string Game::debugInfo() {
@@ -112,6 +113,8 @@ void Game::playsound() {
 }
 
 void Game::run() {
+    audio->loop(Sound("asset/sound/background.mp3"));
+
     while(true) {
         MSG msg = {};
 
@@ -144,6 +147,7 @@ void Game::run() {
 }
 
 Game::~Game() {
+    delete audio;
     delete engine;
     delete setting;
 

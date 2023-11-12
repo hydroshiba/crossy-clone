@@ -9,7 +9,7 @@
 
 #include "typedef.hpp"
 #include "engine.hpp"
-#include "sound.hpp"
+#include "audio.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
 
@@ -22,11 +22,11 @@ private:
     float framesAVG;
 
     std::string title;
-    widestring path;
     high_resolution_clock::time_point epoch, prev;
 
     Engine* engine;
     Setting* setting;
+    AudioDevice* audio;
     
     int cur = 0, numcur = 1;
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
