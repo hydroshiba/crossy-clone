@@ -12,7 +12,7 @@ void Setting::save(){
     file.write(reinterpret_cast<char*>(&packed), sizeof(packed));
 
     // Highscores (3 * 4 bytes)
-    file.write(reinterpret_cast<char*>(score), 3 * sizeof(int));
+    file.write(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
 
     // File format should look like this (without highscores):
@@ -47,11 +47,11 @@ bool Setting::load() {
     sfx = static_cast<Volume>(((package >> 2) & 0x7) * 250);
     sprite = static_cast<Sprite>(package & 0x3);
 
-    // 0000 0000  0000 0000  0000 0000
-    // ---- ----  ---- ----  ---- ----
-    // Highscore  Highscore  Highscore
+    // 0000 0000 0000 0000  0000 0000 0000 0000  0000 0000 0000 0000
+    // ---- ---- ---- ----  ---- ---- ---- ----  ---- ---- ---- ----
+    // Top 1 (4 bytes)      Top 2 (4 bytes)      Top 3 (4 bytes)
 
-    file.read(reinterpret_cast<char*>(score), 3 * sizeof(int));
+    file.read(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
     return true;
 }
@@ -70,8 +70,8 @@ Setting::~Setting() {
     save();
 }
 
-int Setting::highscore(int rank) {
-    return score[rank];
+word Setting::highscore(byte rank) {
+    return *(reinterpret_cast<word*>(score + rank));
 }
 
 Volume Setting::volMusic() {
@@ -86,10 +86,13 @@ Sprite Setting::spriteID() {
     return sprite;
 }
 
-void Setting::setScore(int score) {
-    for(int i = 2; i >= 0; --i)
-        if(score > this->score[i])
-            std::swap(score, this->score[i]);
+void Setting::setScore(word score) {
+    word* ptr = reinterpret_cast<word*>(this->score);
+
+    for(int i = 0; i < 3; ++i) {
+        if(score > *(ptr - i)) std::swap(*(ptr - i), score);
+        ++ptr;
+    }
 }
 
 void Setting::setMusic(Volume volume) {

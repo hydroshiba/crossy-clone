@@ -10,7 +10,7 @@
 
 class Setting {
 private:
-    char score[12];
+    byte score[12]; // Saving 3 highscores as a byte array to keep endianess consistent
     Volume music, sfx;
     Sprite sprite;
 
@@ -21,12 +21,12 @@ public:
     Setting();
     ~Setting();
 
-    int highscore(int rank);
+    word highscore(byte rank);
     Volume volMusic();
     Volume volSFX();
     Sprite spriteID();
 
-    void setScore(int score);
+    void setScore(word score);
     void setMusic(Volume volume);
     void setSFX(Volume volume);
     void setSprite(Sprite sprite);
