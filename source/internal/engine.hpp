@@ -4,6 +4,8 @@
 #include <windows.h>
 #include <thread>
 #include <future>
+
+#include "typedef.hpp"
 #include "color.hpp"
 
 class Engine {

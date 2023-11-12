@@ -5,7 +5,7 @@
 #include <mmsystem.h>
 #include <string>
 
-using widestring = std::wstring;
+#include "typedef.hpp"
 
 class Sound {
 private:

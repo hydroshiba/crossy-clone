@@ -7,13 +7,11 @@
 #include <filesystem>
 #include <thread>
 
+#include "typedef.hpp"
 #include "engine.hpp"
 #include "sound.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
-
-using namespace std::chrono;
-using widestring = std::wstring;
 
 class Game {
 private:

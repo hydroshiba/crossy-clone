@@ -1,8 +1,7 @@
 #ifndef COLOR_HPP_
 #define COLOR_HPP_
 
-using byte = unsigned char;
-using word = unsigned int;
+#include "typedef.hpp"
 
 class Color {
 private:

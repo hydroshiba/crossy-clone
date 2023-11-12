@@ -6,17 +6,7 @@
 #include <windows.h>
 #include <utility>
 
-enum Volume {
-    min = 0,
-    low = 250,
-    medium = 500,
-    high = 750,
-    max = 1000
-};
-
-enum Sprite {
-    duck, chicken, cat
-};
+#include "typedef.hpp"
 
 class Setting {
 private:
