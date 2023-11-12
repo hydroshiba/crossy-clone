@@ -5,6 +5,7 @@
 #include <string>
 
 using byte = unsigned char;
+using little = unsigned short;
 using word = unsigned int;
 
 using widestring = std::wstring;
