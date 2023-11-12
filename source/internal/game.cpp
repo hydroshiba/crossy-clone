@@ -8,8 +8,9 @@ Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
     initialize();
     hdc = GetDC(window);
 
-    // Create engine
+    // Devices initialization
     engine = new Engine(hdc, width, height);
+    setting = new Setting();
 
     // Set epoch time
     epoch = high_resolution_clock::now();
@@ -144,6 +145,8 @@ void Game::run() {
 
 Game::~Game() {
     delete engine;
+    delete setting;
+
     ReleaseDC(window, hdc);
     DeleteDC(hdc);
 }

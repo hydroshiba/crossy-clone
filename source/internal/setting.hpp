@@ -20,7 +20,7 @@ enum Sprite {
 
 class Setting {
 private:
-    int score[3];
+    char score[12];
     Volume music, sfx;
     Sprite sprite;
 
