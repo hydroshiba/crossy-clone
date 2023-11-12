@@ -8,9 +8,9 @@
 
 ## Data: unknown bytes
 
-### Lanes: 4\*nL+1 bytes
-- Number of lanes nL: 1 bytes
-- Coordinate y: 4\*nL bytes
+### Lanes: $4N + 1$ bytes
+- Number of lanes $N$: 1 bytes
+- $y$ coordinate: $4N$ bytes
 
 ### Player: 8 or 5 bytes
 - Address of corresponding lane (or the numerical order of lane): 4 bytes (or 1 bytes)
