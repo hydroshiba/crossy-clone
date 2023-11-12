@@ -9,9 +9,9 @@ void Setting::save(){
 
     // Music + SFX + Sprite (1 byte)
     char packed = (music / 250) << 5 | (sfx / 250) << 2 | sprite;
-    file.write(reinterpret_cast<char*>(&packed), sizeof(packed));
+    file.write(&packed, sizeof(packed));
 
-    // Highscores (3 * 4 bytes)
+    // Highscores (12 bytes)
     file.write(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
 
