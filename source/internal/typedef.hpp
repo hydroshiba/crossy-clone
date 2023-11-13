@@ -11,7 +11,7 @@ using word = unsigned int;
 using widestring = std::wstring;
 using namespace std::chrono;
 
-enum Volume {
+enum class Volume {
     min = 0,
     low = 250,
     medium = 500,
@@ -19,8 +19,14 @@ enum Volume {
     max = 1000
 };
 
-enum Sprite {
+enum class Sprite {
     duck, chicken, cat
 };
+
+Volume& operator++(Volume& volume);
+Volume& operator--(Volume& volume);
+
+Sprite& operator++(Sprite& sprite);
+Sprite& operator--(Sprite& sprite);
 
 #endif

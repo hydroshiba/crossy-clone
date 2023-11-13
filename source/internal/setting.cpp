@@ -8,7 +8,9 @@ void Setting::save(){
     file.write(reinterpret_cast<char*>(&magic), 3);
 
     // Music + SFX + Sprite (1 byte)
-    char packed = (music / 250) << 5 | (sfx / 250) << 2 | sprite;
+    char packed = (static_cast<int>(music) / static_cast<int>(Volume::low)) << 5;
+    packed |= (static_cast<int>(sfx) / static_cast<int>(Volume::low)) << 2;
+    packed |= static_cast<int>(sprite);
     file.write(&packed, sizeof(packed));
 
     // Highscores (12 bytes)
@@ -43,8 +45,8 @@ bool Setting::load() {
     // MUS SFX SP
 
     char package = file.get();
-    music = static_cast<Volume>((package >> 5) * 250);
-    sfx = static_cast<Volume>(((package >> 2) & 0x7) * 250);
+    music = static_cast<Volume>((package >> 5) * static_cast<int>(Volume::low));
+    sfx = static_cast<Volume>(((package >> 2) & 0x7) * static_cast<int>(Volume::low));
     sprite = static_cast<Sprite>(package & 0x3);
 
     // 0000 0000 0000 0000  0000 0000 0000 0000  0000 0000 0000 0000
@@ -95,14 +97,12 @@ void Setting::setScore(word score) {
     }
 }
 
-void Setting::setMusic(Volume volume) {
-    music = volume;
-}
-
-void Setting::setSFX(Volume volume) {
-    sfx = volume;
-}
-
 void Setting::setSprite(Sprite sprite) {
     this->sprite = sprite;
 }
+
+void Setting::incMusic() { ++music; }
+void Setting::decMusic() { --music; }
+
+void Setting::incSFX() { ++sfx; }
+void Setting::decSFX() { --sfx; }

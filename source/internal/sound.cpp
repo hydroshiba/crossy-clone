@@ -1,6 +1,6 @@
 #include "sound.hpp"
 
-Sound::Sound(std::string path) {
+Sound::Sound(std::string path) : path(path) {
     alias = path.substr(path.find_last_of("/"), path.find_last_of(".") - path.find_last_of("/"));
     sfx = (path.find("sfx") != std::string::npos);
 }

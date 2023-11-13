@@ -14,20 +14,8 @@
 #include <vector>
 
 int main() {
-	std::cout << std::filesystem::current_path().string() << std::endl;
-
-	//playSoundFromResource();
-
-	std::string path = "asset\\sound\\background.mp3";
-	
-	mciSendStringA(("open \"" + path + "\" type mpegvideo alias background").c_str(), NULL, 0, NULL);
-	mciSendStringA("setaudio background volume to -1", NULL, 0, NULL);
-	mciSendStringA("play background", NULL, 0, NULL);
-
 	Game game;
 	game.run();
-
-	mciSendStringA("close background", NULL, 0, NULL);
 
 	return 0;
 }

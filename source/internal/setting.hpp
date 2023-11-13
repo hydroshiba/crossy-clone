@@ -27,9 +27,13 @@ public:
     Sprite spriteID();
 
     void setScore(word score);
-    void setMusic(Volume volume);
-    void setSFX(Volume volume);
     void setSprite(Sprite sprite);
+
+    void incMusic();
+    void decMusic();
+
+    void incSFX();
+    void decSFX();
 };
 
 #endif

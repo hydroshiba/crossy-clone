@@ -10,7 +10,7 @@
 class Sound {
 private:
     bool sfx;
-    std::string alias;
+    std::string path, alias;
 
 public:
     Sound(std::string path);
