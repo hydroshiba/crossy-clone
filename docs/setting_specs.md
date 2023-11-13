@@ -21,9 +21,19 @@ D    E     C    A     D    E     MUS SFX SP
 The game has 3 highscores for 1st, 2nd and 3rd place, each highscore is a `word` (`unsigned int`) type. Storing these highscores are straightforward as follows:
 
 ```
-0000 0000 0000 0000  0000 0000 0000 0000  0000 0000 0000 0000
----- ---- ---- ----  ---- ---- ---- ----  ---- ---- ---- ----
-1st place (4 bytes)  2nd place (4 bytes)  3rd place (4 bytes)
+0000 0000 0000 0000 0000 0000 0000 0000
+---- ---- ---- ---- ---- ---- ---- ----
+1st place (4 bytes)
+
+0000 0000 0000 0000 0000 0000 0000 0000
+---- ---- ---- ---- ---- ---- ---- ----
+2nd place (4 bytes)
+
+0000 0000 0000 0000 0000 0000 0000 0000
+---- ---- ---- ---- ---- ---- ---- ----
+3rd place (4 bytes)
 ```
+*These bytes are actually consecutive, I'm out of space*
+
 
 To avoid the difference in endianness between systems, the highscores are stored in the settings as an array of 12 `byte` types instead of 3 `word` types. Endianness only affects the relative position between the bytes but not the bytes themselves, hence printing byte by byte will always result in the same value. To attain the highscores, pointer casting is used to retrieve `word` values from the array of `byte` types.
