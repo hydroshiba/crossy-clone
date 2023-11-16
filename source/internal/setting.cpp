@@ -17,14 +17,6 @@ void Setting::save(){
     file.write(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
 
-    // File format should look like this (without highscores):
-    // 0000 0000  0000 0000  0000 0000  000 000 00
-    // ---- ----  ---- ----  ---- ----  --- --- --
-    // D    E     C    A     D    E     MUS SFX SP'
-
-    // 0xDECADE is chosen because the value stays the same on different endianess
-    // Also it spells out "Decade" which is kinda nice
-
     // Total: 16 bytes
 }
 
@@ -48,10 +40,6 @@ bool Setting::load() {
     music = static_cast<Volume>((package >> 5) * static_cast<int>(Volume::low));
     sfx = static_cast<Volume>(((package >> 2) & 0x7) * static_cast<int>(Volume::low));
     sprite = static_cast<Sprite>(package & 0x3);
-
-    // 0000 0000 0000 0000  0000 0000 0000 0000  0000 0000 0000 0000
-    // ---- ---- ---- ----  ---- ---- ---- ----  ---- ---- ---- ----
-    // Top 1 (4 bytes)      Top 2 (4 bytes)      Top 3 (4 bytes)
 
     file.read(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
