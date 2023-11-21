@@ -19,9 +19,9 @@ public:
     Menu();
     ~Menu();
 
-    void process();
-    void render();
-    void playsound();
+    void process() override;
+    void render() override;
+    void playsound() override;
 };
 
 #endif /* MENU_HPP_ */

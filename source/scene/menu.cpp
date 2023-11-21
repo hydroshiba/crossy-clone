@@ -1,8 +1,7 @@
 #include "menu.hpp"
+#include "sceneRegistry.hpp"
 
-Menu::Menu() {
-
-}
+Menu::Menu() : Scene(nullptr){}
 
 void Menu::process() {
 
