@@ -1,20 +1,30 @@
 #include "sceneRegistry.hpp"
 
-SceneRegistry::SceneRegistry() {
-    menu = new Menu;
-    //play = new Play;
-    //pause = new Pause;
-    //gameover = new Gameover;
+SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting) {
+   menu = new Menu(engine, audio, this, setting);
+   play = NULL;
+   pause = NULL;
+   gameover = NULL;
 }
 
 SceneRegistry::~SceneRegistry(){
-    delete menu;
-    delete play;
-    delete pause;
-    delete gameover;
+    if (menu) {
+        delete menu;
+        menu = NULL;
+    }
 
-    menu = NULL;
-    play = NULL;
-    pause = NULL;
-    gameover = NULL;
+    if (play) {
+        delete play;
+        play = NULL;
+    }
+
+    if (pause) {
+        delete pause;
+        pause = NULL;
+    }
+
+    if (gameover) {
+        delete gameover;
+        gameover = NULL;
+    }
 }
