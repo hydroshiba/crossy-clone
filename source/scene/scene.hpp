@@ -18,7 +18,7 @@ public:
 
     virtual ~Scene();
 
-    virtual void process() = 0;
+    virtual Scene* process(SceneRegistry const * const registry) = 0;
     virtual void render() = 0;
     virtual void playsound() = 0;
 };

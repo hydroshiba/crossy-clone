@@ -1,4 +1,6 @@
-# Format of gamestate.dat
+# Format of `gamestate.dat`
+
+## Special padding: 3 bytes
 
 ## Address of read pointer a: 32 bytes
 - Address of lanes' data: 4 bytes

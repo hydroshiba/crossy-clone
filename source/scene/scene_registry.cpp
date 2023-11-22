@@ -7,7 +7,7 @@ SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* settin
    gameover = NULL;
 }
 
-SceneRegistry::~SceneRegistry(){
+SceneRegistry::~SceneRegistry() {
     if (menu) {
         delete menu;
         menu = NULL;

@@ -7,7 +7,7 @@
     // #include "play.hpp"
     // #include "gameover.hpp
 
-    class SceneRegistry{
+    class SceneRegistry {
     private:
         Scene* menu;
         Scene* play;

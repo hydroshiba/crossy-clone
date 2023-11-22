@@ -1,0 +1,24 @@
+#include "gameover.hpp"
+
+Gameover::Gameover(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
+
+}
+
+Gameover::~Gameover() {
+
+}
+
+Scene* Gameover::process(SceneRegistry const * const registry) {
+    // if (this->engine->isKeyPressed(this->quitButton)) {
+    //     this->playsound();
+    //     return registry->menu;
+    // }
+    // else {
+    //     return this;
+    // }
+    return nullptr;
+}
+
+void Gameover::render() {
+    
+}
