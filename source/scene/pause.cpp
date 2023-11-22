@@ -26,3 +26,7 @@ Scene* Pause::process(SceneRegistry const * const registry) {
 void Pause::render() {
     
 }
+
+void Pause::playsound() {
+    // this->audio->playSound(this->buttonSound);
+}

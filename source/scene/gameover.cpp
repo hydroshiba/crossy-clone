@@ -22,3 +22,7 @@ Scene* Gameover::process(SceneRegistry const * const registry) {
 void Gameover::render() {
     
 }
+
+void Gameover::playsound() {
+    // this->audio->playSound(this->buttonSound);
+}
