@@ -1,5 +1,5 @@
 #include "menu.hpp"
-#include "sceneRegistry.hpp"
+#include "scene_registry.hpp"
 
 Menu::Menu(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting){}
 

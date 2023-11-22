@@ -12,7 +12,7 @@
 #include "audio.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
-#include "sceneRegistry.hpp"
+#include "scene_registry.hpp"
 
 class Game {
 private:

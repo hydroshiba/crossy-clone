@@ -1,4 +1,4 @@
-#include "sceneRegistry.hpp"
+#include "scene_registry.hpp"
 
 SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting) {
    menu = new Menu(engine, audio, this, setting);
