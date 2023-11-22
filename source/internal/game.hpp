@@ -12,6 +12,7 @@
 #include "audio.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
+#include "sceneRegistry.hpp"
 
 class Game {
 private:
@@ -27,7 +28,8 @@ private:
     Engine* engine;
     Setting* setting;
     AudioDevice* audio;
-    
+    SceneRegistry* registry;
+
     int cur = 0, numcur = 1;
     byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
 

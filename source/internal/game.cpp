@@ -9,7 +9,7 @@ Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
     setting = new Setting();
     audio = new AudioDevice(setting);
     engine = new Engine(hdc, width, height);
-
+    registry = new SceneRegistry(engine, audio, setting);
     // Set epoch time
     epoch = high_resolution_clock::now();
     prev = epoch;
@@ -151,6 +151,7 @@ Game::~Game() {
     delete audio;
     delete engine;
     delete setting;
+    delete registry;
 
     ReleaseDC(window, hdc);
     DeleteDC(hdc);
