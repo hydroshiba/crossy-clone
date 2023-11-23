@@ -15,7 +15,7 @@ public:
     Gameover(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
     ~Gameover();
 
-    Scene* process(SceneRegistry const * const registry) override;
+    Scene* process() override;
     void render() override;
     void playsound() override;
 };

@@ -2,7 +2,7 @@
 #define MENU_HPP_
 #include "scene.hpp"
 #include <conio.h>
-
+#include "scene_registry.hpp"
 class Menu: public Scene {
 private:
     std::string gameTitle;
@@ -19,7 +19,7 @@ public:
     Menu(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
     ~Menu();
 
-    Scene* process(SceneRegistry const * const registry) override;
+    Scene* process() override;
     void render() override;
     void playsound() override;
 };

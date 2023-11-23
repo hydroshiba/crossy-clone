@@ -8,7 +8,7 @@ Pause::~Pause() {
 
 }
 
-Scene* Pause::process(SceneRegistry const * const registry) {
+Scene* Pause::process() {
     // if (this->engine->isKeyPressed(this->continueButton)) {
     //     this->playsound();
     //     return registry->play;

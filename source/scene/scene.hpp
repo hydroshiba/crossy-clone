@@ -4,8 +4,8 @@
 #include "setting.hpp"
 #include "audio.hpp"
 #include "engine.hpp"
-#include "scene_registry.hpp"
 
+class SceneRegistry;
 class Scene {
 protected:
     Engine* engine;
@@ -17,7 +17,7 @@ public:
 
     virtual ~Scene();
 
-    virtual Scene* process(SceneRegistry const * const registry) = 0;
+    virtual Scene* process() = 0;
     virtual void render() = 0;
     virtual void playsound() = 0;
 };

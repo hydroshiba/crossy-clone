@@ -1,8 +1,8 @@
 #ifndef SCENE_REGISTRY_HPP_
 #define SCENE_REGISTRY_HPP_
 
-#include "scene.hpp"
 #include "menu.hpp"
+
 // #include "pause.hpp"
 // #include "play.hpp"
 // #include "gameover.hpp

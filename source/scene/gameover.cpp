@@ -8,7 +8,7 @@ Gameover::~Gameover() {
 
 }
 
-Scene* Gameover::process(SceneRegistry const * const registry) {
+Scene* Gameover::process() {
     // if (this->engine->isKeyPressed(this->quitButton)) {
     //     this->playsound();
     //     return registry->menu;
