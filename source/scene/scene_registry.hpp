@@ -1,27 +1,30 @@
-    #ifndef SCENE_REGISTRY_HPP_
-    #define SCENE_REGISTRY_HPP_
+#ifndef SCENE_REGISTRY_HPP_
+#define SCENE_REGISTRY_HPP_
 
-    #include "scene.hpp"
-    #include "menu.hpp"
-    // #include "pause.hpp"
-    // #include "play.hpp"
-    // #include "gameover.hpp
-
-    class SceneRegistry {
+#include "scene.hpp"
+#include "menu.hpp"
+// #include "pause.hpp"
+// #include "play.hpp"
+// #include "gameover.hpp
+enum SceneType {
+    MENU,
+    SETTING,
+    LEADERBOARD,
+    CREDIT,
+    PLAY,
+    PAUSE,
+    GAMEOVER
+};
+class SceneRegistry {
     private:
-        Scene* menu;
-        Scene* play;
-        Scene* pause;
-        Scene* gameover;
+        Scene* scenes[7];
+
     public:
         SceneRegistry(Engine* engine, AudioDevice* audio , Setting* setting);
         ~SceneRegistry();
 
-        friend class Scene;
-        friend class Menu;
-        friend class Play;
-        friend class Pause;
-        friend class Gameover;
+        Scene* getScene(SceneType type);
     };
 
-    #endif
+
+#endif

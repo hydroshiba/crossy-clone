@@ -1,30 +1,33 @@
 #include "scene_registry.hpp"
 
 SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting) {
-   menu = new Menu(engine, audio, this, setting);
-   play = NULL;
-   pause = NULL;
-   gameover = NULL;
+   scenes[MENU] = new Menu(engine, audio, this, setting);
+   scenes[PLAY] = NULL;
+   scenes[SETTING] = NULL;
+   scenes[LEADERBOARD] = NULL;
+   scenes[CREDIT] = NULL;
+   scenes[PAUSE] = NULL;
+   scenes[GAMEOVER] = NULL;
 }
 
 SceneRegistry::~SceneRegistry() {
-    if (menu) {
-        delete menu;
-        menu = NULL;
-    }
 
-    if (play) {
-        delete play;
-        play = NULL;
-    }
+    for(int i = 0; i < 7; i++){
 
-    if (pause) {
-        delete pause;
-        pause = NULL;
-    }
+        if(scenes[i] != NULL){
 
-    if (gameover) {
-        delete gameover;
-        gameover = NULL;
+            delete scenes[i];
+            scenes[i] = NULL;
+
+        }
+    }
+}
+
+Scene* SceneRegistry::getScene(SceneType type) {
+
+    if (type >= 0 && type < 7) {
+        return scenes[type];
+    } else {
+        return nullptr;
     }
 }

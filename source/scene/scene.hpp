@@ -4,8 +4,7 @@
 #include "setting.hpp"
 #include "audio.hpp"
 #include "engine.hpp"
-
-class SceneRegistry;
+#include "scene_registry.hpp"
 
 class Scene {
 protected:

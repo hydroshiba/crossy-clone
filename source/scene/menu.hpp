@@ -1,7 +1,8 @@
 #ifndef MENU_HPP_
 #define MENU_HPP_
 #include "scene.hpp"
-#include "scene_registry.hpp"
+#include <conio.h>
+
 class Menu: public Scene {
 private:
     std::string gameTitle;
