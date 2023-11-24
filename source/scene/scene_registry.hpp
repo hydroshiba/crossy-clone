@@ -1,30 +1,33 @@
 #ifndef SCENE_REGISTRY_HPP_
 #define SCENE_REGISTRY_HPP_
 
-#include "menu.hpp"
+#include <vector>
 
+#include "menu.hpp"
 // #include "pause.hpp"
 // #include "play.hpp"
 // #include "gameover.hpp
-enum SceneType {
+
+enum class SceneID {
     MENU,
     SETTING,
     LEADERBOARD,
     CREDIT,
     PLAY,
     PAUSE,
-    GAMEOVER
+    GAMEOVER,
+    SIZE
 };
+
 class SceneRegistry {
-    private:
-        Scene* scenes[7];
+private:
+    std::vector<Scene*> scenes;
 
-    public:
-        SceneRegistry(Engine* engine, AudioDevice* audio , Setting* setting);
-        ~SceneRegistry();
+public:
+    SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting);
+    ~SceneRegistry();
 
-        Scene* getScene(SceneType type);
-    };
-
+    Scene* scene(SceneID type);
+};
 
 #endif

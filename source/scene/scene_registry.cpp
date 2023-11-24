@@ -1,33 +1,24 @@
 #include "scene_registry.hpp"
 
 SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting) {
-   scenes[MENU] = new Menu(engine, audio, this, setting);
-   scenes[PLAY] = NULL;
-   scenes[SETTING] = NULL;
-   scenes[LEADERBOARD] = NULL;
-   scenes[CREDIT] = NULL;
-   scenes[PAUSE] = NULL;
-   scenes[GAMEOVER] = NULL;
+    scenes.resize(static_cast<int>(SceneID::SIZE));
+
+    scenes[static_cast<int>(SceneID::MENU)] = new Menu(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::PLAY)] = nullptr;
+    scenes[static_cast<int>(SceneID::SETTING)] = nullptr;
+    scenes[static_cast<int>(SceneID::LEADERBOARD)] = nullptr;
+    scenes[static_cast<int>(SceneID::CREDIT)] = nullptr;
+    scenes[static_cast<int>(SceneID::PAUSE)] = nullptr;
+    scenes[static_cast<int>(SceneID::GAMEOVER)] = nullptr;
 }
 
 SceneRegistry::~SceneRegistry() {
-
-    for(int i = 0; i < 7; i++){
-
-        if(scenes[i] != NULL){
-
-            delete scenes[i];
-            scenes[i] = NULL;
-
-        }
-    }
+    for(int i = 0; i < static_cast<int>(SceneID::SIZE); ++i)
+        delete scenes[i];
 }
 
-Scene* SceneRegistry::getScene(SceneType type) {
-
-    if (type >= 0 && type < 7) {
-        return scenes[type];
-    } else {
-        return nullptr;
-    }
+Scene* SceneRegistry::scene(SceneID type) {
+    unsigned int ID = static_cast<unsigned int>(type);
+    if(ID >= scenes.size()) return nullptr;
+    return scenes[ID];
 }
