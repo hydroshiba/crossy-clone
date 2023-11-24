@@ -2,16 +2,17 @@
 #define LANE_HPP_
 
 #include <vector>
-#include "vehicle.hpp"
+
 #include "traffic.hpp"
+#include "vehicle.hpp"
 
 class Lane {
 private:
-    int y; //y position
+    int y;  // y position
     std::vector<Vehicle> vehicles;
-    Traffic traffic; //traffic light
-    bool direction; //true = left, false = right
-    std::string sprite; //sprite
+    Traffic traffic;     // traffic light
+    bool direction;      // true = left, false = right
+    std::string sprite;  // sprite
 
 public:
     void render();

@@ -1,6 +1,6 @@
 #include "setting.hpp"
 
-void Setting::save(){
+void Setting::save() {
     std::ofstream file("data/setting.dat", std::ios::binary);
 
     // Magic number padding (3 bytes)
@@ -26,7 +26,7 @@ bool Setting::load() {
 
     // 0000 0000  0000 0000  0000 0000
     // ---- ----  ---- ----  ---- ----
-    // D    E     C    A     D    E   
+    // D    E     C    A     D    E
 
     int magic = 0;
     file.read(reinterpret_cast<char*>(&magic), 3);

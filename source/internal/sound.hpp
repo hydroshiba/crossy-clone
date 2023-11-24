@@ -1,8 +1,9 @@
 #ifndef SOUND_HPP_
 #define SOUND_HPP_
 
-#include <windows.h>
 #include <mmsystem.h>
+#include <windows.h>
+
 #include <string>
 
 #include "typedef.hpp"
@@ -15,13 +16,13 @@ private:
 public:
     Sound(std::string path);
     bool operator==(const Sound& sound) const;
-    
+
     friend class AudioDevice;
     friend struct std::hash<Sound>;
 };
 
 namespace std {
-    template<>
+    template <>
     struct hash<Sound> {
         size_t operator()(const Sound& sound) const {
             return hash<string>()(sound.alias);

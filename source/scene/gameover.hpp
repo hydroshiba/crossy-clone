@@ -3,7 +3,7 @@
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
-class Gameover: public Scene {
+class Gameover : public Scene {
 private:
     std::string gameTitle;
     std::string quitButton;
@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Gameover(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
     ~Gameover();
 
     Scene* process() override;

@@ -1,10 +1,10 @@
 #include "vehicle.hpp"
 
 void Vehicle::move(const bool& direction) {
-    if(direction){
+    if(direction) {
         std::cout << "Move left";
-    }
-    else std::cout << "Move right";
+    } else
+        std::cout << "Move right";
 }
 
 void Vehicle::render() {

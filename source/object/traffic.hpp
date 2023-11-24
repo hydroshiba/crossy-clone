@@ -5,7 +5,7 @@
 
 class Traffic {
 private:
-    bool isRed; //true = red, false = green
+    bool isRed;  // true = red, false = green
     int clock;
     std::string sprite;
 

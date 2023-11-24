@@ -37,27 +37,31 @@ void AudioDevice::loop(Sound sound) {
 
 void AudioDevice::incMusic() {
     setting->incMusic();
-    for(auto sound : sounds) if(!sound.sfx)
-        mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str(), NULL, 0, NULL),
-        std::cout << ("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str() << std::endl;
+    for(auto sound : sounds)
+        if(!sound.sfx)
+            mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str(), NULL, 0, NULL),
+                std::cout << ("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str() << std::endl;
 }
 
 void AudioDevice::decMusic() {
     setting->decMusic();
-    for(auto sound : sounds) if(!sound.sfx)
-        mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str(), NULL, 0, NULL);
+    for(auto sound : sounds)
+        if(!sound.sfx)
+            mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volMusic()))).c_str(), NULL, 0, NULL);
 }
 
 void AudioDevice::incSFX() {
     setting->incSFX();
-    for(auto sound : sounds) if(sound.sfx)
-        mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volSFX()))).c_str(), NULL, 0, NULL);
+    for(auto sound : sounds)
+        if(sound.sfx)
+            mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volSFX()))).c_str(), NULL, 0, NULL);
 }
 
 void AudioDevice::decSFX() {
     setting->decSFX();
-    for(auto sound : sounds) if(sound.sfx)
-        mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volSFX()))).c_str(), NULL, 0, NULL);
+    for(auto sound : sounds)
+        if(sound.sfx)
+            mciSendString(("setaudio " + sound.alias + " volume to " + std::to_string(static_cast<int>(setting->volSFX()))).c_str(), NULL, 0, NULL);
 }
 
 AudioDevice::~AudioDevice() {

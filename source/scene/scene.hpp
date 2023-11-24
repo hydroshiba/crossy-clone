@@ -1,9 +1,10 @@
 #ifndef SCENE_HPP_
 #define SCENE_HPP_
 #include <iostream>
-#include "setting.hpp"
+
 #include "audio.hpp"
 #include "engine.hpp"
+#include "setting.hpp"
 
 class SceneRegistry;
 class Scene {
@@ -12,8 +13,9 @@ protected:
     AudioDevice* audio;
     SceneRegistry* sceneRegistry;
     Setting* setting;
+
 public:
-    Scene(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    Scene(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
 
     virtual ~Scene();
 

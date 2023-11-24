@@ -5,9 +5,9 @@
 
 class Player {
 private:
-    int x, y; //position
-    std::string sound; //sound
-    std::string sprite; //sprite
+    int x, y;            // position
+    std::string sound;   // sound
+    std::string sprite;  // sprite
 
 public:
     void move();

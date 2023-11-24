@@ -1,11 +1,9 @@
 #include "pause.hpp"
 
-Pause::Pause(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
-
+Pause::Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting) {
 }
 
 Pause::~Pause() {
-
 }
 
 Scene* Pause::process() {
@@ -24,7 +22,6 @@ Scene* Pause::process() {
 }
 
 void Pause::render() {
-    
 }
 
 void Pause::playsound() {

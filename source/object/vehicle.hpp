@@ -7,6 +7,7 @@ class Vehicle {
     int pos;
     std::string sprite;
     std::string sound;
+
 public:
     void move(const bool&);
     void render();

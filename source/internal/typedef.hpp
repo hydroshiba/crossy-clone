@@ -20,7 +20,9 @@ enum class Volume {
 };
 
 enum class Sprite {
-    duck, chicken, cat
+    duck,
+    chicken,
+    cat
 };
 
 Volume& operator++(Volume& volume);

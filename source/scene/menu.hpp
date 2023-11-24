@@ -1,9 +1,11 @@
 #ifndef MENU_HPP_
 #define MENU_HPP_
-#include "scene.hpp"
 #include <conio.h>
+
+#include "scene.hpp"
 #include "scene_registry.hpp"
-class Menu: public Scene {
+
+class Menu : public Scene {
 private:
     std::string gameTitle;
     std::string playButton;
@@ -16,7 +18,7 @@ private:
     std::string buttonSound;
 
 public:
-    Menu(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
     ~Menu();
 
     Scene* process() override;

@@ -23,9 +23,9 @@ void Game::initialize() {
     winclass.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(icon));
 
     winclass.lpfnWndProc = [](HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT {
-		if(msg == WM_CLOSE) return PostQuitMessage(0), 0;
-		return DefWindowProc(hwnd, msg, wParam, lParam);
-	};
+        if(msg == WM_CLOSE) return PostQuitMessage(0), 0;
+        return DefWindowProc(hwnd, msg, wParam, lParam);
+    };
 
     RegisterClass(&winclass);
 
@@ -35,11 +35,10 @@ void Game::initialize() {
         title.c_str(),
         WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-		NULL,
-		NULL,
-		GetModuleHandle(NULL),
-		NULL
-	);
+        NULL,
+        NULL,
+        GetModuleHandle(NULL),
+        NULL);
 
     ShowWindow(window, SW_MAXIMIZE);
 
@@ -68,8 +67,12 @@ void Game::initialize() {
     // Get window size
     RECT size;
     GetWindowRect(window, &size);
-    width = size.right - size.left; width *= scale; width /= 100;
-    height = size.bottom - size.top; height *= scale; height /= 100;
+    
+    width = (size.right - size.left) * scale;
+    width /= 100;
+
+    height = (size.bottom - size.top) * scale;
+    height /= 100;
 
     // Set title
     SetWindowText(window, title.c_str());
@@ -97,30 +100,29 @@ std::string Game::debugInfo() {
 void Game::render() {
     engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
 
-    if (count[cur] == 0 || count[cur] == 255) {
+    if(count[cur] == 0 || count[cur] == 255) {
         cur += numcur;
-        if (cur == 0 || cur == 2) numcur = -numcur;
+        if(cur == 0 || cur == 2) numcur = -numcur;
     }
 
-    if (count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
+    if(count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
     count[cur] += num[cur];
 
     engine->render();
 }
 
 void Game::playsound() {
-    
 }
 
 void Game::run() {
     std::cout << static_cast<int>(setting->volMusic()) << std::endl;
-    audio->loop(Sound("asset/sound/background.mp3"));
+    // audio->loop(Sound("asset/sound/background.mp3"));
 
     while(true) {
         MSG msg = {};
 
         if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-            if (msg.message == WM_QUIT) break;
+            if(msg.message == WM_QUIT) break;
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }

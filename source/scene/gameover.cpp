@@ -1,11 +1,9 @@
 #include "gameover.hpp"
 
-Gameover::Gameover(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
-
+Gameover::Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting) {
 }
 
 Gameover::~Gameover() {
-
 }
 
 Scene* Gameover::process() {
@@ -20,7 +18,6 @@ Scene* Gameover::process() {
 }
 
 void Gameover::render() {
-    
 }
 
 void Gameover::playsound() {

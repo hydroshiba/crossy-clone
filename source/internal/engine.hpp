@@ -2,11 +2,12 @@
 #define ENGINE_HPP_
 
 #include <windows.h>
-#include <thread>
-#include <future>
 
-#include "typedef.hpp"
+#include <future>
+#include <thread>
+
 #include "color.hpp"
+#include "typedef.hpp"
 
 class Engine {
 private:
@@ -21,7 +22,7 @@ public:
     Engine(HDC& hdc, int w, int h);
     ~Engine();
 
-	void set(int x, int y, word value);
+    void set(int x, int y, word value);
     void set(int x, int y, const Color& color);
     void set(int x, int y, byte r, byte g, byte b);
 

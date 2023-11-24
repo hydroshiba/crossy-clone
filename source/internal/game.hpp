@@ -2,17 +2,18 @@
 #define GAME_HPP_
 
 #include <windows.h>
+
 #include <chrono>
-#include <string>
 #include <filesystem>
+#include <string>
 #include <thread>
 
-#include "typedef.hpp"
-#include "engine.hpp"
 #include "audio.hpp"
+#include "engine.hpp"
 #include "resource.hpp"
-#include "setting.hpp"
 #include "scene_registry.hpp"
+#include "setting.hpp"
+#include "typedef.hpp"
 
 class Game {
 private:
@@ -31,7 +32,7 @@ private:
     SceneRegistry* registry;
 
     int cur = 0, numcur = 1;
-    byte count[3] = { 1, 1, 1 }, num[3] = { 1, 1, 1 };
+    byte count[3] = {1, 1, 1}, num[3] = {1, 1, 1};
 
     Game(const Game&) = delete;
     Game(Game&&) = delete;
@@ -39,16 +40,16 @@ private:
     Game& operator=(const Game&) = delete;
 
     void initialize();
-	void render();
-	void process();
-	void playsound();
-	
+    void render();
+    void process();
+    void playsound();
+
     std::string debugInfo();
 
 public:
     Game();
     ~Game();
-    
+
     void run();
 };
 
