@@ -2,9 +2,8 @@
 #define LANE_HPP_
 
 #include <vector>
-
-#include "traffic.hpp"
 #include "vehicle.hpp"
+#include "traffic.hpp"
 
 class Lane {
 private:

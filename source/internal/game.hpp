@@ -2,18 +2,17 @@
 #define GAME_HPP_
 
 #include <windows.h>
-
 #include <chrono>
-#include <filesystem>
 #include <string>
+#include <filesystem>
 #include <thread>
 
-#include "audio.hpp"
-#include "engine.hpp"
-#include "resource.hpp"
-#include "scene_registry.hpp"
-#include "setting.hpp"
 #include "typedef.hpp"
+#include "engine.hpp"
+#include "audio.hpp"
+#include "resource.hpp"
+#include "setting.hpp"
+#include "scene_registry.hpp"
 
 class Game {
 private:

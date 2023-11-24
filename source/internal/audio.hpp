@@ -1,14 +1,13 @@
 #ifndef AUDIO_HPP_
 #define AUDIO_HPP_
 
-#include <mmsystem.h>
 #include <windows.h>
-
 #include <unordered_set>
+#include <mmsystem.h>
 
+#include "typedef.hpp"
 #include "setting.hpp"
 #include "sound.hpp"
-#include "typedef.hpp"
 
 class AudioDevice {
 private:

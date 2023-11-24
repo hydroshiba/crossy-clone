@@ -2,12 +2,11 @@
 #define ENGINE_HPP_
 
 #include <windows.h>
-
-#include <future>
 #include <thread>
+#include <future>
 
-#include "color.hpp"
 #include "typedef.hpp"
+#include "color.hpp"
 
 class Engine {
 private:

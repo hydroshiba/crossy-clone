@@ -1,10 +1,9 @@
 #ifndef SCENE_HPP_
 #define SCENE_HPP_
 #include <iostream>
-
+#include "setting.hpp"
 #include "audio.hpp"
 #include "engine.hpp"
-#include "setting.hpp"
 
 class SceneRegistry;
 class Scene {

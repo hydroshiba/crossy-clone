@@ -1,10 +1,9 @@
 #ifndef SETTING_HPP_
 #define SETTING_HPP_
 
-#include <windows.h>
-
-#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <windows.h>
 #include <utility>
 
 #include "typedef.hpp"

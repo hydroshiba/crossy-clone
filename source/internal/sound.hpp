@@ -1,9 +1,8 @@
 #ifndef SOUND_HPP_
 #define SOUND_HPP_
 
-#include <mmsystem.h>
 #include <windows.h>
-
+#include <mmsystem.h>
 #include <string>
 
 #include "typedef.hpp"
