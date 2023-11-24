@@ -1,9 +1,9 @@
-#ifndef SETTING_SCENE_HPP_
-#define SETTING_SCENE_HPP_
+#ifndef OPTION_HPP_
+#define OPTION_HPP_
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
-class SettingScene: public Scene {
+class Option: public Scene {
 private:
     std::string gameTitle;
     std::string quitButton;
@@ -12,12 +12,12 @@ private:
     std::string buttonSound;
 
 public:
-    SettingScene(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
-    ~SettingScene();
+    Option(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    ~Option();
 
     Scene* process() override;
     void render() override;
     void playsound() override;
 };
 
-#endif /* SETTING_SCENE_HPP_ */
+#endif /* OPTION_HPP_ */

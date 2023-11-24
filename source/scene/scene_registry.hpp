@@ -4,13 +4,16 @@
 #include <vector>
 
 #include "menu.hpp"
-// #include "pause.hpp"
-// #include "play.hpp"
-// #include "gameover.hpp
+#include "option.hpp"
+#include "pause.hpp"
+#include "play.hpp"
+#include "gameover.hpp"
+#include "leaderboard.hpp"
+#include "credit.hpp"
 
 enum class SceneID {
     MENU,
-    SETTING,
+    OPTION,
     LEADERBOARD,
     CREDIT,
     PLAY,

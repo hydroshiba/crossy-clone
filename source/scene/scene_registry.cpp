@@ -4,12 +4,12 @@ SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* settin
     scenes.resize(static_cast<int>(SceneID::SIZE));
 
     scenes[static_cast<int>(SceneID::MENU)] = new Menu(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::PLAY)] = nullptr;
-    scenes[static_cast<int>(SceneID::SETTING)] = nullptr;
-    scenes[static_cast<int>(SceneID::LEADERBOARD)] = nullptr;
-    scenes[static_cast<int>(SceneID::CREDIT)] = nullptr;
-    scenes[static_cast<int>(SceneID::PAUSE)] = nullptr;
-    scenes[static_cast<int>(SceneID::GAMEOVER)] = nullptr;
+    scenes[static_cast<int>(SceneID::PLAY)] = new Play(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::OPTION)] = new Option(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::LEADERBOARD)] = new Leaderboard(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::CREDIT)] = new Credit(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::PAUSE)] = new Pause(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::GAMEOVER)] = new Gameover(engine, audio, this, setting);
 }
 
 SceneRegistry::~SceneRegistry() {
