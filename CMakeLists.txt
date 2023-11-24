@@ -1,3 +1,7 @@
+if(NOT WIN32)
+	set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/toolchain/windows.cmake CACHE STRING "Windows toolchain file")
+endif()
+
 cmake_minimum_required(VERSION 3.20)
 project(crossy)
 
@@ -12,7 +16,7 @@ include_directories(source/internal)
 include_directories(source/object)
 include_directories(source/scene)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     enable_language("RC")
     file(GLOB_RECURSE resources ${CMAKE_CURRENT_SOURCE_DIR}/asset/*.rc)
 endif()
@@ -20,8 +24,9 @@ endif()
 add_executable(${PROJECT_NAME} ${cpp_files} ${resources})
 
 target_link_libraries(${PROJECT_NAME} winmm.lib)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 
-if (MSVC)
+if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W3)
     if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
         add_compile_options(${PROJECT_NAME} PRIVATE /O2)
@@ -29,3 +34,10 @@ if (MSVC)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Ofast -Wpedantic -fpermissive)
 endif()
+
+add_custom_target(winerun
+    COMMAND echo "${CMAKE_FIND_ROOT_PATH}"
+    COMMAND wine64 $<TARGET_FILE:${PROJECT_NAME}>
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
+)
