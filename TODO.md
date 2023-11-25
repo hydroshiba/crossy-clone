@@ -69,3 +69,36 @@ This is a list of tasks for each individual to complete for each week. Please ch
 - [x] Button texture (unclicked, clicked)
 - [x] `gamestate.dat` file format
 - [x] Menu scene
+
+## Week 8 (25/11/2023 - 02/12/2023)
+
+### Phan Hải Minh
+
+- [ ] Keyboard class
+- [ ] Transparency color
+- [ ] Text rendering with font
+- [ ] Bitmap texture rendering
+- [ ] Play process
+
+### Đặng Thanh Tú
+
+- [ ] Road lane texture
+- [ ] Taxi sprite
+- [ ] Truck sprite
+- [ ] Ambulance sprite
+- [ ] Trophies texture
+- [ ] Redraw cat sprite
+
+### Nguyễn Ngọc Anh Tú
+
+- [ ] Menu process
+- [ ] Options process
+- [ ] Pause process
+- [ ] Leaderboard process
+- [ ] Credit process
+
+### Bùi Tá Phát
+
+- [ ] Update Lane logic
+- [ ] Update Player logic
+- [ ] Update Vehicle logic
