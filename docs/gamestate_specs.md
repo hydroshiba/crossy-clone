@@ -4,10 +4,10 @@
 
 ## Address of read pointer a: 32 bytes
 
+- Address of score: 4 bytes
 - Address of lanes' data: 4 bytes
 - Address of player's data: 4 bytes
 - Address of other objects' data: 16 bytes
-- Address of score: 4 bytes
 - Padding: 4 bytes
 
 ## Data: unknown bytes

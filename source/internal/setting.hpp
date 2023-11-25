@@ -5,6 +5,7 @@
 #include <fstream>
 #include <windows.h>
 #include <utility>
+#include <vector>
 
 #include "typedef.hpp"
 
@@ -13,6 +14,7 @@ private:
     byte score[12];  // Saving 3 highscores as a byte array to keep endianess consistent
     Volume music, sfx;
     Sprite sprite;
+    std::vector<std::string> gamestate;
 
     bool load();
     void save();

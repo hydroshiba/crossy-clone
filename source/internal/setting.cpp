@@ -1,6 +1,7 @@
 #include "setting.hpp"
 
 void Setting::save() {
+    // Save setting
     std::ofstream file("data/setting.dat", std::ios::binary);
 
     // Magic number padding (3 bytes)
@@ -18,9 +19,39 @@ void Setting::save() {
     file.close();
 
     // Total: 16 bytes
+
+    // Save gamestate
+    file.open("data/gamestate.dat", std::ios::binary);
+
+    // Magic number padding (3 bytes)
+    magic = 0xDEFCAD;
+    file.write(reinterpret_cast<char*>(&magic), 3);
+
+    // Address padding (32 bytes)
+    int address = 35;
+    for (int i = 0; i < 8; i++) {
+        if (i < gamestate.size()) {
+            file.write(reinterpret_cast<char*>(&address), sizeof(address));
+            address += gamestate[i].size();
+        }
+        else {
+            address = 0;
+            file.write(reinterpret_cast<char*>(&address), sizeof(address));
+        }
+    }
+
+    // Gamestate (??? byte)
+    for (int i = 0; i < gamestate.size(); i++) {
+        file.write(gamestate[i].c_str(), gamestate[i].size());
+    }
+
+    file.close();
+
+    // Total: 3 + ??? bytes
 }
 
 bool Setting::load() {
+    // Read setting
     std::ifstream file("data/setting.dat", std::ios::binary);
     if(!file.good()) return false;
 
@@ -43,6 +74,40 @@ bool Setting::load() {
 
     file.read(reinterpret_cast<char*>(score), sizeof(score));
     file.close();
+
+    // Read gamestate
+    file.open("data/gamestate.dat", std::ios::binary);
+    if(!file.good()) return false;
+    gamestate.clear();
+
+    // 0000 0000  0000 0000  0000 0000
+    // ---- ----  ---- ----  ---- ----
+    // D    E     F    C     A    D
+
+    file.read(reinterpret_cast<char*>(&magic), 3);
+    if(magic != 0xDEFCAD) return false;
+    
+    int bottom = 0;
+    int top = 0;
+    int nextAddress = 0;
+    char* buffer = nullptr;
+    file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
+    while (nextAddress == 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
+        gamestate.push_back(std::string());
+        
+        nextAddress = file.tellg();
+        nextAddress += 4;
+        file.seekg(bottom, std::ios::beg);
+
+        buffer = new char[top - bottom];
+        file.read(buffer, top - bottom);
+        gamestate.back().assign(buffer, top - bottom);
+        
+        delete[] buffer;
+        file.seekg(nextAddress, std::ios::beg);
+        bottom = top;
+    }
+
     return true;
 }
 
