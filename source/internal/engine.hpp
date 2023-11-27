@@ -7,6 +7,7 @@
 
 #include "typedef.hpp"
 #include "color.hpp"
+#include "texture.hpp"
 
 class Engine {
 private:
@@ -28,6 +29,8 @@ public:
     void fill(word value);
     void fill(const Color& color);
     void fill(byte r, byte g, byte b);
+
+    void textureFill(int x, int y, const Texture& texture);
 
     void render();
 };

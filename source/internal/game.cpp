@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), framerate(60) {
+Game::Game() : title("Crossy Clone"), framerate(60), texture("asset/texture/road/road-mid.bmp") {
     // Initialize new window
     initialize();
     hdc = GetDC(window);
@@ -115,6 +115,7 @@ std::string Game::debugInfo() {
 
 void Game::render() {
     engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
+    engine->textureFill(0, 0, texture);
     engine->render();
 }
 

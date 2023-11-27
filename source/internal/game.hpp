@@ -33,6 +33,7 @@ private:
 
     int cur = 0, numcur = 1;
     byte count[3] = {1, 1, 1}, num[3] = {1, 1, 1};
+    Texture texture;
 
     Game(const Game&) = delete;
     Game(Game&&) = delete;

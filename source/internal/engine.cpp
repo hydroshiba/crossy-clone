@@ -13,10 +13,8 @@ Engine::Engine(HDC& hdc, int w, int h) : width(w), height(h), hdc(hdc) {
 }
 
 void Engine::set(int x, int y, word value) {
-    byte* pixel = pixels + (x + y * width) * 4;
-    memset(pixel++, value & 0xFF, 1);
-    memset(pixel++, (value >> 8) & 0xFF, 1);
-    memset(pixel, (value >> 16) & 0xFF, 1);
+    word* pixel = (word*)(pixels + ((x + y * width) << 2));
+    *pixel = value;
 }
 
 void Engine::set(int x, int y, const Color& color) {
@@ -29,12 +27,9 @@ void Engine::set(int x, int y, byte r, byte g, byte b) {
 
 void Engine::fill(word value) {
     for(int y = 0; y < height; y++) {
-        byte* row = pixels + y * width * 4;
-        for(int x = 0; x < width; x++) {
-            byte* pixel = row + x * 4;
-            *(pixel++) = value & 0xFF;
-            *(pixel++) = (value >> 8) & 0xFF;
-            *(pixel) = (value >> 16) & 0xFF;
+        for(int x = 0; x < width * 4; x += 4) {
+            word* pixel = (word*)(pixels + x + y * width * 4);
+            *pixel = value;
         }
     }
 }
@@ -45,6 +40,15 @@ void Engine::fill(const Color& color) {
 
 void Engine::fill(byte r, byte g, byte b) {
     fill((word(r) << 16) | (word(g) << 8) | b);
+}
+
+void Engine::textureFill(int x, int y, const Texture& texture) {
+    for(int j = 0; j < texture.height; j++) {
+        for(int i = 0; i < texture.width; i++) {
+            word* pixel = (word*)(pixels + ((x + i) + (y + j) * width) * 4);
+            *pixel = texture.data[(i % texture.width) + (j % texture.height) * texture.width].val;
+        }
+    }
 }
 
 void Engine::render() {

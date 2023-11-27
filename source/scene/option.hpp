@@ -1,5 +1,6 @@
 #ifndef OPTION_HPP_
 #define OPTION_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
