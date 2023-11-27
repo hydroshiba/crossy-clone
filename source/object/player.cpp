@@ -5,7 +5,7 @@ void Player::move() {
 }
 
 int Player::getPos() {
-    return x;
+    return pos;
 }
 
 void Player::render() {
