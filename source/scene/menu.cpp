@@ -6,14 +6,13 @@ Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting*
 Scene* Menu::process() {
     int button = 1;
     bool isExit = false;
-    Keyboard keyboard;
 
     Scene* nextScene = nullptr;
 
     while (!isExit) {
 
-        keyboard.refresh();
-        Key pressedKey = keyboard.key();
+        keyboard->refresh();
+        Key pressedKey = keyboard->key();
 
         switch (pressedKey) {
         case Key::UP:

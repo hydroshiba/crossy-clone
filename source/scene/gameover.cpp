@@ -7,14 +7,19 @@ Gameover::~Gameover() {
 }
 
 Scene* Gameover::process() {
-    // if (this->engine->isKeyPressed(this->quitButton)) {
-    //     this->playsound();
-    //     return registry->menu;
-    // }
-    // else {
-    //     return this;
-    // }
-    return nullptr;
+    bool isExit = false;
+
+    while (!isExit) {
+
+        keyboard->refresh();
+        Key pressedKey = keyboard->key();
+
+        if(pressedKey == Key::ENTER) {
+            isExit = true;
+        }
+    }
+
+    return sceneRegistry->scene(SceneID::MENU);
 }
 
 void Gameover::render() {

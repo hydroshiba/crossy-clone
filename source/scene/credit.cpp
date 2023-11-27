@@ -9,7 +9,18 @@ Credit::~Credit() {
 }
 
 Scene* Credit::process() {
-    
+    bool isExit = false;
+
+    while (!isExit) {
+
+        keyboard->refresh();
+        Key pressedKey = keyboard->key();
+
+        if(pressedKey == Key::ESC) {
+            isExit = true;
+        }
+    }
+
     return sceneRegistry->scene(SceneID::MENU);
 }
 
