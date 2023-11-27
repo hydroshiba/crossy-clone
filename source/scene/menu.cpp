@@ -1,46 +1,54 @@
 #include "menu.hpp"
 
-Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting) {
+Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Scene* Menu::process() {
-    // int option = 1;
-    // Scene* nextScene = NULL;
-    // while (true) {
-    //     //render();
+    int button = 1;
+    bool isExit = false;
+    Keyboard keyboard;
 
-    //     char key = _getch();
+    Scene* nextScene = nullptr;
 
-    //     switch (key) {
-    //     case 72:
-    //         if (option > 1) {
-    //             option--;
-    //         }
-    //         break;
-    //     case 80:
-    //         if (option < 3) {
-    //             option++;
-    //         }
-    //         break;
-    //     case 13:
-    //         switch (option) {
-    //         case 1:
-    //             std::cout << "play";
-    //             nextScene = sceneRegistry->getScene(MENU);
-    //             break;
-    //         case 2:
-    //             std::cout << "option";
-    //             break;
-    //         case 3:
-    //             std::cout << "exit";
-    //             break;
-    //         }
-    //     default:
-    //         break;
-    //     }
-    // }
-    // return nextScene;
-    return NULL;
+    while (!isExit) {
+
+        keyboard.refresh();
+        Key pressedKey = keyboard.key();
+
+        switch (pressedKey) {
+        case Key::UP:
+            if (button > 1) {
+                button--;
+            }
+            break;
+        case Key::DOWN:
+            if (button < 5) {
+                button++;
+            }
+            break;
+        case Key::ENTER:
+            switch (button) {
+            case 1:
+                nextScene = sceneRegistry->scene(SceneID::MENU);
+                break;
+            case 2:
+                nextScene = sceneRegistry->scene(SceneID::OPTION);
+                break;
+            case 3:
+                nextScene = sceneRegistry->scene(SceneID::LEADERBOARD);
+                break;
+            case 4:
+                nextScene = sceneRegistry->scene(SceneID::CREDIT);
+                break;
+            case 5:
+                isExit = true;
+                break;
+            }
+            break;
+        }
+    }
+
+    return nextScene;
 }
 
 void Menu::render() {

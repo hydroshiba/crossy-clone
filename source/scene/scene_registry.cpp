@@ -1,15 +1,15 @@
 #include "scene_registry.hpp"
 
-SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting) {
+SceneRegistry::SceneRegistry(Engine* engine, AudioDevice* audio, Setting* setting, Keyboard* keyboard) {
     scenes.resize(static_cast<int>(SceneID::SIZE));
 
-    scenes[static_cast<int>(SceneID::MENU)] = new Menu(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::PLAY)] = new Play(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::OPTION)] = new Option(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::LEADERBOARD)] = new Leaderboard(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::CREDIT)] = new Credit(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::PAUSE)] = new Pause(engine, audio, this, setting);
-    scenes[static_cast<int>(SceneID::GAMEOVER)] = new Gameover(engine, audio, this, setting);
+    scenes[static_cast<int>(SceneID::MENU)] = new Menu(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::PLAY)] = new Play(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::OPTION)] = new Option(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::LEADERBOARD)] = new Leaderboard(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::CREDIT)] = new Credit(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::PAUSE)] = new Pause(engine, audio, this, setting, keyboard);
+    scenes[static_cast<int>(SceneID::GAMEOVER)] = new Gameover(engine, audio, this, setting, keyboard);
 }
 
 SceneRegistry::~SceneRegistry() {

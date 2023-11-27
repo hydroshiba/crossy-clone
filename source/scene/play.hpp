@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Play();
 
     Scene* process() override;

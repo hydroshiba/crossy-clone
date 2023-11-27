@@ -1,6 +1,6 @@
 #include "play.hpp"
 
-Play::Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
+Play::Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
 
 }
 

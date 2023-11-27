@@ -1,6 +1,6 @@
 #include "credit.hpp"
 
-Credit::Credit(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
+Credit::Credit(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
 
 }
 

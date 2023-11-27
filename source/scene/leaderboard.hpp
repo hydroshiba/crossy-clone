@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Leaderboard(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting);
+    Leaderboard(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();
 
     Scene* process() override;

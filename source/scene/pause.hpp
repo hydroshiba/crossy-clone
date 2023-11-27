@@ -13,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
+    Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Pause();
 
     Scene* process() override;

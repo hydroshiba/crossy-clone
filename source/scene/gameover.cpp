@@ -1,6 +1,6 @@
 #include "gameover.hpp"
 
-Gameover::Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting) {
+Gameover::Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Gameover::~Gameover() {

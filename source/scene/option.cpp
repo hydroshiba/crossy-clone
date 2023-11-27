@@ -1,6 +1,6 @@
 #include "option.hpp"
 
-Option::Option(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
+Option::Option(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
 
 }
 
@@ -9,7 +9,7 @@ Option::~Option() {
 }
 
 Scene* Option::process() {
-    
+
     return nullptr;
 }
 

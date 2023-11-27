@@ -1,6 +1,6 @@
 #include "leaderboard.hpp"
 
-Leaderboard::Leaderboard(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting): Scene(engine, audio, registry, setting) {
+Leaderboard::Leaderboard(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
     
 }
 

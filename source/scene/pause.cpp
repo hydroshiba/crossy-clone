@@ -1,6 +1,6 @@
 #include "pause.hpp"
 
-Pause::Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting) : Scene(engine, audio, registry, setting) {
+Pause::Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Pause::~Pause() {

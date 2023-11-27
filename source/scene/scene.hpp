@@ -4,7 +4,7 @@
 #include "setting.hpp"
 #include "audio.hpp"
 #include "engine.hpp"
-
+#include "keyboard.hpp"
 class SceneRegistry;
 class Scene {
 protected:
@@ -12,9 +12,10 @@ protected:
     AudioDevice* audio;
     SceneRegistry* sceneRegistry;
     Setting* setting;
+    Keyboard* keyboard;
 
 public:
-    Scene(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
+    Scene(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
 
     virtual ~Scene();
 
