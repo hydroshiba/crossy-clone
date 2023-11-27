@@ -86,13 +86,13 @@ void Game::process() {
 
     // Process input
     keyboard->refresh();
-    byte key = keyboard->key();
+    Key key = keyboard->key();
 
-    if(key == VK_ESCAPE) PostQuitMessage(0);
-    if(key == VK_UP) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
-    if(key == VK_DOWN) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
-    if(key == VK_LEFT) std::cout << "Key left pressed" << std::endl;
-    if(key == VK_RIGHT) std::cout << "Key right pressed" << std::endl;
+    if(key == Key::ESC) PostQuitMessage(0);
+    if(key == Key::UP) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
+    if(key == Key::DOWN) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
+    if(key == Key::LEFT) std::cout << "Key left pressed" << std::endl;
+    if(key == Key::RIGHT) std::cout << "Key right pressed" << std::endl;
 
     if(count[cur] == 0 || count[cur] == 255) {
         cur += numcur;

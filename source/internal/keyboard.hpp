@@ -9,16 +9,16 @@
 class Keyboard {
 private:
 	bool* toggle;
-	byte last;
+	Key last;
     
-	bool pressed(byte key);
+	bool pressed(Key key);
 
 public:
 	Keyboard();
 	~Keyboard();
 
 	void refresh();
-	byte key();
+	Key key();
 };
 
 #endif

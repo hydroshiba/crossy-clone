@@ -1,29 +1,36 @@
 #include "keyboard.hpp"
 
-Keyboard::Keyboard() {
-	toggle = new bool[256];
-	last = VK_NONAME;
-}
+Keyboard::Keyboard() : last(Key::DEFAULT), toggle(new bool[256]) {}
 
 Keyboard::~Keyboard() {
 	delete[] toggle;
 }
 
 void Keyboard::refresh() {
-	for(int i = 0; i < 256; i++)
-		if(pressed(i)) last = i;
+	for(int i = static_cast<int>(Key::A); i <= static_cast<int>(Key::Z); i++)
+		last = (pressed(static_cast<Key>(i)) ? static_cast<Key>(i) : last);
+
+	for(int i = static_cast<int>(Key::LEFT); i <= static_cast<int>(Key::DOWN); i++)
+		last = (pressed(static_cast<Key>(i)) ? static_cast<Key>(i) : last);
+
+	last = (pressed(Key::SPACE) ? Key::SPACE : last);
+	last = (pressed(Key::BACK) ? Key::BACK : last);
+	last = (pressed(Key::ENTER) ? Key::ENTER : last);
+	last = (pressed(Key::ESC) ? Key::ESC : last);
 }
 
-bool Keyboard::pressed(byte key) {
-	bool down = GetAsyncKeyState(key);
-	bool pressed = !down && toggle[key];
+bool Keyboard::pressed(Key key) {
+	byte num = static_cast<byte>(key);
 
-	toggle[key] = down;
+	bool down = GetAsyncKeyState(num);
+	bool pressed = !down && toggle[num];
+
+	toggle[num] = down;
 	return pressed;
 }
 
-byte Keyboard::key() {
-	byte key = last;
-	last = VK_NONAME;
+Key Keyboard::key() {
+	Key key = last;
+	last = Key::DEFAULT;
 	return key;
 }
