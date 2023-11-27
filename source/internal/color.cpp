@@ -26,15 +26,27 @@ byte Color::A() const {
 }
 
 Color Color::operator+=(const Color& other) {
-    val = (val & 0xFEFEFEFE) >> 1;
-    val += (other.value() & 0xFEFEFEFE) >> 1;
-    val += (val & other.value() & 0x01010101);
+    // Alpha blending
+    byte alpha = other.A();
+    byte invAlpha = 255 - alpha;
+
+    byte r = (R() * invAlpha + other.R() * alpha) / 255;
+    byte g = (G() * invAlpha + other.G() * alpha) / 255;
+    byte b = (B() * invAlpha + other.B() * alpha) / 255;
+
+    val = 0xFF000000 | word(r << 16) | word(g << 8) | b;
+
     return *this;
 }
 
 Color Color::operator+(const Color& other) const {
-    word res = (val & 0xFEFEFEFE) >> 1;
-    res += (other.value() & 0xFEFEFEFE) >> 1;
-    res += (val & other.value() & 0x01010101);
-    return res;
+    // Alpha blending
+    byte alpha = other.A();
+    byte invAlpha = 255 - alpha;
+
+    byte r = (R() * invAlpha + other.R() * alpha) / 255;
+    byte g = (G() * invAlpha + other.G() * alpha) / 255;
+    byte b = (B() * invAlpha + other.B() * alpha) / 255;
+
+    return Color(r, g, b);
 }

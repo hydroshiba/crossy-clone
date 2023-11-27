@@ -116,6 +116,10 @@ std::string Game::debugInfo() {
 void Game::render() {
     engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
     engine->textureFill(0, 0, texture);
+    engine->textureFill(100, 50, texture);
+    engine->textureFill(200, 100, texture);
+    engine->textureFill(300, 150, texture);
+    engine->textureFill(400, 200, texture);
     engine->render();
 }
 
