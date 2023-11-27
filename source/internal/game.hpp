@@ -10,6 +10,7 @@
 #include "typedef.hpp"
 #include "engine.hpp"
 #include "audio.hpp"
+#include "keyboard.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
 #include "scene_registry.hpp"
@@ -19,8 +20,7 @@ private:
     HWND window;
     HDC hdc;
 
-    int width, height, scale, frames;
-    float framesAVG;
+    int width, height, scale, framerate;
 
     std::string title;
     high_resolution_clock::time_point epoch, prev;
@@ -29,6 +29,7 @@ private:
     Setting* setting;
     AudioDevice* audio;
     SceneRegistry* registry;
+    Keyboard* keyboard;
 
     int cur = 0, numcur = 1;
     byte count[3] = {1, 1, 1}, num[3] = {1, 1, 1};

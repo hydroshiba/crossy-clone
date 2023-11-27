@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
+Game::Game() : title("Crossy Clone"), framerate(60) {
     // Initialize new window
     initialize();
     hdc = GetDC(window);
@@ -10,6 +10,8 @@ Game::Game() : title("Crossy Clone"), frames(0), framesAVG(0) {
     audio = new AudioDevice(setting);
     engine = new Engine(hdc, width, height);
     registry = new SceneRegistry(engine, audio, setting);
+    keyboard = new Keyboard();
+
     // Set epoch time
     epoch = high_resolution_clock::now();
     prev = epoch;
@@ -79,26 +81,18 @@ void Game::initialize() {
 }
 
 void Game::process() {
+    // Show debug info
+    SetWindowText(window, (title + debugInfo()).c_str());
+
     // Process input
-    if(GetAsyncKeyState(VK_ESCAPE)) PostQuitMessage(0);
+    keyboard->refresh();
+    byte key = keyboard->key();
 
-    if(GetAsyncKeyState(VK_UP)) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
-    if(GetAsyncKeyState(VK_DOWN)) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
-}
-
-std::string Game::debugInfo() {
-    std::string text;
-
-    text += " - FPS: " + std::to_string(frames);
-    text += " - Average FPS: " + std::to_string(framesAVG);
-    text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height);
-    text += " - Scale: " + std::to_string(scale) + "%";
-
-    return text;
-}
-
-void Game::render() {
-    engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
+    if(key == VK_ESCAPE) PostQuitMessage(0);
+    if(key == VK_UP) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
+    if(key == VK_DOWN) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
+    if(key == VK_LEFT) std::cout << "Key left pressed" << std::endl;
+    if(key == VK_RIGHT) std::cout << "Key right pressed" << std::endl;
 
     if(count[cur] == 0 || count[cur] == 255) {
         cur += numcur;
@@ -107,7 +101,20 @@ void Game::render() {
 
     if(count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
     count[cur] += num[cur];
+}
 
+std::string Game::debugInfo() {
+    std::string text;
+
+    text += " - FPS: " + std::to_string(framerate);
+    text += " - Resolution: " + std::to_string(width) + " x " + std::to_string(height);
+    text += " - Scale: " + std::to_string(scale) + "%";
+
+    return text;
+}
+
+void Game::render() {
+    engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
     engine->render();
 }
 
@@ -127,24 +134,13 @@ void Game::run() {
             DispatchMessage(&msg);
         }
 
-        process();
-        render();
-        ++frames;
-
         high_resolution_clock::time_point now = high_resolution_clock::now();
-        uint64_t elapsed = duration_cast<microseconds>(now - prev).count();
-        uint64_t totalElapsed = duration_cast<microseconds>(now - epoch).count();
+        uint64_t elapsed = duration_cast<nanoseconds>(now - prev).count();
 
-        if(elapsed >= 1000000) {
-            int num = int(totalElapsed) / 1000000;
-
-            frames = int(float(elapsed / 1000000.0) * frames);
-            framesAVG -= framesAVG / num;
-            framesAVG += float(frames) / num;
-
-            SetWindowText(window, (title + debugInfo()).c_str());
+        if(elapsed >= duration_cast<nanoseconds>(seconds(1)).count() / framerate) {
+            process();
+            render();
             prev = now;
-            frames = 0;
         }
     }
 }
@@ -154,6 +150,7 @@ Game::~Game() {
     delete engine;
     delete setting;
     delete registry;
+    delete keyboard;
 
     ReleaseDC(window, hdc);
     DeleteDC(hdc);
