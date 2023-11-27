@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
+    Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Gameover();
 
     Scene* process() override;

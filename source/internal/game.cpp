@@ -9,8 +9,8 @@ Game::Game() : title("Crossy Clone"), framerate(60) {
     setting = new Setting();
     audio = new AudioDevice(setting);
     engine = new Engine(hdc, width, height);
-    registry = new SceneRegistry(engine, audio, setting);
     keyboard = new Keyboard();
+    registry = new SceneRegistry(engine, audio, setting, keyboard);
 
     // Set epoch time
     epoch = high_resolution_clock::now();

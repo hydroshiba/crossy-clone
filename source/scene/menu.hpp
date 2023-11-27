@@ -16,7 +16,7 @@ private:
     std::string buttonSound;
 
 public:
-    Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting);
+    Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Menu();
 
     Scene* process() override;
