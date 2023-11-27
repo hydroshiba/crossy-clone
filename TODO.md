@@ -91,11 +91,11 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 ### Nguyễn Ngọc Anh Tú
 
-- [ ] Menu process
-- [ ] Options process
+- [x] Menu process
+- [x] Options process
 - [ ] Pause process
-- [ ] Leaderboard process
-- [ ] Credit process
+- [x] Leaderboard process
+- [x] Credit process
 
 ### Bùi Tá Phát
 
