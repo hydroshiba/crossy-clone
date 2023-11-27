@@ -4,7 +4,8 @@
 #include <iostream>
 
 class Vehicle {
-    int pos;
+    int lane;
+    float pos;
     std::string sprite;
     std::string sound;
 

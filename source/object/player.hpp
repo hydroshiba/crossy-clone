@@ -5,7 +5,8 @@
 
 class Player {
 private:
-    int x, y;            // position
+    int lane;
+    float pos;
     std::string sound;   // sound
     std::string sprite;  // sprite
 

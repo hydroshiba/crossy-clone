@@ -7,7 +7,7 @@
 
 class Lane {
 private:
-    int y;  // y position
+    int pos;             // position
     std::vector<Vehicle> vehicles;
     Traffic traffic;     // traffic light
     bool direction;      // true = left, false = right
