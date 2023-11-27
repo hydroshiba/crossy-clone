@@ -93,7 +93,7 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 - [x] Menu process
 - [x] Options process
-- [ ] Pause process
+- [x] Pause process
 - [x] Leaderboard process
 - [x] Credit process
 
