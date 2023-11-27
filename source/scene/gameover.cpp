@@ -9,8 +9,7 @@ Gameover::~Gameover() {
 Scene* Gameover::process() {
     bool isExit = false;
 
-    while (!isExit) {
-
+    while(!isExit) {
         keyboard->refresh();
         Key pressedKey = keyboard->key();
 

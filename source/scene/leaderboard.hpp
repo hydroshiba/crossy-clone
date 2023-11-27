@@ -3,7 +3,7 @@
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
-class Leaderboard: public Scene {
+class Leaderboard : public Scene {
 private:
     std::string gameTitle;
     std::string quitButton;
@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Leaderboard(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Leaderboard(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();
 
     Scene* process() override;

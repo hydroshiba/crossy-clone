@@ -4,7 +4,7 @@
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
-class Option: public Scene {
+class Option : public Scene {
 private:
     std::string gameTitle;
     std::string quitButton;
@@ -13,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Option(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Option(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Option();
 
     Scene* process() override;

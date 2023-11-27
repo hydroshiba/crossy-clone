@@ -10,16 +10,16 @@
 
 class Texture {
 private:
-	word width, height;
-	Color* data;
+    word width, height;
+    Color* data;
 
 public:
-	Texture(const std::string& path);
-	Texture(const Texture& other);
-	Texture& operator=(const Texture& other);
-	~Texture();
+    Texture(const std::string& path);
+    Texture(const Texture& other);
+    Texture& operator=(const Texture& other);
+    ~Texture();
 
-	friend class Engine;
+    friend class Engine;
 };
 
 #endif

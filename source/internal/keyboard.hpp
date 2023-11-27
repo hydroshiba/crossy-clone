@@ -8,17 +8,17 @@
 
 class Keyboard {
 private:
-	bool* toggle;
-	Key last;
-    
-	bool pressed(Key key);
+    bool* toggle;
+    Key last;
+
+    bool pressed(Key key);
 
 public:
-	Keyboard();
-	~Keyboard();
+    Keyboard();
+    ~Keyboard();
 
-	void refresh();
-	Key key();
+    void refresh();
+    Key key();
 };
 
 #endif

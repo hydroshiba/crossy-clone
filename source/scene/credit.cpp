@@ -1,18 +1,15 @@
 #include "credit.hpp"
 
-Credit::Credit(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
-
+Credit::Credit(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Credit::~Credit() {
-
 }
 
 Scene* Credit::process() {
     bool isExit = false;
 
-    while (!isExit) {
-
+    while(!isExit) {
         keyboard->refresh();
         Key pressedKey = keyboard->key();
 
@@ -25,7 +22,6 @@ Scene* Credit::process() {
 }
 
 void Credit::render() {
-    
 }
 
 void Credit::playsound() {

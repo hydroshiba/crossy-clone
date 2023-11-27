@@ -3,7 +3,7 @@
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
-class Play: public Scene {
+class Play : public Scene {
 private:
     std::string gameTitle;
     std::string quitButton;
@@ -12,7 +12,7 @@ private:
     std::string buttonSound;
 
 public:
-    Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Play(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Play();
 
     Scene* process() override;

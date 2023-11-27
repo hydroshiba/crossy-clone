@@ -69,7 +69,7 @@ void Game::initialize() {
     // Get window size
     RECT size;
     GetWindowRect(window, &size);
-    
+
     width = (size.right - size.left) * scale;
     width /= 100;
 

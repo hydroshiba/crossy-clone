@@ -1,11 +1,9 @@
 #include "play.hpp"
 
-Play::Play(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
-
+Play::Play(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Play::~Play() {
-
 }
 
 Scene* Play::process() {
@@ -13,7 +11,6 @@ Scene* Play::process() {
 }
 
 void Play::render() {
-    
 }
 
 void Play::playsound() {

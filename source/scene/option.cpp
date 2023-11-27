@@ -1,60 +1,57 @@
 #include "option.hpp"
 
-Option::Option(Engine* engine, AudioDevice* audio ,SceneRegistry* registry, Setting* setting, Keyboard* keyboard): Scene(engine, audio, registry, setting, keyboard) {
-
+Option::Option(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
 }
 
 Option::~Option() {
-
 }
 
 Scene* Option::process() {
     bool isExit = false;
     int button = 1;
     Sprite sprite = setting->spriteID();
-    
-    while (!isExit) {
-        
-        keyboard->refresh();
-        Key pressedKey = keyboard->key(); 
 
-        switch (pressedKey) {
+    while(!isExit) {
+        keyboard->refresh();
+        Key pressedKey = keyboard->key();
+
+        switch(pressedKey) {
         case Key::UP:
-            if (button > 1) {
+            if(button > 1) {
                 button--;
             }
             break;
         case Key::DOWN:
-            if (button < 3) {
+            if(button < 3) {
                 button++;
             }
             break;
         case Key::LEFT:
-            switch(button){
-                case 1:
-                    --sprite;
-                    setting->setSprite(sprite);
-                    break;
-                case 2:
-                    setting->decMusic();
-                    break;
-                case 3:
-                    setting->decSFX();
-                    break;
+            switch(button) {
+            case 1:
+                --sprite;
+                setting->setSprite(sprite);
+                break;
+            case 2:
+                setting->decMusic();
+                break;
+            case 3:
+                setting->decSFX();
+                break;
             }
             break;
         case Key::RIGHT:
-            switch(button){
-                case 1:
-                    ++sprite;
-                    setting->setSprite(sprite);
-                    break;
-                case 2:
-                    setting->incMusic();
-                    break;
-                case 3:
-                    setting->incSFX();
-                    break;
+            switch(button) {
+            case 1:
+                ++sprite;
+                setting->setSprite(sprite);
+                break;
+            case 2:
+                setting->incMusic();
+                break;
+            case 3:
+                setting->incSFX();
+                break;
             }
             break;
         case Key::ESC:
@@ -66,7 +63,6 @@ Scene* Option::process() {
 }
 
 void Option::render() {
-    
 }
 
 void Option::playsound() {

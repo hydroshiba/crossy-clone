@@ -9,24 +9,23 @@ Scene* Menu::process() {
 
     Scene* nextScene = nullptr;
 
-    while (!isExit) {
-
+    while(!isExit) {
         keyboard->refresh();
         Key pressedKey = keyboard->key();
 
-        switch (pressedKey) {
+        switch(pressedKey) {
         case Key::UP:
-            if (button > 1) {
+            if(button > 1) {
                 button--;
             }
             break;
         case Key::DOWN:
-            if (button < 5) {
+            if(button < 5) {
                 button++;
             }
             break;
         case Key::ENTER:
-            switch (button) {
+            switch(button) {
             case 1:
                 nextScene = sceneRegistry->scene(SceneID::MENU);
                 break;

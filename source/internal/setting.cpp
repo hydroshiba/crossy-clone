@@ -29,19 +29,18 @@ void Setting::save() {
 
     // Address padding (32 bytes)
     int address = 35;
-    for (int i = 0; i < 8; i++) {
-        if (i < gamestate.size()) {
+    for(int i = 0; i < 8; i++) {
+        if(i < gamestate.size()) {
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
             address += gamestate[i].size();
-        }
-        else {
+        } else {
             address = 0;
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
         }
     }
 
     // Gamestate (??? byte)
-    for (int i = 0; i < gamestate.size(); i++) {
+    for(int i = 0; i < gamestate.size(); i++) {
         file.write(gamestate[i].c_str(), gamestate[i].size());
     }
 
@@ -86,15 +85,15 @@ bool Setting::load() {
 
     file.read(reinterpret_cast<char*>(&magic), 3);
     if(magic != 0xDEFCAD) return false;
-    
+
     int bottom = 0;
     int top = 0;
     int nextAddress = 0;
     char* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
-    while (nextAddress == 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
+    while(nextAddress == 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         gamestate.push_back(std::string());
-        
+
         nextAddress = file.tellg();
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
@@ -102,7 +101,7 @@ bool Setting::load() {
         buffer = new char[top - bottom];
         file.read(buffer, top - bottom);
         gamestate.back().assign(buffer, top - bottom);
-        
+
         delete[] buffer;
         file.seekg(nextAddress, std::ios::beg);
         bottom = top;
