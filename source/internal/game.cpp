@@ -111,7 +111,7 @@ void Game::playsound() {
 
 void Game::run() {
     std::cout << static_cast<int>(setting->volMusic()) << std::endl;
-    // audio->loop(Sound("asset/sound/background.mp3"));
+    audio->loop(Sound("asset/sound/background.mp3"));
 
     while(current != nullptr) {
         MSG msg = {};
