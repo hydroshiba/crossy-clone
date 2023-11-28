@@ -6,7 +6,6 @@ Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting*
 
 Scene* Menu::process() {
     int button = 1;
-    bool isExit = false;
 
     Scene* next = this;
     Key pressedKey = keyboard->key();
@@ -37,9 +36,12 @@ Scene* Menu::process() {
             next = sceneRegistry->scene(SceneID::CREDIT);
             break;
         case 5:
-            isExit = true;
+            next = nullptr;
             break;
         }
+        break;
+    case Key::ESC:
+        next = nullptr;
         break;
     }
 

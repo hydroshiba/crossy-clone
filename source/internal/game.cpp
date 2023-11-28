@@ -86,6 +86,8 @@ void Game::initialize() {
 void Game::process() {
     // Show debug info
     SetWindowText(window, (title + debugInfo()).c_str());
+
+    keyboard->refresh();
     current = current->process();
 }
 
@@ -124,8 +126,8 @@ void Game::run() {
         uint64_t elapsed = duration_cast<nanoseconds>(now - prev).count();
 
         if(elapsed >= duration_cast<nanoseconds>(seconds(1)).count() / framerate) {
-            process();
             render();
+            process();
             prev = now;
         }
     }
