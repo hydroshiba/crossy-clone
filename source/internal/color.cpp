@@ -26,15 +26,15 @@ byte Color::A() const {
 }
 
 Color Color::operator+=(const Color& other) {
-    val = (val & 0xFEFEFEFE) >> 1;
-    val += (other.value() & 0xFEFEFEFE) >> 1;
-    val += (val & other.value() & 0x01010101);
+    word mask = other.A();
+    mask = (mask | (mask << 8)) | (mask << 16);
+    val = (other.val & mask) | (val & ~mask);
+
     return *this;
 }
 
 Color Color::operator+(const Color& other) const {
-    word res = (val & 0xFEFEFEFE) >> 1;
-    res += (other.value() & 0xFEFEFEFE) >> 1;
-    res += (val & other.value() & 0x01010101);
+    Color res = *this;
+    res += other;
     return res;
 }

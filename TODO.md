@@ -74,10 +74,10 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 ### Phan Hải Minh
 
-- [ ] Keyboard class
-- [ ] Transparency color
+- [x] Keyboard class
+- [x] Transparency color
 - [ ] Text rendering with font
-- [ ] Bitmap texture rendering
+- [x] Bitmap texture rendering
 - [ ] Play process
 
 ### Đặng Thanh Tú
