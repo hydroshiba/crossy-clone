@@ -55,6 +55,7 @@ Scene* Menu::process() {
 }
 
 void Menu::render() {
+    engine->fill(0, 162, 232);
     title.render(engine);
 }
 
