@@ -99,6 +99,7 @@ This is a list of tasks for each individual to complete for each week. Please ch
 
 ### Bùi Tá Phát
 
-- [ ] Update Lane logic
-- [ ] Update Player logic
-- [ ] Update Vehicle logic
+- [x] Update Lane logic
+- [x] Update Player logic
+- [x] Update Vehicle logic
+- [x] Play process

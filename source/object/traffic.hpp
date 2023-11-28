@@ -11,8 +11,13 @@ private:
     std::string sprite;
 
 public:
+    Traffic(const int& lane, const bool& isRed, const int& clock, const std::string& sprite);
+
     void render();
-    void process();
+    void process(const int& time);
+    bool isRedLight();
+
+    ~Traffic();
 };
 
 #endif

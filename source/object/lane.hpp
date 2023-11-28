@@ -2,6 +2,8 @@
 #define LANE_HPP_
 
 #include <vector>
+#include <thread>
+#include <mutex>
 #include "vehicle.hpp"
 #include "traffic.hpp"
 
@@ -10,12 +12,17 @@ private:
     int pos;             // position
     std::vector<Vehicle> vehicles;
     Traffic traffic;     // traffic light
-    bool direction;      // true = left, false = right
+    int speed;           // speed
     std::string sprite;  // sprite
 
 public:
+    Lane(const int& pos, const int& speed, const std::string& sprite);
+
     void render();
-    void process(int time);
+    void process(const int& time, const bool& isRunning, bool& isGameover, const int& playerLane, const float& playerPos);
+    bool checkCollision(const float& pos);
+
+    ~Lane();
 };
 
 #endif

@@ -1,10 +1,29 @@
 #include "player.hpp"
 
-void Player::move() {
-    std::cout << "Player moved" << std::endl;
+void Player::move(Key key) {
+    switch (key) {
+        case Key::UP:
+            lane += 1;
+            break;
+        case Key::DOWN:
+            lane -= 1;
+            break;
+        case Key::LEFT:
+            pos -= 1;
+            break;
+        case Key::RIGHT:
+            pos += 1;
+            break;
+        default:
+            break;
+    }
 }
 
-int Player::getPos() {
+const int& Player::getLane() {
+    return lane;
+}
+
+const float& Player::getPos() {
     return pos;
 }
 
