@@ -8,12 +8,12 @@
 
 class Menu : public Scene {
 private:
-    Texture* titleTexture;
-    Texture* playTexture;
-    Texture* optionTexture;
-    Texture* leaderboardTexture;
-    Texture* creditTexture;
-    Texture* exitTexture;
+    Texture* TITLE;
+    Texture* START; Texture* START_CLICKED;
+    Texture* OPTION; Texture* OPTION_CLICKED;
+    Texture* LEADERBOARD; Texture* LEADERBOARD_CLICKED;
+    Texture* CREDIT; Texture* CREDIT_CLICKED;
+    Texture* QUIT; Texture* QUIT_CLICKED;
     
     Object title;
 
