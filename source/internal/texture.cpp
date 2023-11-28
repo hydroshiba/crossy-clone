@@ -30,6 +30,10 @@ Texture::Texture(const std::string& path) {
 Texture::Texture(int ID) {
     HBITMAP bitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(ID));
     BITMAP bmp;
+    if (!bitmap) {
+        std::cout << "Failed to load bitmap: " << ID << std::endl;
+        exit(1);
+    }
 
     GetObject(bitmap, sizeof(bmp), &bmp);
     width = bmp.bmWidth;
