@@ -8,6 +8,13 @@
 
 class Menu : public Scene {
 private:
+    Texture* titleTexture;
+    Texture* playTexture;
+    Texture* optionTexture;
+    Texture* leaderboardTexture;
+    Texture* creditTexture;
+    Texture* exitTexture;
+    
     Object title;
 
 public:

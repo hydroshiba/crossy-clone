@@ -8,10 +8,10 @@
 class Object {
 private:
 	int x, y;
-	Texture texture;
+	Texture* texture;
 
 public:
-	Object(int x, int y, const Texture& texture);
+	Object(int x, int y, Texture* texture);
 	~Object();
 
 	virtual void render(Engine* engine);

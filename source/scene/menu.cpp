@@ -2,7 +2,8 @@
 
 Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
     Scene(engine, audio, registry, setting, keyboard),
-    title(0, 0, Texture("asset/texture/title.bmp")) {}
+    titleTexture(new Texture(TITLE)),
+    title(0, 0, titleTexture) {}
 
 Scene* Menu::process() {
     int button = 1;
@@ -56,4 +57,5 @@ void Menu::playsound() {
 }
 
 Menu::~Menu() {
+    delete titleTexture;
 }

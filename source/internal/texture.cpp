@@ -3,9 +3,9 @@
 Texture::Texture(const std::string& path) {
     std::ifstream fin(path, std::ios::binary);
 
-    if (!fin) {
-        std::cerr << "Failed to open texture file: " << path << std::endl;
-        exit(1);
+    if(!fin) {
+        std::cout << "Failed to open file: " << path << std::endl;
+        return;
     }
 
     fin.seekg(18); // Seek to width and height
@@ -22,10 +22,22 @@ Texture::Texture(const std::string& path) {
 
     fin.close();
 
-    // Flip the rows of the image
     for (int i = 0; i < height / 2; ++i) {
         std::swap_ranges(data + i * width, data + (i + 1) * width, data + (height - i - 1) * width);
     }
+}
+
+Texture::Texture(int ID) {
+    HBITMAP bitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(ID));
+    BITMAP bmp;
+
+    GetObject(bitmap, sizeof(bmp), &bmp);
+    width = bmp.bmWidth;
+    height = bmp.bmHeight;
+
+    data = new Color[width * height];
+    GetBitmapBits(bitmap, width * height * sizeof(Color), data);
+    DeleteObject(bitmap);
 }
 
 Texture::Texture(const Texture& other) : width(other.width), height(other.height) {
