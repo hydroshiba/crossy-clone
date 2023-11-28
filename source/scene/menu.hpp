@@ -18,7 +18,7 @@ private:
     Object title;
 
 public:
-    Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Menu(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Menu();
 
     Scene* process() override;

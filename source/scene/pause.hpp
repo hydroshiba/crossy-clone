@@ -1,5 +1,6 @@
 #ifndef PAUSE_HPP_
 #define PAUSE_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
@@ -13,7 +14,7 @@ private:
     std::string buttonSound;
 
 public:
-    Pause(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Pause(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Pause();
 
     Scene* process() override;

@@ -1,5 +1,6 @@
 #ifndef PLAY_HPP_
 #define PLAY_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
@@ -12,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Play(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Play(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Play();
 
     Scene* process() override;

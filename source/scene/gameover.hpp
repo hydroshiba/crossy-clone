@@ -1,5 +1,6 @@
 #ifndef GAMEOVER_HPP_
 #define GAMEOVER_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
@@ -12,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Gameover(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Gameover(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Gameover();
 
     Scene* process() override;

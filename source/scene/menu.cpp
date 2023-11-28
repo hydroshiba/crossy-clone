@@ -1,9 +1,9 @@
 #include "menu.hpp"
 
-Menu::Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
-    Scene(engine, audio, registry, setting, keyboard),
+Menu::Menu(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
+    Scene(width, height, engine, audio, registry, setting, keyboard),
     titleTexture(new Texture(TITLE)),
-    title(0, 0, titleTexture) {}
+    title((width - titleTexture->getWidth()) / 2, height / 6, titleTexture) {}
 
 Scene* Menu::process() {
     int button = 1;

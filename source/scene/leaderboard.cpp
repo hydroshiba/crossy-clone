@@ -1,7 +1,7 @@
 #include "leaderboard.hpp"
 
-Leaderboard::Leaderboard(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(engine, audio, registry, setting, keyboard) {
-}
+Leaderboard::Leaderboard(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
+    Scene(width, height, engine, audio, registry, setting, keyboard) {}
 
 Leaderboard::~Leaderboard() {
 }

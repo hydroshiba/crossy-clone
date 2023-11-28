@@ -1,5 +1,6 @@
 #ifndef CREDIT_HPP_
 #define CREDIT_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
@@ -12,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Credit(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Credit(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Credit();
 
     Scene* process() override;

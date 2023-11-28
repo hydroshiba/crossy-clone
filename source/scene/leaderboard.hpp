@@ -1,5 +1,6 @@
 #ifndef LEADERBOARD_HPP_
 #define LEADERBOARD_HPP_
+
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
@@ -12,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Leaderboard(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Leaderboard(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();
 
     Scene* process() override;
