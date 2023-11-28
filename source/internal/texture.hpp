@@ -19,6 +19,9 @@ public:
     Texture& operator=(const Texture& other);
     ~Texture();
 
+    word getWidth() const;
+    word getHeight() const;
+
     friend class Engine;
 };
 

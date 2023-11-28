@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), framerate(60), texture("asset/texture/road/road-mid.bmp") {
+Game::Game() : title("Crossy Clone"), framerate(60) {
     // Initialize new window
     initialize();
     hdc = GetDC(window);
@@ -11,6 +11,9 @@ Game::Game() : title("Crossy Clone"), framerate(60), texture("asset/texture/road
     engine = new Engine(hdc, width, height);
     keyboard = new Keyboard();
     registry = new SceneRegistry(engine, audio, setting, keyboard);
+
+    // Set scene
+    current = registry->scene(SceneID::MENU);
 
     // Set epoch time
     epoch = high_resolution_clock::now();
@@ -83,24 +86,7 @@ void Game::initialize() {
 void Game::process() {
     // Show debug info
     SetWindowText(window, (title + debugInfo()).c_str());
-
-    // Process input
-    keyboard->refresh();
-    Key key = keyboard->key();
-
-    if(key == Key::ESC) PostQuitMessage(0);
-    if(key == Key::UP) audio->incMusic(), std::cout << "Key up pressed" << std::endl;
-    if(key == Key::DOWN) audio->decMusic(), std::cout << "Key down pressed" << std::endl;
-    if(key == Key::LEFT) std::cout << "Key left pressed" << std::endl;
-    if(key == Key::RIGHT) std::cout << "Key right pressed" << std::endl;
-
-    if(count[cur] == 0 || count[cur] == 255) {
-        cur += numcur;
-        if(cur == 0 || cur == 2) numcur = -numcur;
-    }
-
-    if(count[cur] == 0 || count[cur] == 255) num[cur] = -num[cur];
-    count[cur] += num[cur];
+    current = current->process();
 }
 
 std::string Game::debugInfo() {
@@ -114,12 +100,7 @@ std::string Game::debugInfo() {
 }
 
 void Game::render() {
-    engine->fill(Color(count[2] << 16 | count[1] << 8 | count[0]));
-    engine->textureFill(0, 0, texture);
-    engine->textureFill(100, 50, texture);
-    engine->textureFill(200, 100, texture);
-    engine->textureFill(300, 150, texture);
-    engine->textureFill(400, 200, texture);
+    current->render();
     engine->render();
 }
 
@@ -130,7 +111,7 @@ void Game::run() {
     std::cout << static_cast<int>(setting->volMusic()) << std::endl;
     // audio->loop(Sound("asset/sound/background.mp3"));
 
-    while(true) {
+    while(current != nullptr) {
         MSG msg = {};
 
         if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {

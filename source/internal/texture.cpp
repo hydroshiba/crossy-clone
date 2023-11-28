@@ -44,6 +44,14 @@ Texture& Texture::operator=(const Texture& other) {
     return *this;
 }
 
+word Texture::getWidth() const {
+    return width;
+}
+
+word Texture::getHeight() const {
+    return height;
+}
+
 Texture::~Texture() {
     delete[] data;
 }

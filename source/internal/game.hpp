@@ -31,9 +31,7 @@ private:
     SceneRegistry* registry;
     Keyboard* keyboard;
 
-    int cur = 0, numcur = 1;
-    byte count[3] = {1, 1, 1}, num[3] = {1, 1, 1};
-    Texture texture;
+    Scene* current;
 
     Game(const Game&) = delete;
     Game(Game&&) = delete;

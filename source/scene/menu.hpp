@@ -1,19 +1,14 @@
 #ifndef MENU_HPP_
 #define MENU_HPP_
+
+#include "typedef.hpp"
+#include "object.hpp"
 #include "scene.hpp"
-#include <conio.h>
 #include "scene_registry.hpp"
+
 class Menu : public Scene {
 private:
-    std::string gameTitle;
-    std::string playButton;
-    std::string quitButton;
-    std::string continueButton;
-    std::string settingsButton;
-    std::string scoreboard;
-    std::string background;
-    std::string backgroundMusic;
-    std::string buttonSound;
+    Object title;
 
 public:
     Menu(Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
