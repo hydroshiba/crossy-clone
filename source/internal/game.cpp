@@ -73,11 +73,8 @@ void Game::initialize() {
     RECT size;
     GetWindowRect(window, &size);
 
-    width = (size.right - size.left) * scale;
-    width /= 100;
-
-    height = (size.bottom - size.top) * scale;
-    height /= 100;
+    width = size.right - size.left;
+    height = size.bottom - size.top;
 
     // Set title
     SetWindowText(window, title.c_str());
