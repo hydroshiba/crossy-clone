@@ -8,6 +8,8 @@
 
 class Menu : public Scene {
 private:
+    int button; // 1: Play, 2: Option, 3: Leaderboard, 4: Credit, 5: Quit
+    
     Texture* TITLE;
     Texture* START; Texture* START_CLICKED;
     Texture* OPTION; Texture* OPTION_CLICKED;
