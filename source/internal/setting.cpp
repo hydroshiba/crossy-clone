@@ -27,6 +27,12 @@ void Setting::save() {
     magic = 0xDEFCAD;
     file.write(reinterpret_cast<char*>(&magic), 3);
 
+    // EOF address (4 bytes)
+    int eofAddress = 35;
+    for (int i = 0; i < gamestate.size(); i++) {
+        eofAddress += gamestate[i].size();
+    }
+
     // Address padding (32 bytes)
     int address = 35;
     for(int i = 0; i < 8; i++) {
@@ -34,7 +40,7 @@ void Setting::save() {
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
             address += gamestate[i].size();
         } else {
-            address = 0;
+            address = eofAddress;
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
         }
     }
@@ -49,7 +55,7 @@ void Setting::save() {
 
     file.close();
 
-    // Total: 3 + ??? bytes
+    // Total: 35 + ??? bytes
 }
 
 bool Setting::load() {
@@ -91,13 +97,12 @@ bool Setting::load() {
 
     int bottom = 0;
     int top = 0;
-    int nextAddress = 0;
     char* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
+    int nextAddress = file.tellg();
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         gamestate.push_back(std::string());
 
-        nextAddress = file.tellg();
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
 
@@ -109,6 +114,8 @@ bool Setting::load() {
         file.seekg(nextAddress, std::ios::beg);
         bottom = top;
     }
+
+    file.close();
 
     return true;
 }
