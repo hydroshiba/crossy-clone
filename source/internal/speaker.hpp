@@ -12,6 +12,7 @@ private:
 	HWAVEOUT musicDevice;
 
 	word sfxVolume, musicVolume;
+	static void CALLBACK waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 
 public:
 	Speaker(Setting* setting);
