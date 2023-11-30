@@ -11,7 +11,8 @@
 
 class Menu : public Scene {
 private:
-    int button;  // 1: Play, 2: Option, 3: Leaderboard, 4: Credit, 5: Quit
+    const int defaultButton;
+    int button; // 0 = continue, 1 = start, 2 = option, 3 = leaderboard, 4 = credit, 5 = quit
 
     const Texture TITLE;
     const Texture CONTINUE, CONTINUE_CLICKED;

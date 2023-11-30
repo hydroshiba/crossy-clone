@@ -14,6 +14,8 @@ public:
 	~Button() = default;
 
 	void press();
+	void release();
+	
 	void render(Engine* engine);
 };
 
