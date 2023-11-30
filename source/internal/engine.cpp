@@ -42,13 +42,17 @@ void Engine::fill(byte r, byte g, byte b) {
     fill((word(r) << 16) | (word(g) << 8) | b);
 }
 
-void Engine::textureFill(int x, int y, Texture* texture) {
+void Engine::textureFill(int x, int y, Texture const * const texture) {
     for(int j = 0; j < texture->height; j++) {
         for(int i = 0; i < texture->width; i++) {
             Color* pixel = (Color*)(pixels + ((x + i) + (y + j) * width) * 4);
             *pixel += texture->data[(i % texture->width) + (j % texture->height) * texture->width];
         }
     }
+}
+
+void Engine::textureFill(int x, int y, const Texture& texture) {
+    textureFill(x, y, &texture);
 }
 
 int Engine::getWidth() const {

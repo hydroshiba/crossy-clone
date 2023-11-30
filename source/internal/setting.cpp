@@ -124,19 +124,19 @@ Setting::~Setting() {
     save();
 }
 
-word Setting::highscore(byte rank) {
-    return *(reinterpret_cast<word*>(score + rank));
+word Setting::highscore(byte rank) const {
+    return *(reinterpret_cast<word*>(const_cast<byte*>(score) + rank));
 }
 
-Volume Setting::volMusic() {
+Volume Setting::volMusic() const {
     return music;
 }
 
-Volume Setting::volSFX() {
+Volume Setting::volSFX() const {
     return sfx;
 }
 
-Sprite Setting::spriteID() {
+Sprite Setting::spriteID() const {
     return sprite;
 }
 
@@ -149,12 +149,14 @@ void Setting::setScore(word score) {
     }
 }
 
-void Setting::setSprite(Sprite sprite) {
-    this->sprite = sprite;
-}
-
 void Setting::incMusic() { ++music; }
 void Setting::decMusic() { --music; }
 
 void Setting::incSFX() { ++sfx; }
 void Setting::decSFX() { --sfx; }
+
+void Setting::incSprite() { ++sprite; }
+void Setting::decSprite() { --sprite; }
+
+std::vector<std::string> Setting::getGamestate() const { return gamestate; }
+void Setting::setGamestate(std::vector<std::string> state) { gamestate = state; }
