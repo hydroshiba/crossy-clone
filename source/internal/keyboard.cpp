@@ -1,12 +1,16 @@
 #include "keyboard.hpp"
 
-Keyboard::Keyboard() : last(Key::DEFAULT), toggle(new bool[256]) {}
+Keyboard::Keyboard() : last(Key::DEFAULT), toggle(new bool[256]) {
+    memset(toggle, 0, 256);
+}
 
 Keyboard::~Keyboard() {
     delete[] toggle;
 }
 
 void Keyboard::refresh() {
+    last = Key::DEFAULT;
+
     for(int i = static_cast<int>(Key::A); i <= static_cast<int>(Key::Z); i++)
         last = (pressed(static_cast<Key>(i)) ? static_cast<Key>(i) : last);
 

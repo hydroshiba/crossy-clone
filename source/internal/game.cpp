@@ -84,8 +84,8 @@ void Game::process() {
     // Show debug info
     SetWindowText(window, (title + debugInfo()).c_str());
 
-    keyboard->refresh();
     current = current->process();
+    keyboard->refresh();
 }
 
 std::string Game::debugInfo() {
@@ -109,8 +109,6 @@ void Game::playsound() {
 void Game::run() {
     std::cout << static_cast<word>(setting->volMusic()) << std::endl;
     std::cout << static_cast<word>(setting->volSFX()) << std::endl;
-
-    speaker->setSFXVolume(0xFFFFFFFF);
     speaker->play(sound);
 
     while(current != nullptr) {
