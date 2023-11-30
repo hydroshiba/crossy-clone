@@ -23,19 +23,23 @@ public:
     Setting();
     ~Setting();
 
-    word highscore(byte rank);
-    Volume volMusic();
-    Volume volSFX();
-    Sprite spriteID();
+    word highscore(byte rank) const;
+    Volume volMusic() const;
+    Volume volSFX() const;
+    Sprite spriteID() const;
+    std::vector<std::string> getGamestate() const;
 
     void setScore(word score);
-    void setSprite(Sprite sprite);
+    void setGamestate(std::vector<std::string> state);
 
     void incMusic();
     void decMusic();
 
     void incSFX();
     void decSFX();
+
+    void incSprite();
+    void decSprite();
 };
 
 #endif

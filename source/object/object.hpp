@@ -7,12 +7,20 @@
 
 class Object {
 private:
+	const Texture& texture;
+	
+protected:
 	int x, y;
-	Texture* texture;
 
 public:
-	Object(int x, int y, Texture* texture);
-	~Object();
+	Object(int x, int y, const Texture& texture);
+	~Object() = default;
+
+	int getX();
+	int getY();
+
+	int getWidth();
+	int getHeight();
 
 	virtual void render(Engine* engine);
 };

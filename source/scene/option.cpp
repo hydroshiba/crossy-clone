@@ -29,8 +29,7 @@ Scene* Option::process() {
         case Key::LEFT:
             switch(button) {
             case 1:
-                --sprite;
-                setting->setSprite(sprite);
+                setting->decSprite();
                 break;
             case 2:
                 setting->decMusic();
@@ -43,8 +42,7 @@ Scene* Option::process() {
         case Key::RIGHT:
             switch(button) {
             case 1:
-                ++sprite;
-                setting->setSprite(sprite);
+                setting->incSprite();
                 break;
             case 2:
                 setting->incMusic();

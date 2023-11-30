@@ -9,14 +9,12 @@ Scene* Play::process() {
 
     bool isRunning = true;
 
-    // Thread for lane processing
-    std::vector<std::thread> laneThreads;
-    for (auto lane : lanes) {
-        laneThreads.emplace_back([&]() {
-            lane.process(100, isRunning, isGameover, player->getLane(), player->getPos());
-        });
-    }
+    high_resolution_clock::time_point prev;
 
+    std::vector<int> laneTime(lanes.size());
+    for (int i = 0; i < laneTime.size(); i++) {
+        laneTime[i] = 100;
+    }
 
     // Player processing
     do {
@@ -38,15 +36,18 @@ Scene* Play::process() {
             case Key::ESC:
                 isStopped = true;
                 break;
+            default:
+                break;
+        }
+
+        // Lane processing
+        for (int i = 0; i < lanes.size(); i++) {
+            lanes[i].process(laneTime[i], prev, isGameover, player->getPos());
+            laneTime[i] = 100 - (offset * 10);
         }
 
         isRunning = !isStopped && !isGameover;
     } while (isRunning);
-
-    // Join all threads
-    for (auto& laneThread : laneThreads) {
-        laneThread.join();
-    }
     
     // Return next scene
     Scene* next = nullptr;

@@ -6,7 +6,6 @@
 #include <mutex>
 #include "vehicle.hpp"
 #include "traffic.hpp"
-
 class Lane {
 private:
     int pos;             // position
@@ -19,7 +18,7 @@ public:
     Lane(const int& pos, const int& speed, const std::string& sprite);
 
     void render();
-    void process(const int& time, const bool& isRunning, bool& isGameover, const int& playerLane, const float& playerPos);
+    void process(const uint64_t& time, hrClock& prev, bool& isGameover, const int& playerPos = -10);
     bool checkCollision(const float& pos);
 
     ~Lane();

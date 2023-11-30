@@ -30,7 +30,7 @@ void Setting::save() {
     // Address padding (32 bytes)
     int address = 35;
     for(int i = 0; i < 8; i++) {
-        if(i < gamestate.size()) {
+        if (i < gamestate.size()) {
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
             address += gamestate[i].size();
         } else {
@@ -38,6 +38,9 @@ void Setting::save() {
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
         }
     }
+
+    // Seek to the start of the gamestate data
+    file.seekp(35, std::ios::beg);
 
     // Gamestate (??? byte)
     for(int i = 0; i < gamestate.size(); i++) {
@@ -91,7 +94,7 @@ bool Setting::load() {
     int nextAddress = 0;
     char* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
-    while(nextAddress == 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
+    while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         gamestate.push_back(std::string());
 
         nextAddress = file.tellg();
@@ -124,19 +127,19 @@ Setting::~Setting() {
     save();
 }
 
-word Setting::highscore(byte rank) {
-    return *(reinterpret_cast<word*>(score + rank));
+word Setting::highscore(byte rank) const {
+    return *(reinterpret_cast<word*>(const_cast<byte*>(score) + rank));
 }
 
-Volume Setting::volMusic() {
+Volume Setting::volMusic() const {
     return music;
 }
 
-Volume Setting::volSFX() {
+Volume Setting::volSFX() const {
     return sfx;
 }
 
-Sprite Setting::spriteID() {
+Sprite Setting::spriteID() const {
     return sprite;
 }
 
@@ -149,12 +152,14 @@ void Setting::setScore(word score) {
     }
 }
 
-void Setting::setSprite(Sprite sprite) {
-    this->sprite = sprite;
-}
-
 void Setting::incMusic() { ++music; }
 void Setting::decMusic() { --music; }
 
 void Setting::incSFX() { ++sfx; }
 void Setting::decSFX() { --sfx; }
+
+void Setting::incSprite() { ++sprite; }
+void Setting::decSprite() { --sprite; }
+
+std::vector<std::string> Setting::getGamestate() const { return gamestate; }
+void Setting::setGamestate(std::vector<std::string> state) { gamestate = state; }

@@ -2,6 +2,8 @@
 #define TRAFFIC_HPP_
 
 #include <iostream>
+#include "typedef.hpp"
+using hrClock = high_resolution_clock::time_point;
 
 class Traffic {
 private:
@@ -14,7 +16,7 @@ public:
     Traffic(const int& lane, const bool& isRed, const int& clock, const std::string& sprite);
 
     void render();
-    void process(const int& time);
+    void process(const int& time, hrClock& prev, hrClock& now);
     bool isRedLight();
 
     ~Traffic();
