@@ -1,5 +1,12 @@
 #include "speaker.hpp"
 
+void CALLBACK Speaker::waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2) {
+    if (uMsg == WOM_DONE) {
+        Sound* sound = reinterpret_cast<Sound*>(dwInstance);
+        waveOutWrite(hwo, &sound->header, sizeof(WAVEHDR));
+    }
+}
+
 Speaker::Speaker(Setting* setting) : sfxVolume(static_cast<word>(setting->volSFX())), musicVolume(static_cast<word>(setting->volMusic())) {
 	wfx.wFormatTag = WAVE_FORMAT_PCM;
     wfx.nChannels = 2;
@@ -9,7 +16,7 @@ Speaker::Speaker(Setting* setting) : sfxVolume(static_cast<word>(setting->volSFX
     wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign;
 
 	waveOutOpen(&sfxDevice, WAVE_MAPPER, &wfx, 0, 0, CALLBACK_NULL);
-	waveOutOpen(&musicDevice, WAVE_MAPPER, &wfx, 0, 0, CALLBACK_NULL);
+	waveOutOpen(&musicDevice, WAVE_MAPPER, &wfx, (DWORD_PTR)waveOutProc, 0, CALLBACK_FUNCTION);
 
 	waveOutSetVolume(sfxDevice, sfxVolume);
 	waveOutSetVolume(musicDevice, musicVolume);

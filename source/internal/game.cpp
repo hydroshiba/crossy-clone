@@ -108,6 +108,9 @@ void Game::playsound() {
 
 void Game::run() {
     std::cout << static_cast<word>(setting->volMusic()) << std::endl;
+    std::cout << static_cast<word>(setting->volSFX()) << std::endl;
+
+    speaker->setSFXVolume(0xFFFFFFFF);
     speaker->play(sound);
 
     while(current != nullptr) {
