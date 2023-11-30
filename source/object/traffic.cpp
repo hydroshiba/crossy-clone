@@ -7,8 +7,12 @@ void Traffic::render() {
     std::cout << sprite;
 }
 
-void Traffic::process(const int& time) {
-    std::cout << "Traffic process~";
+void Traffic::process(const int& time, hrClock& prev, hrClock& now) {
+    uint64_t interval = duration_cast<milliseconds>(now - prev).count();
+    if (interval >= time) {
+        isRed = !isRed;
+        prev = now;
+    }
 }
 
 bool Traffic::isRedLight() {
