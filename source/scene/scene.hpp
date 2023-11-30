@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "setting.hpp"
-#include "audio.hpp"
+#include "speaker.hpp"
 #include "engine.hpp"
 #include "keyboard.hpp"
 
@@ -15,13 +15,13 @@ protected:
     int width, height;
 
     Engine* engine;
-    AudioDevice* audio;
+    Speaker* speaker;
     Setting* setting;
     SceneRegistry* sceneRegistry;
     Keyboard* keyboard;
 
 public:
-    Scene(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Scene(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     virtual ~Scene();
 
     virtual Scene* process() = 0;

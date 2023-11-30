@@ -1,7 +1,7 @@
 #include "option.hpp"
 
-Option::Option(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
-    Scene(width, height, engine, audio, registry, setting, keyboard) {}
+Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
+    Scene(width, height, engine, speaker, registry, setting, keyboard) {}
 
 Option::~Option() {
 }

@@ -27,7 +27,7 @@ private:
     std::vector<Scene*> scenes;
 
 public:
-    SceneRegistry(int width, int height, Engine* engine, AudioDevice* audio, Setting* setting, Keyboard* keyboard);
+    SceneRegistry(int width, int height, Engine* engine, Speaker* speaker, Setting* setting, Keyboard* keyboard);
     ~SceneRegistry();
 
     Scene* scene(SceneID type);

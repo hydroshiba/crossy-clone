@@ -12,11 +12,11 @@ using widestring = std::wstring;
 using namespace std::chrono;
 
 enum class Volume {
-    min = 0,
-    low = 250,
-    medium = 500,
-    high = 750,
-    max = 1000
+    min = int(0x00000000),
+    low = int(0x40004000),
+    medium = int(0x80008000),
+    high = int(0xC000C000),
+    max = int(0xFFFFFFFF)
 };
 
 enum class Sprite {

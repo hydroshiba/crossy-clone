@@ -3,30 +3,23 @@
 
 #include <windows.h>
 #include <mmsystem.h>
-#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 #include "typedef.hpp"
 
 class Sound {
 private:
-    bool sfx;
-    std::string path, alias;
+    WAVEHDR header;
+    bool background;
+    std::vector<char> buffer;    
 
 public:
-    Sound(std::string path);
-    bool operator==(const Sound& sound) const;
+    Sound(std::string path, bool background = false);
+    ~Sound() = default;
 
-    friend class AudioDevice;
-    friend struct std::hash<Sound>;
+    friend class Speaker;
 };
-
-namespace std {
-    template <>
-    struct hash<Sound> {
-        size_t operator()(const Sound& sound) const {
-            return hash<string>()(sound.alias);
-        }
-    };
-}
 
 #endif

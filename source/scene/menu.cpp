@@ -1,8 +1,8 @@
 #include "menu.hpp"
 
-Menu::Menu(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) :
+Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
+    Scene(width, height, engine, speaker, registry, setting, keyboard),
     button(1),
-    Scene(width, height, engine, audio, registry, setting, keyboard),
     TITLE(new Texture("asset/texture/title.bmp")),
     START(new Texture("asset/texture/button/start.bmp")), START_CLICKED(new Texture("asset/texture/button/start_clicked.bmp")),
     OPTION(new Texture("asset/texture/button/option.bmp")), OPTION_CLICKED(new Texture("asset/texture/button/option_clicked.bmp")),

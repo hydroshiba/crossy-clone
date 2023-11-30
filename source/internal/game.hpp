@@ -9,7 +9,7 @@
 
 #include "typedef.hpp"
 #include "engine.hpp"
-#include "audio.hpp"
+#include "speaker.hpp"
 #include "keyboard.hpp"
 #include "resource.hpp"
 #include "setting.hpp"
@@ -27,11 +27,13 @@ private:
 
     Engine* engine;
     Setting* setting;
-    AudioDevice* audio;
+    Speaker* speaker;
     SceneRegistry* registry;
     Keyboard* keyboard;
 
     Scene* current;
+
+    Sound sound;
 
     Game(const Game&) = delete;
     Game(Game&&) = delete;

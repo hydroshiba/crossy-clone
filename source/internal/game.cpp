@@ -1,16 +1,16 @@
 #include "game.hpp"
 
-Game::Game() : title("Crossy Clone"), framerate(60) {
+Game::Game() : title("Crossy Clone"), framerate(60), sound("asset/sound/background.wav", true) {
     // Initialize new window
     initialize();
     hdc = GetDC(window);
 
     // Devices initialization
     setting = new Setting();
-    audio = new AudioDevice(setting);
+    speaker = new Speaker(setting);
     engine = new Engine(hdc, width, height);
     keyboard = new Keyboard();
-    registry = new SceneRegistry(width, height, engine, audio, setting, keyboard);
+    registry = new SceneRegistry(width, height, engine, speaker, setting, keyboard);
 
     // Set scene
     current = registry->scene(SceneID::MENU);
@@ -107,8 +107,8 @@ void Game::playsound() {
 }
 
 void Game::run() {
-    std::cout << static_cast<int>(setting->volMusic()) << std::endl;
-    audio->loop(Sound("asset/sound/background.mp3"));
+    std::cout << static_cast<word>(setting->volMusic()) << std::endl;
+    speaker->play(sound);
 
     while(current != nullptr) {
         MSG msg = {};
@@ -131,7 +131,7 @@ void Game::run() {
 }
 
 Game::~Game() {
-    delete audio;
+    delete speaker;
     delete engine;
     delete setting;
     delete registry;

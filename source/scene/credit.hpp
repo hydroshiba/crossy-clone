@@ -13,7 +13,7 @@ private:
     std::string buttonSound;
 
 public:
-    Credit(int width, int height, Engine* engine, AudioDevice* audio, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Credit(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Credit();
 
     Scene* process() override;
