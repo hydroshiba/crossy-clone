@@ -132,11 +132,11 @@ void Game::run() {
 }
 
 Game::~Game() {
+    delete registry;
+    delete keyboard;
     delete speaker;
     delete engine;
     delete setting;
-    delete registry;
-    delete keyboard;
 
     ReleaseDC(window, hdc);
     DeleteDC(hdc);

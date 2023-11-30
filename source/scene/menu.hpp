@@ -17,6 +17,7 @@ private:
     Texture* CREDIT; Texture* CREDIT_CLICKED;
     Texture* QUIT; Texture* QUIT_CLICKED;
     
+    Sound background;
     Object title;
 
 public:

@@ -9,7 +9,8 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
     // LEADERBOARD(new Texture("asset/texture/button/leaderboard.bmp")), LEADERBOARD_CLICKED(new Texture("asset/texture/button/leaderboard_clicked.bmp")),
     // CREDIT(new Texture("asset/texture/button/credit.bmp")), CREDIT_CLICKED(new Texture("asset/texture/button/credit_clicked.bmp")),
     QUIT(new Texture("asset/texture/button/quit.bmp")), QUIT_CLICKED(new Texture("asset/texture/button/quit_clicked.bmp")),
-    title((width - TITLE->getWidth()) / 2, height / 6, TITLE){}
+    background("asset/sound/background.wav"),
+    title((width - TITLE->getWidth()) / 2, height / 6, TITLE) {}
 
 Scene* Menu::process() {
     Scene* next = this;

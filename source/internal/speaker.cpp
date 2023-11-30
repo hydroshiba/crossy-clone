@@ -38,6 +38,11 @@ void Speaker::pause(Sound& sound) {
 	waveOutPause(device);
 }
 
+void Speaker::stop() {
+	waveOutReset(sfxDevice);
+	waveOutReset(musicDevice);
+}
+
 void Speaker::setSFXVolume(word volume) {
 	sfxVolume = volume;
 	waveOutSetVolume(sfxDevice, sfxVolume);
