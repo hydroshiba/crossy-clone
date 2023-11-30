@@ -13,7 +13,6 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
 
 Scene* Menu::process() {
     Scene* next = this;
-
     Key pressedKey = keyboard->key();
 
     switch(pressedKey) {
