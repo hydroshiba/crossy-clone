@@ -99,11 +99,11 @@ Scene* Option::process() {
         arrow = 3;
         switch(button) {
         case 0:
-            setting->decMusic();
+            setting->decMusic(speaker);
             if(musicId > 0) musicId--;
             break;
         case 1:   
-            setting->decSFX();
+            setting->decSFX(speaker);
             if(sfxId > 0) sfxId--;
             break;
         case 2:
@@ -119,11 +119,11 @@ Scene* Option::process() {
         arrow = 4;
         switch(button) {
         case 0:
-            setting->incMusic();
+            setting->incMusic(speaker);
             if(musicId < 4) musicId++;
             break;
         case 1:
-            setting->incSFX();
+            setting->incSFX(speaker);
             if(sfxId < 4) sfxId++;
             break;
         case 2:
