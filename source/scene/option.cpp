@@ -36,12 +36,12 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
     else if(setting->volSFX() == Volume::high) sfxId = 3;
     else sfxId = 4;
 
-    buttons.push_back(new Button(MUSIC, MUSIC_CLICKED, width / 5, (height - SFX.getHeight()) / 2 - 200));
-    buttons.push_back(new Button(SFX, SFX_CLICKED, width / 5, (height - SFX.getHeight()) / 2));
-    buttons.push_back(new Button(SPRITE, SPRITE_CLICKED, width / 5, (height - SFX.getHeight()) / 2 + 200));
+    buttons.push_back(new Button(MUSIC, MUSIC_CLICKED, width / 5, height / 2 - height / 4));
+    buttons.push_back(new Button(SFX, SFX_CLICKED, width / 5, height / 2));
+    buttons.push_back(new Button(SPRITE, SPRITE_CLICKED, width / 5, height / 2 + height / 4));
 
-    buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + 10));
-    buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, buttons.back()->getX() + buttons.back()->getWidth() + 300, buttons[2]->getY() + 10));
+    buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + buttons[2]->getHeight() / 3));
+    buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, width / 2 + 2 * buttons.back()->getWidth(), buttons[2]->getY() + buttons[2]->getHeight() / 3));
 
     music.push_back(new Object(width / 3, buttons[0]->getY(), MIN_VOLUME));
     music.push_back(new Object(width / 3, buttons[0]->getY(), LOW_VOLUME));
@@ -55,7 +55,7 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
     sfx.push_back(new Object(width / 3, buttons[1]->getY(), HIGH_VOLUME));
     sfx.push_back(new Object(width / 3, buttons[1]->getY(), MAX_VOLUME));
     
-    sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), CHICKEN));
+    sprites.push_back(new Object((buttons[3]->getX()  + buttons[4]->getX()) / 2, buttons[2]->getY(), CHICKEN));
     sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), DUCK));
     sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), CAT));
 }
