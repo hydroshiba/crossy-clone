@@ -16,10 +16,11 @@ private:
     HBITMAP bitmap;
 
     int width, height;
+    int framerate;
     byte* pixels;
 
 public:
-    Engine(HDC& hdc, int w, int h);
+    Engine(HDC& hdc, int w, int h, int fps);
     ~Engine();
 
     void set(int x, int y, word value);
@@ -35,6 +36,7 @@ public:
 
     int getWidth() const;
     int getHeight() const;
+    int fps() const;
 
     void render();
 };

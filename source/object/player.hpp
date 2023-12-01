@@ -9,19 +9,18 @@ class Player {
 private:
     int lane;
     float pos;
+    std::string name;
     std::string sound;   // sound
     std::string sprite;  // sprite
 
 public:
-    Player(int lane, float pos, std::string sprite, std::string sound);
+    Player(const int& lane, const float& pos, const std::string& name, const std::string& sprite, const std::string& sound);
 
-    void move(Key key);
-    const int& getLane();
-    const float& getPos();
+    void move(const Key& key);
+    int getLane();
+    float getPos();
     void render();
     void playSound();
-
-    ~Player();
 };
 
 #endif

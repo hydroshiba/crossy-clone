@@ -11,17 +11,16 @@ private:
     int pos;             // position
     std::vector<Vehicle> vehicles;
     Traffic traffic;     // traffic light
-    int speed;           // speed
+    float speed;           // speed
     std::string sprite;  // sprite
 
 public:
-    Lane(const int& pos, const int& speed, const std::string& sprite);
+    Lane(const int& pos, const float& speed, const std::string& sprite);
 
     void render();
-    void process(const uint64_t& time, hrClock& prev, bool& isGameover, const int& playerPos = -10);
+    void process(const uint64_t& time, hrClock& prev, bool& isGameover, const float& playerPos = -10);
     bool checkCollision(const float& pos);
-
-    ~Lane();
+    void addVehicle(const float& pos, const std::string& sprite, const std::string& sound);
 };
 
 #endif

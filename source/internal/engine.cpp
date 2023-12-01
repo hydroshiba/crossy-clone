@@ -1,6 +1,6 @@
 #include "engine.hpp"
 
-Engine::Engine(HDC& hdc, int w, int h) : width(w), height(h), hdc(hdc) {
+Engine::Engine(HDC& hdc, int w, int h, int fps) : hdc(hdc), width(w), height(h), framerate(fps) {
     ZeroMemory(&mapinfo, sizeof(BITMAPINFO));
 
     mapinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -61,6 +61,10 @@ int Engine::getWidth() const {
 
 int Engine::getHeight() const {
     return height;
+}
+
+int Engine::fps() const {
+    return framerate;
 }
 
 void Engine::render() {

@@ -13,7 +13,9 @@ private:
     std::string buttonSound;
     Player *player;
     std::vector<Lane> lanes;
+    int score;
     int offset;
+    void loadGamestate(const std::vector<std::string>& gamestate);
 
 public:
     Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
