@@ -92,4 +92,7 @@ void Menu::playsound() {
 }
 
 Menu::~Menu() {
+    for(auto& button : buttons) {
+        delete button;
+    }
 }
