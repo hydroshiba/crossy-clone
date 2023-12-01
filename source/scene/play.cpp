@@ -10,7 +10,6 @@ Play::Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
 Scene* Play::process() {
     bool isGameover = false;
     bool isStopped = false;
-
     bool isRunning = true;
 
     high_resolution_clock::time_point prev;
@@ -77,6 +76,7 @@ Scene* Play::process() {
 }
 
 void Play::render() {
+    
 }
 
 void Play::playsound() {
@@ -159,9 +159,17 @@ void Play::createNewGame(const std::string& name) {
 
     // Lanes
     lanes.clear();
-    for (int i = 0; i < 20; i++) {
+    lanes.push_back(Lane(0, 0, "asset/texture/grass"));
+    for (int i = 1; i < 20; i++) {
+        // Grass lane
+        if (needCreateGrassLane()) {
+            lanes.push_back(Lane(i, 0, "asset/texture/grass"));
+            continue;
+        }
+
+        // Road lane
         float speed = rand() % (10000 + offset * offset * offset) / 1.0 * 100 + 1;
-        lanes.push_back(Lane(0, speed, "asset/texture/lane"));
+        lanes.push_back(Lane(i, speed, "asset/texture/lane"));
     }
 
     // Player
@@ -177,7 +185,14 @@ void Play::updateLane() {
 
     // Update lanes
     lanes.erase(lanes.begin());
-    lanes.push_back(Lane(19 + offset, rand() % (10000 + offset * offset * offset) / 1.0 * 100 + 1, "asset/texture/lane"));
+    if (needCreateGrassLane()) {
+        lanes.push_back(Lane(19 + offset, 0, "asset/texture/grass"));
+    }
+    else lanes.push_back(Lane(19 + offset, rand() % (10000 + offset * offset * offset) / 1.0 * 100 + 1, "asset/texture/lane"));
+}
+
+bool Play::needCreateGrassLane() {
+    return rand() % 100 < (50 - offset / 2);
 }
 
 Play::~Play() {

@@ -24,9 +24,7 @@ bool Vehicle::isOut(const float& pos) {
 }
 
 void Vehicle::render() {
-    std::cout << sprite;
 }
 
 void Vehicle::playSound() {
-    std::cout << "Play sound...";
 }

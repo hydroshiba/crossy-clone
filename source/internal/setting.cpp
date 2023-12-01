@@ -101,6 +101,8 @@ bool Setting::load() {
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
     std::streampos nextAddress = file.tellg();
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
+        if (top == 35) break;
+
         gamestate.push_back(std::string());
 
         nextAddress += 4;

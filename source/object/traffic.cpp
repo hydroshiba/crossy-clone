@@ -4,7 +4,6 @@ Traffic::Traffic(const int& lane, const bool& isRed, const int& clock, const std
 }
 
 void Traffic::render() {
-    std::cout << sprite;
 }
 
 void Traffic::process(const uint64_t& time, hrClock& prev, hrClock& now) {

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "typedef.hpp"
+#include "texture.hpp"
 using hrClock = high_resolution_clock::time_point;
 
 class Traffic {

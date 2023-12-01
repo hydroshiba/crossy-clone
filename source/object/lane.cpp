@@ -4,7 +4,6 @@ Lane::Lane(const int& pos, const float& speed, const std::string& sprite) : pos(
 }
 
 void Lane::render() {
-    std::cout << sprite << std::endl;
 }
 
 void Lane::process(const uint64_t& time, hrClock& prev, bool& isGameover, const float& playerPos) {
@@ -46,4 +45,8 @@ bool Lane::checkCollision(const float& pos) {
 
 void Lane::addVehicle(const float& pos, const std::string& sprite, const std::string& sound) {
     vehicles.push_back(Vehicle(this->pos, pos, sprite, sound));
+}
+
+Lane::~Lane() {
+    vehicles.clear();
 }
