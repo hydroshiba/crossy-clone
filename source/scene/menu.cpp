@@ -17,16 +17,16 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
                                                                                                                                      QUIT("asset/texture/button/quit.bmp"),
                                                                                                                                      QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
                                                                                                                                      background("asset/sound/background.wav"),
-                                                                                                                                     title((width - TITLE.getWidth()) / 2, height / 10, TITLE) {
+                                                                                                                                     title((width - TITLE.getWidth()) / 2, height / 16, TITLE) {
     if(setting->getGamestate().size()){
-        buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, height / 6 + 180));
+        buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, height / 6 + 140));
         
     }
-    buttons.push_back(new Button(START, START_CLICKED, (width - START.getWidth()) / 2, buttons.size() ? buttons.back()->getY() + 60 : height / 6 + 180));
-    buttons.push_back(new Button(OPTION, OPTION_CLICKED, (width - OPTION.getWidth()) / 2, buttons.back()->getY() + 60));
-    buttons.push_back(new Button(LEADERBOARD, LEADERBOARD_CLICKED, (width - LEADERBOARD.getWidth()) / 2, buttons.back()->getY() + 60));
-    buttons.push_back(new Button(CREDIT, CREDIT_CLICKED, (width - CREDIT.getWidth()) / 2, buttons.back()->getY() + 60));
-    buttons.push_back(new Button(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) / 2, buttons.back()->getY() + 60));
+    buttons.push_back(new Button(START, START_CLICKED, (width - START.getWidth()) / 2, buttons.size() ? buttons.back()->getY() + 75 : height / 6 + 140));
+    buttons.push_back(new Button(OPTION, OPTION_CLICKED, (width - OPTION.getWidth()) / 2, buttons.back()->getY() + 75));
+    buttons.push_back(new Button(LEADERBOARD, LEADERBOARD_CLICKED, (width - LEADERBOARD.getWidth()) / 2, buttons.back()->getY() + 75));
+    buttons.push_back(new Button(CREDIT, CREDIT_CLICKED, (width - CREDIT.getWidth()) / 2, buttons.back()->getY() + 75));
+    buttons.push_back(new Button(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) / 2, buttons.back()->getY() + 75));
 }
 
 Scene* Menu::process() {
