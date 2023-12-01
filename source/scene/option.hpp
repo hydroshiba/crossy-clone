@@ -7,7 +7,6 @@
 class Option : public Scene {
 private:
     int button;
-    int arrow;
     int musicId;
     int sfxId;
     int spriteId;
