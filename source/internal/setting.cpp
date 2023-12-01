@@ -9,10 +9,10 @@ void Setting::save() {
     file.write(reinterpret_cast<char*>(&magic), 3);
 
     // Music + SFX + Sprite (1 byte)
-    char packed = (static_cast<int>(music) / static_cast<int>(Volume::low)) << 5;
-    packed |= (static_cast<int>(sfx) / static_cast<int>(Volume::low)) << 2;
-    packed |= static_cast<int>(sprite);
-    file.write(&packed, sizeof(packed));
+    byte packed = (static_cast<word>(music) / static_cast<word>(Volume::low)) << 5;
+    packed |= (static_cast<word>(sfx) / static_cast<word>(Volume::low)) << 2;
+    packed |= static_cast<word>(sprite);
+    file.write(reinterpret_cast<char*>(&packed), sizeof(packed));
 
     // Highscores (12 bytes)
     file.write(reinterpret_cast<char*>(score), sizeof(score));
@@ -75,9 +75,11 @@ bool Setting::load() {
     // --- --- --
     // MUS SFX SP
 
-    char package = file.get();
-    music = static_cast<Volume>((package >> 5) * static_cast<int>(Volume::low));
-    sfx = static_cast<Volume>(((package >> 2) & 0x7) * static_cast<int>(Volume::low));
+    char get = file.get();
+    byte package = static_cast<byte>(get);
+
+    music = static_cast<Volume>((package >> 5U) * static_cast<word>(Volume::low));
+    sfx = static_cast<Volume>(((package >> 2U) & 0x7U) * static_cast<word>(Volume::low));
     sprite = static_cast<Sprite>(package & 0x3);
 
     file.read(reinterpret_cast<char*>(score), sizeof(score));
@@ -123,14 +125,16 @@ bool Setting::load() {
     return true;
 }
 
-Setting::Setting() {
+Setting::Setting(Speaker* speaker) {
     if(!load()) {
         music = Volume::medium;
         sfx = Volume::medium;
         sprite = Sprite::duck;
         *score = 0;
-        save();
     }
+
+    speaker->setMusicVolume(static_cast<word>(music));
+    speaker->setSFXVolume(static_cast<word>(sfx));
 }
 
 Setting::~Setting() {
@@ -162,11 +166,24 @@ void Setting::setScore(word score) {
     }
 }
 
-void Setting::incMusic() { ++music; }
-void Setting::decMusic() { --music; }
+void Setting::incMusic(Speaker* speaker) {
+    ++music;
+    speaker->setMusicVolume(static_cast<word>(music));
+}
+void Setting::decMusic(Speaker* speaker) {
+    --music;
+    speaker->setMusicVolume(static_cast<word>(music));
+}
 
-void Setting::incSFX() { ++sfx; }
-void Setting::decSFX() { --sfx; }
+void Setting::incSFX(Speaker* speaker) {
+    ++sfx;
+    speaker->setSFXVolume(static_cast<word>(sfx));
+}
+
+void Setting::decSFX(Speaker* speaker) {
+    --sfx;
+    speaker->setSFXVolume(static_cast<word>(sfx));
+}
 
 void Setting::incSprite() { ++sprite; }
 void Setting::decSprite() { --sprite; }
