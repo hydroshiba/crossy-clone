@@ -48,7 +48,29 @@ void Game::initialize() {
         GetModuleHandle(NULL),
         NULL);
 
-    ShowWindow(window, SW_MAXIMIZE);
+    // Set window style
+
+    WINDOWPLACEMENT wpc;
+    LONG HWNDStyle = 0;
+    LONG HWNDStyleEx = 0;
+
+    GetWindowPlacement(window, &wpc);
+    if (HWNDStyle == 0)
+        HWNDStyle = GetWindowLong(window, GWL_STYLE);
+    if (HWNDStyleEx == 0)
+        HWNDStyleEx = GetWindowLong(window, GWL_EXSTYLE);
+
+    LONG NewHWNDStyle = HWNDStyle;
+    NewHWNDStyle &= ~WS_BORDER;
+    NewHWNDStyle &= ~WS_DLGFRAME;
+    NewHWNDStyle &= ~WS_THICKFRAME;
+
+    LONG NewHWNDStyleEx =HWNDStyleEx;
+    NewHWNDStyleEx &= ~WS_EX_WINDOWEDGE;
+
+    SetWindowLong(window, GWL_STYLE, NewHWNDStyle | WS_POPUP);
+    SetWindowLong(window, GWL_EXSTYLE, NewHWNDStyleEx | WS_EX_TOPMOST);
+    ShowWindow(window, SW_SHOWMAXIMIZED);
 
     // Get scale
     scale = []() -> int {
