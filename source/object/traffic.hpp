@@ -16,7 +16,7 @@ public:
     Traffic(const int& lane, const bool& isRed, const int& clock, const std::string& sprite);
 
     void render();
-    void process(const int& time, hrClock& prev, hrClock& now);
+    void process(const uint64_t& time, hrClock& prev, hrClock& now);
     bool isRedLight();
 
     ~Traffic();

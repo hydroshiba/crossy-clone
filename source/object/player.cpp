@@ -1,6 +1,9 @@
 #include "player.hpp"
 
-void Player::move(Key key) {
+Player::Player(const int& lane, const float& pos, const std::string& name, const std::string& sprite, const std::string& sound) : lane(lane), pos(pos), name(name), sprite(sprite), sound(sound) {
+}
+
+void Player::move(const Key& key) {
     switch (key) {
         case Key::UP:
             lane += 1;
@@ -19,11 +22,11 @@ void Player::move(Key key) {
     }
 }
 
-const int& Player::getLane() {
+int Player::getLane() {
     return lane;
 }
 
-const float& Player::getPos() {
+float Player::getPos() {
     return pos;
 }
 

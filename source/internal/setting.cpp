@@ -99,14 +99,15 @@ bool Setting::load() {
     int top = 0;
     char* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
-    int nextAddress = file.tellg();
+    std::streampos nextAddress = file.tellg();
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         gamestate.push_back(std::string());
 
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
 
-        buffer = new char[top - bottom];
+        buffer = new char[top - bottom + 1];
+        buffer[top - bottom] = '\0';
         file.read(buffer, top - bottom);
         gamestate.back().assign(buffer, top - bottom);
 

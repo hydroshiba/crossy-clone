@@ -18,26 +18,27 @@ D    E     F    C     A    D
 
 ## Data: unknown bytes
 
-### Score and name: $? + 4$ bytes
+### Score and name: $8$ bytes
 
 - Score: 4 bytes ------------------------------------- ($gamestate[0][0] -> gamestate[0][3]$)
-- Name: unknown bytes ---------------------------- ($gamestate[0][4] -> gamestate[0][Name.size() + 4]$)
+- Offset: 4 bytes ------------------------------------- ($gamestate[0][4] -> gamestate[0][7]$)
 
-### Lanes: $4N + 1$ bytes
+### Lanes: $5N$ bytes
 
-- Number of lanes $N$: 1 bytes ---------------------- ($gamestate[1][0]$)
-- Lanes data: $8N$ bytes ----------------------------- ($gamestate[1][1] -> gamestate[1][4 * gamestate[1][0] + 4]$)
-  - $y$ coordinate: $4$ bytes
+- Number of lanes: $N$ (this isn't a stored data)
+- Lanes data: $5N$ bytes ----------------------------- ($gamestate[1][0] -> gamestate[1][5 * gamestate[1][0] - 1]$)
+  - $y$ coordinate: $1$ bytes
   - Spawning time: $4$ bytes
 
 ### Player: 5 bytes
 
 - The numerical order of lane: 1 bytes -------------- ($gamestate[2][0]$)
-- Coordinate x: 4 bytes ------------------------------ ($gamestate[2][1] -> gamestate[2][4]$)
+- $x$ coordinate: 4 bytes ------------------------------ ($gamestate[2][1] -> gamestate[2][4]$)
+- Name: unknown bytes ----------------------------- ($gamestate[2][5] -> gamestate[2][Name.size() + 4]$)
 
-### Cars, trucks, e.t.c: $5N + 1$ bytes
+### Cars, trucks: $2 * 5N$ bytes
 
-- Number of cars (or other) $N$: 1 bytes ------------- ($gamestate[n][0]$)
-- Objects data: $5N$ bytes ---------------------------- ($gamestate[n][1] -> gamestate[n][5 * gamestate[n][0] + 1]$)
+- Number of cars (or trucks): $N$ (this isn't a stored data)
+- Objects data: $5N$ bytes ---------------------------- ($gamestate[n][0] -> gamestate[n][5 * gamestate[n][0] - 1]$)
   - The numerical order of lane: 1 bytes
-  - Coordinate x: 4 bytes
+  - $x$ coordinate: 4 bytes

@@ -3,7 +3,7 @@
 Vehicle::Vehicle(const int& lane, const float& pos, const std::string& sprite, const std::string& sound) : lane(lane), pos(pos), sprite(sprite), sound(sound) {
 }
 
-void Vehicle::move(const int& speed) {
+void Vehicle::move(const float& speed) {
     pos += speed;
 }
 
@@ -21,7 +21,4 @@ void Vehicle::render() {
 
 void Vehicle::playSound() {
     std::cout << "Play sound...";
-}
-
-Vehicle::~Vehicle() {
 }
