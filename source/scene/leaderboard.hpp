@@ -6,12 +6,11 @@
 
 class Leaderboard : public Scene {
 private:
-    std::string gameTitle;
-    std::string quitButton;
-    std::string background;
-    std::string backgroundMusic;
-    std::string buttonSound;
+    const Texture GOLD;
+    const Texture SILVER;
+    const Texture COPPER;
 
+    Object gold, silver, copper;
 public:
     Leaderboard(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();
