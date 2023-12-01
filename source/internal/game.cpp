@@ -1,6 +1,9 @@
 #include "game.hpp"
 
 Game::Game() : title("Crossy Clone"), framerate(60), sound("asset/sound/background.wav", true) {
+    // Initialize random seed
+    srand(time(NULL));
+
     // Initialize new window
     initialize();
     hdc = GetDC(window);

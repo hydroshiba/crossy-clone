@@ -16,6 +16,8 @@ private:
     int score;
     int offset;
     void loadGamestate(const std::vector<std::string>& gamestate);
+    void createNewGame(const std::string& name);
+    void updateLane();
 
 public:
     Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
