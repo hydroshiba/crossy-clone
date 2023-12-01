@@ -51,6 +51,7 @@ Scene* Menu::process() {
             break;
         case 1:
             next = sceneRegistry->scene(SceneID::PLAY);
+            setting->setGamestate({});
             break;
         case 2:
             next = sceneRegistry->scene(SceneID::OPTION);
