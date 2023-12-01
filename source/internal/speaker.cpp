@@ -7,7 +7,7 @@ void CALLBACK Speaker::waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance
     }
 }
 
-Speaker::Speaker(Setting* setting) : sfxVolume(static_cast<word>(setting->volSFX())), musicVolume(static_cast<word>(setting->volMusic())) {
+Speaker::Speaker() : sfxVolume(static_cast<word>(Volume::medium)), musicVolume(static_cast<word>(Volume::medium)) {
 	wfx.wFormatTag = WAVE_FORMAT_PCM;
     wfx.nChannels = 2;
     wfx.nSamplesPerSec = 48000;

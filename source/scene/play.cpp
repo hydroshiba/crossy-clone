@@ -3,20 +3,22 @@
 Play::Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
     Scene(width, height, engine, speaker, registry, setting, keyboard) {
         // Load gamestate
-        loadGamestate(setting->getGamestate());
+        if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
+        else createNewGame("");
     }
 
 Scene* Play::process() {
     bool isGameover = false;
     bool isStopped = false;
-
     bool isRunning = true;
 
     high_resolution_clock::time_point prev;
 
-    std::vector<int> laneTime(lanes.size());
+    std::vector<uint64_t> laneTime(lanes.size());
+    uint64_t time = 8000;
     for (int i = 0; i < laneTime.size(); i++) {
-        laneTime[i] = 100;
+        laneTime[i] = rand() % time + 1;
+        time -= offset * offset * offset / 100;
     }
 
     // Player processing
@@ -27,14 +29,17 @@ Scene* Play::process() {
         switch (pressedKey) {
             case Key::UP:
                 player->move(pressedKey);
-                offset++;
+                score += 20000000 / laneTime[player->getLane() - offset];
+                lanes[player->getLane() - offset].checkCollision(player->getPos());
                 break;
             case Key::DOWN:
                 player->move(pressedKey);
-                offset--;
+                score -= 333;
+                lanes[player->getLane() - offset].checkCollision(player->getPos());
                 break;
             case Key::LEFT: case Key::RIGHT:
                 player->move(pressedKey);
+                lanes[player->getLane() - offset].checkCollision(player->getPos());
                 break;
             case Key::ESC:
                 isStopped = true;
@@ -45,8 +50,14 @@ Scene* Play::process() {
 
         // Lane processing
         for (int i = 0; i < lanes.size(); i++) {
-            lanes[i].process(laneTime[i], prev, isGameover, player->getPos());
-            laneTime[i] = 100 - (offset * 10);
+            if (i == player->getLane() - offset) {
+                lanes[i].process(laneTime[i], prev, isGameover, player->getPos());
+            }
+            else lanes[i].process(laneTime[i], prev, isGameover);
+        }
+
+        if (player->getLane() - offset == 10) {
+            updateLane();
         }
 
         isRunning = !isStopped && !isGameover;
@@ -65,6 +76,7 @@ Scene* Play::process() {
 }
 
 void Play::render() {
+    
 }
 
 void Play::playsound() {
@@ -138,6 +150,49 @@ void Play::loadGamestate(const std::vector<std::string>& gamestate) {
         }
         lanes[std::stoi(tmpLane)].addVehicle(toFloat(tmpPos), "asset/texture/truck", "asset/sound/truck");
     }
+}
+
+void Play::createNewGame(const std::string& name) {
+    // Score and offset
+    score = 0;
+    offset = 0;
+
+    // Lanes
+    lanes.clear();
+    lanes.push_back(Lane(0, 0, "asset/texture/grass"));
+    for (int i = 1; i < 20; i++) {
+        // Grass lane
+        if (needCreateGrassLane()) {
+            lanes.push_back(Lane(i, 0, "asset/texture/grass"));
+            continue;
+        }
+
+        // Road lane
+        float speed = rand() % (10000 + offset * offset * offset) / 1.0 * 100 + 1;
+        lanes.push_back(Lane(i, speed, "asset/texture/lane"));
+    }
+
+    // Player
+    player = new Player(0, 500, name, "asset/texture/player", "asset/sound/player");
+}
+
+void Play::updateLane() {
+    // Update score
+    score += 1000 + 1000 * offset / 10;
+
+    // Update offset
+    offset++;
+
+    // Update lanes
+    lanes.erase(lanes.begin());
+    if (needCreateGrassLane()) {
+        lanes.push_back(Lane(19 + offset, 0, "asset/texture/grass"));
+    }
+    else lanes.push_back(Lane(19 + offset, rand() % (10000 + offset * offset * offset) / 1.0 * 100 + 1, "asset/texture/lane"));
+}
+
+bool Play::needCreateGrassLane() {
+    return rand() % 100 < (50 - offset / 2);
 }
 
 Play::~Play() {

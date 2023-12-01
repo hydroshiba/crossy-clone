@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "typedef.hpp"
+#include "speaker.hpp"
 
 class Setting {
 private:
@@ -20,7 +21,7 @@ private:
     void save();
 
 public:
-    Setting();
+    Setting(Speaker* speaker);
     ~Setting();
 
     word highscore(byte rank) const;
@@ -32,11 +33,11 @@ public:
     void setScore(word score);
     void setGamestate(std::vector<std::string> state);
 
-    void incMusic();
-    void decMusic();
+    void incMusic(Speaker* speaker);
+    void decMusic(Speaker* speaker);
 
-    void incSFX();
-    void decSFX();
+    void incSFX(Speaker* speaker);
+    void decSFX(Speaker* speaker);
 
     void incSprite();
     void decSprite();

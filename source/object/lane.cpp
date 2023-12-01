@@ -4,7 +4,6 @@ Lane::Lane(const int& pos, const float& speed, const std::string& sprite) : pos(
 }
 
 void Lane::render() {
-    std::cout << sprite << std::endl;
 }
 
 void Lane::process(const uint64_t& time, hrClock& prev, bool& isGameover, const float& playerPos) {
@@ -13,15 +12,19 @@ void Lane::process(const uint64_t& time, hrClock& prev, bool& isGameover, const 
     traffic.process(time * 7 - time * 1 / 2, prev, now);
 
     if (interval >= time && !traffic.isRedLight()) {
-        vehicles.push_back(Vehicle(pos, -5, "", ""));
+        if (rand() % 2) {
+            vehicles.push_back(Vehicle(pos, -5, "asset/texture/car", "asset/sound/car"));
+        }
+        else {
+            vehicles.push_back(Vehicle(pos, -5, "asset/texture/truck", "asset/sound/truck"));
+        }
         prev = now;
     }
 
     for (auto& vehicle : vehicles) {
-        vehicle.move(speed);
-        if (vehicle.isCollision(playerPos)) {
-            vehicle.playSound();
+        if (!vehicle.move(speed, playerPos)) {
             isGameover = true;
+            break;
         }
     }
 
@@ -42,4 +45,8 @@ bool Lane::checkCollision(const float& pos) {
 
 void Lane::addVehicle(const float& pos, const std::string& sprite, const std::string& sound) {
     vehicles.push_back(Vehicle(this->pos, pos, sprite, sound));
+}
+
+Lane::~Lane() {
+    vehicles.clear();
 }

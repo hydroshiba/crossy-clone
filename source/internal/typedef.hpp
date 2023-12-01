@@ -13,10 +13,10 @@ using namespace std::chrono;
 
 enum class Volume {
     min = int(0x00000000),
-    low = int(0x40004000),
-    medium = int(0x80008000),
-    high = int(0xC000C000),
-    max = int(0xFFFFFFFF)
+    low = int(0x3FFF3FFF),
+    medium = int(0x7FFE7FFE),
+    high = int(0xBFFDBFFD),
+    max = int(0xFFFCFFFC)
 };
 
 enum class Sprite {

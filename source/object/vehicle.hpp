@@ -2,6 +2,7 @@
 #define VEHICLE_HPP_
 
 #include <iostream>
+#include "texture.hpp"
 
 class Vehicle {
     int lane;
@@ -12,7 +13,7 @@ class Vehicle {
 public:
     Vehicle(const int& lane, const float& pos, const std::string& sprite, const std::string& sound);
 
-    void move(const float& speed);
+    bool move(const float& speed, const float& playerPos);
     bool isCollision(const float& pos);
     bool isOut(const float& pos);
     void render();

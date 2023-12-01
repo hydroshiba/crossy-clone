@@ -31,9 +31,7 @@ float Player::getPos() {
 }
 
 void Player::render() {
-    std::cout << sprite << std::endl;
 }
 
 void Player::playSound() {
-    std::cout << sound << std::endl;
 }
