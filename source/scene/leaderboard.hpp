@@ -6,11 +6,13 @@
 
 class Leaderboard : public Scene {
 private:
+    bool view;
+    int cupSelected, xSelected, ySelected;
     const Texture GOLD;
     const Texture SILVER;
     const Texture COPPER;
 
-    Object gold, silver, copper;
+    std::vector<Object*> cups;
 public:
     Leaderboard(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();

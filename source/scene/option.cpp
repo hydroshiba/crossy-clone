@@ -9,9 +9,9 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         DUCK("asset/texture/sprite/duck/down.bmp"),
                                                                                                                                         CAT("asset/texture/sprite/chicken/down.bmp"), //cat sprite
                                                                                                                                         MUSIC("asset/texture/volume/bgm.bmp"),
-                                                                                                                                        MUSIC_CLICKED("asset/texture/volume/sfx.bmp"), //music clicked
+                                                                                                                                        MUSIC_CLICKED("asset/texture/volume/bgm-clicked.bmp"),
                                                                                                                                         SFX("asset/texture/volume/sfx.bmp"), 
-                                                                                                                                        SFX_CLICKED("asset/texture/volume/bgm.bmp"), // sfx clicked
+                                                                                                                                        SFX_CLICKED("asset/texture/volume/sfx-clicked.bmp"),
                                                                                                                                         MIN_VOLUME("asset/texture/volume/0.bmp"),
                                                                                                                                         LOW_VOLUME("asset/texture/volume/25.bmp"),
                                                                                                                                         MEDIUM_VOLUME("asset/texture/volume/50.bmp"),
