@@ -19,6 +19,11 @@ int Object::getHeight() {
 	return texture.getHeight();
 }
 
+void Object::setOffset(int x, int y) {
+	this->x = x;
+	this->y = y;
+}
+
 void Object::render(Engine* engine) {
 	engine->textureFill(x, y, texture);
 }

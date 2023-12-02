@@ -1,16 +1,12 @@
 #ifndef OPTION_HPP_
 #define OPTION_HPP_
 
-#include "typedef.hpp"
-#include "object.hpp"
-#include "button.hpp"
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
 class Option : public Scene {
 private:
     int button;
-    int arrow;
     int musicId;
     int sfxId;
     int spriteId;

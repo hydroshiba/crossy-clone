@@ -21,7 +21,7 @@ public:
 
 	int getWidth();
 	int getHeight();
-
+	void setOffset(int x, int y);
 	virtual void render(Engine* engine);
 };
 

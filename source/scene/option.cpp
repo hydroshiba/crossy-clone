@@ -2,7 +2,6 @@
 
 Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard), 
                                                                                                                                         button(0),
-                                                                                                                                        arrow(0),
                                                                                                                                         spriteId(0),
                                                                                                                                         SPRITE("asset/texture/volume/bgm.bmp"), //sprite
                                                                                                                                         SPRITE_CLICKED("asset/texture/volume/sfx.bmp"), //sprite clicked
@@ -10,18 +9,18 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         DUCK("asset/texture/sprite/duck/down.bmp"),
                                                                                                                                         CAT("asset/texture/sprite/chicken/down.bmp"), //cat sprite
                                                                                                                                         MUSIC("asset/texture/volume/bgm.bmp"),
-                                                                                                                                        MUSIC_CLICKED("asset/texture/volume/sfx.bmp"), //music clicked
+                                                                                                                                        MUSIC_CLICKED("asset/texture/volume/bgm-clicked.bmp"),
                                                                                                                                         SFX("asset/texture/volume/sfx.bmp"), 
-                                                                                                                                        SFX_CLICKED("asset/texture/volume/bgm.bmp"), // sfx clicked
+                                                                                                                                        SFX_CLICKED("asset/texture/volume/sfx-clicked.bmp"),
                                                                                                                                         MIN_VOLUME("asset/texture/volume/0.bmp"),
                                                                                                                                         LOW_VOLUME("asset/texture/volume/25.bmp"),
                                                                                                                                         MEDIUM_VOLUME("asset/texture/volume/50.bmp"),
                                                                                                                                         HIGH_VOLUME("asset/texture/volume/75.bmp"),
                                                                                                                                         MAX_VOLUME("asset/texture/volume/100.bmp"),
                                                                                                                                         LEFT_ARROW("asset/texture/button/arrow-left.bmp"),
-                                                                                                                                        LEFT_ARROW_CLICKED("asset/texture/button/arrow-right.bmp"), //left arrow clicked
+                                                                                                                                        LEFT_ARROW_CLICKED("asset/texture/button/arrow-left-clicked.bmp"),
                                                                                                                                         RIGHT_ARROW("asset/texture/button/arrow-right.bmp"),
-                                                                                                                                        RIGHT_ARROW_CLICKED("asset/texture/button/arrow-left.bmp"), //right arrow clicked
+                                                                                                                                        RIGHT_ARROW_CLICKED("asset/texture/button/arrow-right-clicked.bmp"),
                                                                                                                                         background("asset/sound/background.wav"){
     
     if(setting->volMusic() == Volume::min) musicId = 0;
@@ -36,12 +35,12 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
     else if(setting->volSFX() == Volume::high) sfxId = 3;
     else sfxId = 4;
 
-    buttons.push_back(new Button(MUSIC, MUSIC_CLICKED, width / 5, (height - SFX.getHeight()) / 2 - 200));
-    buttons.push_back(new Button(SFX, SFX_CLICKED, width / 5, (height - SFX.getHeight()) / 2));
-    buttons.push_back(new Button(SPRITE, SPRITE_CLICKED, width / 5, (height - SFX.getHeight()) / 2 + 200));
+    buttons.push_back(new Button(MUSIC, MUSIC_CLICKED, width / 5, height / 2 - height / 4));
+    buttons.push_back(new Button(SFX, SFX_CLICKED, width / 5, height / 2));
+    buttons.push_back(new Button(SPRITE, SPRITE_CLICKED, width / 5, height / 2 + height / 4));
 
-    buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + 10));
-    buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, buttons.back()->getX() + buttons.back()->getWidth() + 300, buttons[2]->getY() + 10));
+    buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + buttons[2]->getHeight() / 3));
+    buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, width / 2 + 7 * buttons.back()->getWidth() / 4, buttons[2]->getY() + buttons[2]->getHeight() / 3));
 
     music.push_back(new Object(width / 3, buttons[0]->getY(), MIN_VOLUME));
     music.push_back(new Object(width / 3, buttons[0]->getY(), LOW_VOLUME));
@@ -55,9 +54,9 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
     sfx.push_back(new Object(width / 3, buttons[1]->getY(), HIGH_VOLUME));
     sfx.push_back(new Object(width / 3, buttons[1]->getY(), MAX_VOLUME));
     
-    sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), CHICKEN));
-    sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), DUCK));
-    sprites.push_back(new Object(buttons[3]->getX() + 170, buttons[2]->getY(), CAT));
+    sprites.push_back(new Object((buttons[3]->getX() + buttons[4]->getX()) / 2, buttons[2]->getY(), CHICKEN));
+    sprites.push_back(new Object(sprites.back()->getX(), sprites.back()->getY(), DUCK));
+    sprites.push_back(new Object(sprites.back()->getX(), sprites.back()->getY(), CAT));
 }
 
 Option::~Option() {
@@ -84,6 +83,19 @@ Scene* Option::process() {
 
     Key pressedKey = keyboard->key();
 
+    switch(spriteId) {
+        case 0:
+            buttons[3]->press();
+            break;
+        case 1:
+            buttons[3]->release();
+            buttons[4]->release();
+            break;
+        case 2:
+            buttons[4]->press();
+            break;
+    }
+
     switch(pressedKey) {
     case Key::UP:
         if(button > 0) {
@@ -96,7 +108,6 @@ Scene* Option::process() {
         }
         break;
     case Key::LEFT:
-        arrow = 3;
         switch(button) {
         case 0:
             setting->decMusic(speaker);
@@ -110,13 +121,11 @@ Scene* Option::process() {
             setting->decSprite();
             if(spriteId > 0) {
                 spriteId--;
-                buttons[arrow]->press();
             }
             break;
         }
         break;
     case Key::RIGHT:
-        arrow = 4;
         switch(button) {
         case 0:
             setting->incMusic(speaker);
@@ -130,7 +139,6 @@ Scene* Option::process() {
             setting->incSprite();
             if(spriteId < 2) {
                 spriteId++;
-                buttons[arrow]->press();
             }
             break;
         }
@@ -155,10 +163,6 @@ void Option::render() {
     sfx[sfxId]->render(engine);
     sprites[spriteId]->render(engine);
     buttons[button]->release();
-    if(arrow != 0) {
-        buttons[arrow]->release();
-        arrow = 0;
-    }
 }
 
 void Option::playsound() {

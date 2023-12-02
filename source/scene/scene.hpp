@@ -7,6 +7,9 @@
 #include "speaker.hpp"
 #include "engine.hpp"
 #include "keyboard.hpp"
+#include "typedef.hpp"
+#include "object.hpp"
+#include "button.hpp"
 
 class SceneRegistry;
 

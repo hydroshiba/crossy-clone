@@ -3,9 +3,6 @@
 
 #include <vector>
 
-#include "typedef.hpp"
-#include "object.hpp"
-#include "button.hpp"
 #include "scene.hpp"
 #include "scene_registry.hpp"
 
