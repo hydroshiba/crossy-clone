@@ -3,8 +3,8 @@
 Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard), 
                                                                                                                                         button(0),
                                                                                                                                         spriteId(0),
-                                                                                                                                        SPRITE("asset/texture/volume/bgm.bmp"), //sprite
-                                                                                                                                        SPRITE_CLICKED("asset/texture/volume/sfx.bmp"), //sprite clicked
+                                                                                                                                        SPRITE("asset/texture/button/choose-sprite.bmp"),
+                                                                                                                                        SPRITE_CLICKED("asset/texture/button/choose-sprite-clicked.bmp"),
                                                                                                                                         CHICKEN("asset/texture/sprite/chicken/down.bmp"),
                                                                                                                                         DUCK("asset/texture/sprite/duck/down.bmp"),
                                                                                                                                         CAT("asset/texture/sprite/chicken/down.bmp"), //cat sprite
