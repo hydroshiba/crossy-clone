@@ -7,10 +7,10 @@ Credit::Credit(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         FOX("asset/texture/credit/fox.bmp"),
                                                                                                                                         SEAL("asset/texture/credit/seal.bmp"),
                                                                                                                                         teacher((width - TEACHER.getWidth()) / 2, height / 4, TEACHER),
-                                                                                                                                        astraunaut(teacher.getX() - teacher.getWidth() * 5, height / 2 + height / 8, ASTRAUNAUT),
+                                                                                                                                        astraunaut(teacher.getX() - teacher.getWidth() * 6, height / 2 + height / 8, ASTRAUNAUT),
                                                                                                                                         cat(teacher.getX() - teacher.getWidth() * 2, height / 2 + height / 8, CAT),
                                                                                                                                         fox(teacher.getX() + teacher.getWidth() * 2, height / 2 + height / 8, FOX),
-                                                                                                                                        seal(teacher.getX() + teacher.getWidth() * 5, height / 2 + height / 8, SEAL),
+                                                                                                                                        seal(teacher.getX() + teacher.getWidth() * 6, height / 2 + height / 8, SEAL),
                                                                                                                                         // title(width / 2, height / 4, TITLE),
                                                                                                                                         background("asset/sound/background.wav"){}
                                                                                                                                         
