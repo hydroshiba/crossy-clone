@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "typedef.hpp"
+#include "object.hpp"
 
 class Player {
 private:

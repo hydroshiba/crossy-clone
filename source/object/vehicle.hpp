@@ -2,7 +2,7 @@
 #define VEHICLE_HPP_
 
 #include <iostream>
-#include "texture.hpp"
+#include "object.hpp"
 
 class Vehicle {
     int lane;

@@ -12,8 +12,8 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
                                                                                                                                      OPTION_CLICKED("asset/texture/button/option_clicked.bmp"),
                                                                                                                                      LEADERBOARD("asset/texture/button/leaderboard.bmp"),
                                                                                                                                      LEADERBOARD_CLICKED("asset/texture/button/leaderboard_clicked.bmp"),
-                                                                                                                                     CREDIT("asset/texture/button/leaderboard.bmp"), //credit
-                                                                                                                                     CREDIT_CLICKED("asset/texture/button/leaderboard_clicked.bmp"), //credit clicked
+                                                                                                                                     CREDIT("asset/texture/button/credit.bmp"), //credit
+                                                                                                                                     CREDIT_CLICKED("asset/texture/button/credit_clicked.bmp"), //credit clicked
                                                                                                                                      QUIT("asset/texture/button/quit.bmp"),
                                                                                                                                      QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
                                                                                                                                      background("asset/sound/background.wav"),
