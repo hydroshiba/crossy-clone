@@ -6,21 +6,20 @@
 #include "engine.hpp"
 
 class Object {
-private:
-	const Texture& texture;
-	
 protected:
+	const Texture& texture;
 	int x, y;
 
 public:
-	Object(int x, int y, const Texture& texture);
-	~Object() = default;
+	Object(const Texture& texture);
+	Object(const Texture& texture, int x, int y);
 
 	int getX();
 	int getY();
 
 	int getWidth();
 	int getHeight();
+
 	void setOffset(int x, int y);
 	virtual void render(Engine* engine);
 };

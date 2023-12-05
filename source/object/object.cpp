@@ -1,7 +1,9 @@
 #include "object.hpp"
 #include <iostream>
 
-Object::Object(int x, int y, const Texture& texture) : x(x), y(y), texture(texture) {}
+Object::Object(const Texture& texture) : x(0), y(0), texture(texture) {}
+
+Object::Object(const Texture& texture, int x, int y) : x(x), y(y), texture(texture) {}
 
 int Object::getX() {
 	return x;
