@@ -6,9 +6,9 @@ Leaderboard::Leaderboard(int width, int height, Engine* engine, Speaker* speaker
                                                                                                                                                  GOLD("asset/texture/cup/gold.bmp"),
                                                                                                                                                  SILVER("asset/texture/cup/silver.bmp"),
                                                                                                                                                  COPPER("asset/texture/cup/copper.bmp"){
-    cups.push_back(new Object((width - SILVER.getWidth()) / 2 - 400, (height - SILVER.getHeight()) / 3 + 180, SILVER));
-    cups.push_back(new Object((width - GOLD.getWidth()) / 2, (height - GOLD.getHeight()) / 3, GOLD));
-    cups.push_back(new Object((width - COPPER.getWidth()) / 2 + 400, (height - COPPER.getHeight()) / 3 + 180, COPPER));
+    cups.push_back(new Object(SILVER, (width - SILVER.getWidth()) / 2 - 400, (height - SILVER.getHeight()) / 3 + 180));
+    cups.push_back(new Object(GOLD, (width - GOLD.getWidth()) / 2, (height - GOLD.getHeight()) / 3));
+    cups.push_back(new Object(COPPER, (width - COPPER.getWidth()) / 2 + 400, (height - COPPER.getHeight()) / 3 + 180));
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {

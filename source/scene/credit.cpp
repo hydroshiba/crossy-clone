@@ -6,12 +6,12 @@ Credit::Credit(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         CAT("asset/texture/credit/cat.bmp"),
                                                                                                                                         FOX("asset/texture/credit/fox.bmp"),
                                                                                                                                         SEAL("asset/texture/credit/seal.bmp"),
-                                                                                                                                        teacher((width - TEACHER.getWidth()) / 2, height / 4, TEACHER),
-                                                                                                                                        astraunaut(teacher.getX() - teacher.getWidth() * 6, height / 2 + height / 8, ASTRAUNAUT),
-                                                                                                                                        cat(teacher.getX() - teacher.getWidth() * 2, height / 2 + height / 8, CAT),
-                                                                                                                                        fox(teacher.getX() + teacher.getWidth() * 2, height / 2 + height / 8, FOX),
-                                                                                                                                        seal(teacher.getX() + teacher.getWidth() * 6, height / 2 + height / 8, SEAL),
-                                                                                                                                        // title(width / 2, height / 4, TITLE),
+                                                                                                                                        teacher(TEACHER, (width - TEACHER.getWidth()) / 2, height / 4),
+                                                                                                                                        astraunaut(ASTRAUNAUT, teacher.getX() - teacher.getWidth() * 6, height / 2 + height / 8),
+                                                                                                                                        cat(CAT, teacher.getX() - teacher.getWidth() * 2, height / 2 + height / 8),
+                                                                                                                                        fox(FOX, teacher.getX() + teacher.getWidth() * 2, height / 2 + height / 8),
+                                                                                                                                        seal(SEAL, teacher.getX() + teacher.getWidth() * 6, height / 2 + height / 8),
+                                                                                                                                        // title(TITLE, width / 2, height / 4),
                                                                                                                                         background("asset/sound/background.wav"){}
                                                                                                                                         
 Credit::~Credit() {

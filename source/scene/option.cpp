@@ -42,21 +42,21 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
     buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + buttons[2]->getHeight() / 3));
     buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, width / 2 + 7 * buttons.back()->getWidth() / 4, buttons[2]->getY() + buttons[2]->getHeight() / 3));
 
-    music.push_back(new Object(width / 3, buttons[0]->getY(), MIN_VOLUME));
-    music.push_back(new Object(width / 3, buttons[0]->getY(), LOW_VOLUME));
-    music.push_back(new Object(width / 3, buttons[0]->getY(), MEDIUM_VOLUME));
-    music.push_back(new Object(width / 3, buttons[0]->getY(), HIGH_VOLUME));
-    music.push_back(new Object(width / 3, buttons[0]->getY(), MAX_VOLUME));
+    music.push_back(new Object(MIN_VOLUME, width / 3, buttons[0]->getY()));
+    music.push_back(new Object(LOW_VOLUME, width / 3, buttons[0]->getY()));
+    music.push_back(new Object(MEDIUM_VOLUME, width / 3, buttons[0]->getY()));
+    music.push_back(new Object(HIGH_VOLUME, width / 3, buttons[0]->getY()));
+    music.push_back(new Object(MAX_VOLUME, width / 3, buttons[0]->getY()));
 
-    sfx.push_back(new Object(width / 3, buttons[1]->getY(), MIN_VOLUME));
-    sfx.push_back(new Object(width / 3, buttons[1]->getY(), LOW_VOLUME));
-    sfx.push_back(new Object(width / 3, buttons[1]->getY(), MEDIUM_VOLUME));
-    sfx.push_back(new Object(width / 3, buttons[1]->getY(), HIGH_VOLUME));
-    sfx.push_back(new Object(width / 3, buttons[1]->getY(), MAX_VOLUME));
+    sfx.push_back(new Object(MIN_VOLUME, width / 3, buttons[1]->getY()));
+    sfx.push_back(new Object(LOW_VOLUME, width / 3, buttons[1]->getY()));
+    sfx.push_back(new Object(MEDIUM_VOLUME, width / 3, buttons[1]->getY()));
+    sfx.push_back(new Object(HIGH_VOLUME, width / 3, buttons[1]->getY()));
+    sfx.push_back(new Object(MAX_VOLUME, width / 3, buttons[1]->getY()));
     
-    sprites.push_back(new Object((buttons[3]->getX() + buttons[4]->getX()) / 2, buttons[2]->getY(), CHICKEN));
-    sprites.push_back(new Object(sprites.back()->getX(), sprites.back()->getY(), DUCK));
-    sprites.push_back(new Object(sprites.back()->getX(), sprites.back()->getY(), CAT));
+    sprites.push_back(new Object(CHICKEN, (buttons[3]->getX() + buttons[4]->getX()) / 2, buttons[2]->getY()));
+    sprites.push_back(new Object(DUCK, sprites.back()->getX(), sprites.back()->getY()));
+    sprites.push_back(new Object(CAT, sprites.back()->getX(), sprites.back()->getY()));
 }
 
 Option::~Option() {

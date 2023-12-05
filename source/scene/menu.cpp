@@ -17,7 +17,7 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
                                                                                                                                      QUIT("asset/texture/button/quit.bmp"),
                                                                                                                                      QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
                                                                                                                                      background("asset/sound/background.wav"),
-                                                                                                                                     title((width - TITLE.getWidth()) / 2, height / 16, TITLE) {
+                                                                                                                                     title(TITLE, (width - TITLE.getWidth()) / 2, height / 16) {
     if(setting->getGamestate().size()){
         buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, height / 6 + 140));
         
