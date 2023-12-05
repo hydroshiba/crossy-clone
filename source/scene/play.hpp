@@ -8,17 +8,24 @@
 
 class Play : public Scene {
 private:
-    std::string background;
-    std::string backgroundMusic;
-    std::string buttonSound;
+    // std::string background;
+    // std::string backgroundMusic;
+    // std::string buttonSound;
     Player *player;
-    std::vector<Lane> lanes;
+    std::vector<Lane*> lanes;
     int score;
     int offset;
-    void loadGamestate(const std::vector<std::string>& gamestate);
+
+    const Texture GRASS1, GRASS2, GRASS3;
+    const Texture ROAD;
+    const Texture PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT;
+
+    void loadGamestate(const std::vector<std::vector<char>>& gamestate);
+    std::vector<std::vector<char>> createGamestate() const;
     void createNewGame(const std::string& name);
-    void updateLane();
-    bool needCreateGrassLane();
+    void updateProcess();
+    bool needCreateGrassLane() const;
+    const Texture& getGrassTexture() const;
 
 public:
     Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);

@@ -13,32 +13,34 @@ D    E     F    C     A    D
 - Address of score and name: 4 bytes
 - Address of lanes' data: 4 bytes
 - Address of player's data: 4 bytes
-- Address of other objects' data: 16 bytes
-- Padding: 4 bytes
+- Address of other objects' data: 4 bytes
+- Padding: 16 bytes
 
 ## Data: unknown bytes
 
-### Score and name: $8$ bytes
+### Score and offset: $8$ bytes
 
 - Score: 4 bytes ------------------------------------- ($gamestate[0][0] -> gamestate[0][3]$)
 - Offset: 4 bytes ------------------------------------- ($gamestate[0][4] -> gamestate[0][7]$)
 
-### Lanes: $5N$ bytes
+### Lanes: $13N$ bytes
 
 - Number of lanes: $N$ (this isn't a stored data)
-- Lanes data: $5N$ bytes ----------------------------- ($gamestate[1][0] -> gamestate[1][5 * gamestate[1][0] - 1]$)
-  - $y$ coordinate: $1$ bytes
-  - Spawning time: $4$ bytes
+- Lanes data: $9N$ bytes ----------------------------- ($gamestate[1][0] -> gamestate[1][13 * N - 1]$)
+  - $y$ coordinate: $4$ bytes
+  - Speed: $4$ bytes
+  - Traffic state: $1$ bytes
 
-### Player: 5 bytes
+### Player: $5 + ???$ bytes
 
-- The numerical order of lane: 1 bytes -------------- ($gamestate[2][0]$)
-- $x$ coordinate: 4 bytes ------------------------------ ($gamestate[2][1] -> gamestate[2][4]$)
-- Name: unknown bytes ----------------------------- ($gamestate[2][5] -> gamestate[2][Name.size() + 4]$)
+- The numerical order of lane: $1$ bytes ------------- ($gamestate[2][0]$) ($lanes[this]$ has this player)
+- $x$ coordinate: $4$ bytes ----------------------------- ($gamestate[2][1] -> gamestate[2][8]$)
+- Name: unknown bytes ---------------------------- ($gamestate[2][9] -> gamestate[2][Name.size() + 4]$)
 
-### Cars, trucks: $2 * 5N$ bytes
 
-- Number of cars (or trucks): $N$ (this isn't a stored data)
-- Objects data: $5N$ bytes ---------------------------- ($gamestate[n][0] -> gamestate[n][5 * gamestate[n][0] - 1]$)
-  - The numerical order of lane: 1 bytes
-  - $x$ coordinate: 4 bytes
+### Cars, trucks: $5N$ bytes
+
+- Number of cars (and trucks): $N$ (this isn't a stored data)
+- Objects data: $9N$ bytes ---------------------------- ($gamestate[n][0] -> gamestate[n][9 * N - 1]$)
+  - The numerical order of lane: 1 bytes ($lanes[this]$ contains this vehicles)
+  - $x$ coordinate: 5 bytes

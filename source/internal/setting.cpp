@@ -50,7 +50,7 @@ void Setting::save() {
 
     // Gamestate (??? byte)
     for(int i = 0; i < gamestate.size(); i++) {
-        file.write(gamestate[i].c_str(), gamestate[i].size());
+        file.write((char*)&gamestate[i], gamestate[i].size());
     }
 
     file.close();
@@ -105,7 +105,7 @@ bool Setting::load() {
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         if (top == 35) break;
 
-        gamestate.push_back(std::string());
+        gamestate.push_back(std::vector<char>());
 
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
@@ -113,7 +113,9 @@ bool Setting::load() {
         buffer = new char[top - bottom + 1];
         buffer[top - bottom] = '\0';
         file.read(buffer, top - bottom);
-        gamestate.back().assign(buffer, top - bottom);
+        for (int i = 0; i < top - bottom; i++) {
+            gamestate.back().push_back(buffer[i]);
+        }
 
         delete[] buffer;
         file.seekg(nextAddress, std::ios::beg);
@@ -157,6 +159,19 @@ Sprite Setting::spriteID() const {
     return sprite;
 }
 
+std::string Setting::spriteObject() const {
+    switch(sprite) {
+        case Sprite::duck:
+            return "duck";
+        case Sprite::cat:
+            return "cat";
+        case Sprite::chicken:
+            return "chicken";
+        default:
+            return "duck";
+    }
+}
+
 void Setting::setScore(word score) {
     word* ptr = reinterpret_cast<word*>(this->score);
 
@@ -188,5 +203,5 @@ void Setting::decSFX(Speaker* speaker) {
 void Setting::incSprite() { ++sprite; }
 void Setting::decSprite() { --sprite; }
 
-std::vector<std::string> Setting::getGamestate() const { return gamestate; }
-void Setting::setGamestate(std::vector<std::string> state) { gamestate = state; }
+std::vector<std::vector<char>> Setting::getGamestate() const { return gamestate; }
+void Setting::setGamestate(std::vector<std::vector<char>> state) { gamestate = state; }

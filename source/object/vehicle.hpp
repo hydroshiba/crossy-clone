@@ -2,22 +2,23 @@
 #define VEHICLE_HPP_
 
 #include <iostream>
-#include "object.hpp"
+#include <isometric.hpp>
 
-class Vehicle {
-    int lane;
-    float pos;
-    std::string sprite;
+class Vehicle : public Isometric {
+    const Texture& vehicleSprite;
     std::string sound;
 
 public:
-    Vehicle(const int& lane, const float& pos, const std::string& sprite, const std::string& sound);
+    Vehicle(const float& lane, const float& pos, const Texture& sprite, const std::string& sound);
+    Vehicle(const int& lane, const float& pos, const Texture& sprite, const std::string& sound);
 
     bool move(const float& speed, const float& playerPos);
     bool isCollision(const float& pos);
     bool isOut(const float& pos);
     void render();
     void playSound();
+
+    ~Vehicle() = default;
 };
 
 #endif

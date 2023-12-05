@@ -3,24 +3,26 @@
 
 #include <iostream>
 #include "typedef.hpp"
-#include "object.hpp"
-using hrClock = high_resolution_clock::time_point;
+#include "isometric.hpp"
+using hrClock_TP = high_resolution_clock::time_point;
 
-class Traffic {
+class Traffic : public Isometric {
 private:
-    int lane;
     bool isRed;  // true = red, false = green
-    int clock;
-    std::string sprite;
+    hrClock_TP prev, now;
+    const Texture& trafficRed, trafficGreen;
 
 public:
-    Traffic(const int& lane, const bool& isRed, const int& clock, const std::string& sprite);
+    Traffic(const float& pos, const Texture& red, const Texture& green);
+    Traffic(const int& pos, const Texture& red, const Texture& green);
+    Traffic(const float& pos, const bool& isRed, const Texture& red, const Texture& green);
+    Traffic(const int& pos, const bool& isRed, const Texture& red, const Texture& green);
 
-    void render();
-    void process(const uint64_t& time, hrClock& prev, hrClock& now);
-    bool isRedLight();
+    void process(const uint64_t& milliTime);
+    bool isRedLight() const;
+    void render(Engine* engine);
 
-    ~Traffic();
+    ~Traffic() = default;
 };
 
 #endif

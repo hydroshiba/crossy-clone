@@ -1,7 +1,17 @@
 #include "player.hpp"
 
-Player::Player(const int& lane, const float& pos, const std::string& name, const std::string& sprite, const std::string& sound) : lane(lane), pos(pos), name(name), sprite(sprite), sound(sound) {
-}
+Player::Player(const int& lane, const float& pos, const std::string& name, const Texture& up, const Texture& down, const Texture& left, const Texture& right, const std::string& sound) :
+    Isometric(up, {100.0f, 100.0f}, {pos, 0.0f}),
+    lane(lane),
+    pos(pos),
+    name(name),
+    sound(sound),
+    playerSpriteUp(up),
+    playerSpriteDown(down),
+    playerSpriteLeft(left),
+    playerSpriteRight(right)
+    {
+    }
 
 void Player::move(const Key& key) {
     switch (key) {
@@ -28,6 +38,10 @@ int Player::getLane() {
 
 float Player::getPos() {
     return pos;
+}
+
+std::string Player::getName() {
+    return name;
 }
 
 void Player::render() {

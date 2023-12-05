@@ -6,22 +6,33 @@
 #include <mutex>
 #include "vehicle.hpp"
 #include "traffic.hpp"
-class Lane {
+class Lane : public Isometric {
 private:
-    int pos;             // position
-    std::vector<Vehicle> vehicles;
+    std::vector<Vehicle*> vehicles;
     Traffic traffic;     // traffic light
     float speed;           // speed
-    // const Texture sprite;  // sprite
-    std::string sprite;
+    const Texture& laneSprite;  // sprite
+    
+    const Texture AMBULANCE_FRONT, AMBULANCE_BACK;
+    const Texture BLUE_CAR_FRONT, BLUE_CAR_BACK;
+    const Texture ORANGE_CAR_FRONT, ORANGE_CAR_BACK;
+    const Texture TRUCK_FRONT, TRUCK_BACK;
+    const Texture TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN;
 
 public:
-    Lane(const int& pos, const float& speed, const std::string& sprite);
+    Lane(const float& pos, const float& speed, const Texture& sprite);
+    Lane(const int& pos, const float& speed, const Texture& sprite);
+    Lane(const float& pos, const float& speed, const bool& trafficState, const Texture& sprite);
+    Lane(const int& pos, const float& speed, const bool& trafficState, const Texture& sprite);
+    Lane(const Lane& lane);
 
-    void render();
-    void process(const uint64_t& time, hrClock& prev, bool& isGameover, const float& playerPos = -10);
+    void render(const int& offset, const float& playerLane);
+    void process(const int& time, hrClock_TP& prev, bool& isGameover, const float& playerPos = -10);
     bool checkCollision(const float& pos);
-    void addVehicle(const float& pos, const std::string& sprite, const std::string& sound);
+    void addVehicle(const float& pos, const std::string& sound);
+    float getSpeed() const;
+    bool getTrafficState() const;
+    std::vector<char> getVehiclesGamestate() const;
 
     virtual ~Lane();
 };
