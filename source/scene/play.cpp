@@ -11,6 +11,18 @@ Play::Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
     PLAYER_LEFT("asset/texture/sprite/" + setting->spriteObject() + "/left.bmp"),
     PLAYER_RIGHT("asset/texture/sprite/" + setting->spriteObject() + "/right.bmp")
     {
+        // Load lane textures
+        laneTextures.push_back(new Texture("asset/texture/ambulance/front.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/ambulance/back.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/car/blue/front.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/car/blue/back.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/car/orange/front.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/car/orange/back.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/truck/front.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/truck/back.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/traffic/red.bmp"));
+        laneTextures.push_back(new Texture("asset/texture/traffic/green.bmp"));
+
         // Load gamestate
         if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
         else createNewGame("");
@@ -153,8 +165,8 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
         tmpTraffic += gamestate[1][i + 8];
 
-        if (toFloat(tmpSpeed) == 0) lanes.push_back(new Lane(toInt(tmpPos), toFloat(tmpSpeed), toBool(tmpTraffic), getGrassTexture()));
-        else lanes.push_back(new Lane(toInt(tmpPos), toFloat(tmpSpeed), toBool(tmpTraffic), ROAD));
+        if (toFloat(tmpSpeed) == 0) lanes.push_back(new Lane(toInt(tmpPos), toFloat(tmpSpeed), toBool(tmpTraffic), getGrassTexture(), laneTextures));
+        else lanes.push_back(new Lane(toInt(tmpPos), toFloat(tmpSpeed), toBool(tmpTraffic), ROAD, laneTextures));
     }
 
     // Handle gamestate[2] : Player
@@ -259,17 +271,19 @@ std::vector<std::vector<char>> Play::createGamestate() const {
 }
 
 void Play::createNewGame(const std::string& name) {
+    std::cout << "Creating new game" << std::endl;
     // Score and offset
     score = 0;
     offset = 0;
 
     // Lanes initialization
-    lanes.push_back(new Lane(0, 0, GRASS1));
+    lanes.push_back(new Lane(0, 0, GRASS1, laneTextures));
     for (int i = 1; i < 30; i++) {
+        std::cout << "Creating lane " << i << std::endl;
         if (needCreateGrassLane()) {
-            lanes.push_back(new Lane(0 - i - offset, 0, getGrassTexture()));
+            lanes.push_back(new Lane(0 - i - offset, 0, getGrassTexture(), laneTextures));
         }
-        else lanes.push_back(new Lane(0 - i - offset, rand() % (100 + offset * offset) / 1.0 * 100 + 1, ROAD));
+        else lanes.push_back(new Lane(0 - i - offset, rand() % (100 + offset * offset) / 1.0 * 100 + 1, ROAD, laneTextures));
     }
 
     // Player
@@ -286,7 +300,7 @@ void Play::updateProcess() {
     // Update lanes
     if (!lanes.empty()) delete lanes.front();
     lanes.erase(lanes.begin());
-    lanes.push_back(new Lane(0 - 30 - offset, rand() % (100 + offset * offset) / 1.0 * 100 + 1, ROAD));
+    lanes.push_back(new Lane(0 - 30 - offset, rand() % (100 + offset * offset) / 1.0 * 100 + 1, ROAD, laneTextures));
 }
 
 bool Play::needCreateGrassLane() const {
@@ -311,5 +325,8 @@ Play::~Play() {
     delete player;
     for (auto lane : lanes) {
         delete lane;
+    }
+    for (auto texture : laneTextures) {
+        delete texture;
     }
 }

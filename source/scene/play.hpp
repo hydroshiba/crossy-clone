@@ -19,6 +19,7 @@ private:
     const Texture GRASS1, GRASS2, GRASS3;
     const Texture ROAD;
     const Texture PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT;
+    std::vector<const Texture*> laneTextures;
 
     void loadGamestate(const std::vector<std::vector<char>>& gamestate);
     std::vector<std::vector<char>> createGamestate() const;

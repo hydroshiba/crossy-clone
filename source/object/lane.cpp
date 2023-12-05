@@ -1,48 +1,85 @@
 #include "lane.hpp"
 
-Lane::Lane(const float& pos, const float& speed, const Texture& sprite) :
+Lane::Lane(const float& pos, const float& speed, const Texture& sprite, std::vector<const Texture*>& textures) :
     Isometric(sprite, {100.0f, 100.0f}, {pos, 0.0f}),
     speed(speed),
     laneSprite(sprite),
-    traffic(pos, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN),
-    AMBULANCE_FRONT("asset/texture/ambulance/front.bmp"),
-    AMBULANCE_BACK("asset/texture/ambulance/back.bmp"),
-    BLUE_CAR_FRONT("asset/texture/car/blue/front.bmp"),
-    BLUE_CAR_BACK("asset/texture/car/blue/back.bmp"),
-    ORANGE_CAR_FRONT("asset/texture/car/orange/front.bmp"),
-    ORANGE_CAR_BACK("asset/texture/car/orange/back.bmp"),
-    TRUCK_FRONT("asset/texture/truck/front.bmp"),
-    TRUCK_BACK("asset/texture/truck/back.bmp"),
-    TRAFFIC_LIGHT_RED("asset/texture/traffic/red.bmp"),
-    TRAFFIC_LIGHT_GREEN("asset/texture/traffic/green.bmp")
+    AMBULANCE_FRONT(*textures[0]),
+    AMBULANCE_BACK(*textures[1]),
+    BLUE_CAR_FRONT(*textures[2]),
+    BLUE_CAR_BACK(*textures[3]),
+    ORANGE_CAR_FRONT(*textures[4]),
+    ORANGE_CAR_BACK(*textures[5]),
+    TRUCK_FRONT(*textures[6]),
+    TRUCK_BACK(*textures[7]),
+    TRAFFIC_LIGHT_RED(*textures[8]),
+    TRAFFIC_LIGHT_GREEN(*textures[9]),
+    traffic(pos, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN)
     {
     
     }
 
-Lane::Lane(const int& pos, const float& speed, const Texture& sprite) :
+Lane::Lane(const int& pos, const float& speed, const Texture& sprite, std::vector<const Texture*>& textures) :
     Isometric(sprite, {100.0f, 100.0f}, {static_cast<float>(pos), 0.0f}),
     speed(speed),
     laneSprite(sprite),
-    traffic(pos, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN),
-    AMBULANCE_FRONT("asset/texture/ambulance/front.bmp"),
-    AMBULANCE_BACK("asset/texture/ambulance/back.bmp"),
-    BLUE_CAR_FRONT("asset/texture/car/blue/front.bmp"),
-    BLUE_CAR_BACK("asset/texture/car/blue/back.bmp"),
-    ORANGE_CAR_FRONT("asset/texture/car/orange/front.bmp"),
-    ORANGE_CAR_BACK("asset/texture/car/orange/back.bmp"),
-    TRUCK_FRONT("asset/texture/truck/front.bmp"),
-    TRUCK_BACK("asset/texture/truck/back.bmp"),
-    TRAFFIC_LIGHT_RED("asset/texture/traffic/red.bmp"),
-    TRAFFIC_LIGHT_GREEN("asset/texture/traffic/green.bmp")
+    AMBULANCE_FRONT(*textures[0]),
+    AMBULANCE_BACK(*textures[1]),
+    BLUE_CAR_FRONT(*textures[2]),
+    BLUE_CAR_BACK(*textures[3]),
+    ORANGE_CAR_FRONT(*textures[4]),
+    ORANGE_CAR_BACK(*textures[5]),
+    TRUCK_FRONT(*textures[6]),
+    TRUCK_BACK(*textures[7]),
+    TRAFFIC_LIGHT_RED(*textures[8]),
+    TRAFFIC_LIGHT_GREEN(*textures[9]),
+    traffic(pos, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN)
+    {
+    
+    }
+
+Lane::Lane(const float& pos, const float& speed, const bool& trafficState, const Texture& sprite, std::vector<const Texture*>& textures) :
+    Isometric(sprite, {100.0f, 100.0f}, {pos, 0.0f}),
+    speed(speed),
+    laneSprite(sprite),
+    AMBULANCE_FRONT(*textures[0]),
+    AMBULANCE_BACK(*textures[1]),
+    BLUE_CAR_FRONT(*textures[2]),
+    BLUE_CAR_BACK(*textures[3]),
+    ORANGE_CAR_FRONT(*textures[4]),
+    ORANGE_CAR_BACK(*textures[5]),
+    TRUCK_FRONT(*textures[6]),
+    TRUCK_BACK(*textures[7]),
+    TRAFFIC_LIGHT_RED(*textures[8]),
+    TRAFFIC_LIGHT_GREEN(*textures[9]),
+    traffic(pos, trafficState, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN)
+    {
+    
+    }
+
+Lane::Lane(const int& pos, const float& speed, const bool& trafficState, const Texture& sprite, std::vector<const Texture*>& textures) :
+    Isometric(sprite, {100.0f, 100.0f}, {static_cast<float>(pos), 0.0f}),
+    speed(speed),
+    laneSprite(sprite),
+    AMBULANCE_FRONT(*textures[0]),
+    AMBULANCE_BACK(*textures[1]),
+    BLUE_CAR_FRONT(*textures[2]),
+    BLUE_CAR_BACK(*textures[3]),
+    ORANGE_CAR_FRONT(*textures[4]),
+    ORANGE_CAR_BACK(*textures[5]),
+    TRUCK_FRONT(*textures[6]),
+    TRUCK_BACK(*textures[7]),
+    TRAFFIC_LIGHT_RED(*textures[8]),
+    TRAFFIC_LIGHT_GREEN(*textures[9]),
+    traffic(pos, trafficState, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN)
     {
     
     }
 
 Lane::Lane(const Lane& lane) :
-    Isometric(laneSprite, {100.0f, 100.0f}, {lane.Y(), 0.0f}),
+    Isometric(lane),
     speed(lane.speed),
     laneSprite(lane.laneSprite),
-    traffic(lane.traffic),
     AMBULANCE_FRONT(lane.AMBULANCE_FRONT),
     AMBULANCE_BACK(lane.AMBULANCE_BACK),
     BLUE_CAR_FRONT(lane.BLUE_CAR_FRONT),
@@ -52,45 +89,8 @@ Lane::Lane(const Lane& lane) :
     TRUCK_FRONT(lane.TRUCK_FRONT),
     TRUCK_BACK(lane.TRUCK_BACK),
     TRAFFIC_LIGHT_RED(lane.TRAFFIC_LIGHT_RED),
-    TRAFFIC_LIGHT_GREEN(lane.TRAFFIC_LIGHT_GREEN)
-    {
-    
-    }
-
-Lane::Lane(const float& pos, const float& speed, const bool& trafficState, const Texture& sprite) :
-    Isometric(sprite, {100.0f, 100.0f}, {pos, 0.0f}),
-    speed(speed),
-    laneSprite(sprite),
-    traffic(pos, trafficState, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN),
-    AMBULANCE_FRONT("asset/texture/ambulance/front.bmp"),
-    AMBULANCE_BACK("asset/texture/ambulance/back.bmp"),
-    BLUE_CAR_FRONT("asset/texture/car/blue/front.bmp"),
-    BLUE_CAR_BACK("asset/texture/car/blue/back.bmp"),
-    ORANGE_CAR_FRONT("asset/texture/car/orange/front.bmp"),
-    ORANGE_CAR_BACK("asset/texture/car/orange/back.bmp"),
-    TRUCK_FRONT("asset/texture/truck/front.bmp"),
-    TRUCK_BACK("asset/texture/truck/back.bmp"),
-    TRAFFIC_LIGHT_RED("asset/texture/traffic/red.bmp"),
-    TRAFFIC_LIGHT_GREEN("asset/texture/traffic/green.bmp")
-    {
-    
-    }
-
-Lane::Lane(const int& pos, const float& speed, const bool& trafficState, const Texture& sprite) :
-    Isometric(sprite, {100.0f, 100.0f}, {static_cast<float>(pos), 0.0f}),
-    speed(speed),
-    laneSprite(sprite),
-    traffic(pos, trafficState, TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN),
-    AMBULANCE_FRONT("asset/texture/ambulance/front.bmp"),
-    AMBULANCE_BACK("asset/texture/ambulance/back.bmp"),
-    BLUE_CAR_FRONT("asset/texture/car/blue/front.bmp"),
-    BLUE_CAR_BACK("asset/texture/car/blue/back.bmp"),
-    ORANGE_CAR_FRONT("asset/texture/car/orange/front.bmp"),
-    ORANGE_CAR_BACK("asset/texture/car/orange/back.bmp"),
-    TRUCK_FRONT("asset/texture/truck/front.bmp"),
-    TRUCK_BACK("asset/texture/truck/back.bmp"),
-    TRAFFIC_LIGHT_RED("asset/texture/traffic/red.bmp"),
-    TRAFFIC_LIGHT_GREEN("asset/texture/traffic/green.bmp")
+    TRAFFIC_LIGHT_GREEN(lane.TRAFFIC_LIGHT_GREEN),
+    traffic(lane.traffic)
     {
     
     }

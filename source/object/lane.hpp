@@ -13,17 +13,17 @@ private:
     float speed;           // speed
     const Texture& laneSprite;  // sprite
     
-    const Texture AMBULANCE_FRONT, AMBULANCE_BACK;
-    const Texture BLUE_CAR_FRONT, BLUE_CAR_BACK;
-    const Texture ORANGE_CAR_FRONT, ORANGE_CAR_BACK;
-    const Texture TRUCK_FRONT, TRUCK_BACK;
-    const Texture TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN;
+    const Texture& AMBULANCE_FRONT, AMBULANCE_BACK;
+    const Texture& BLUE_CAR_FRONT, BLUE_CAR_BACK;
+    const Texture& ORANGE_CAR_FRONT, ORANGE_CAR_BACK;
+    const Texture& TRUCK_FRONT, TRUCK_BACK;
+    const Texture& TRAFFIC_LIGHT_RED, TRAFFIC_LIGHT_GREEN;
 
 public:
-    Lane(const float& pos, const float& speed, const Texture& sprite);
-    Lane(const int& pos, const float& speed, const Texture& sprite);
-    Lane(const float& pos, const float& speed, const bool& trafficState, const Texture& sprite);
-    Lane(const int& pos, const float& speed, const bool& trafficState, const Texture& sprite);
+    Lane(const float& pos, const float& speed, const Texture& sprite, std::vector<const Texture*>& textures);
+    Lane(const int& pos, const float& speed, const Texture& sprite, std::vector<const Texture*>& textures);
+    Lane(const float& pos, const float& speed, const bool& trafficState, const Texture& sprite, std::vector<const Texture*>& textures);
+    Lane(const int& pos, const float& speed, const bool& trafficState, const Texture& sprite, std::vector<const Texture*>& textures);
     Lane(const Lane& lane);
 
     void render(const int& offset, const float& playerLane);
