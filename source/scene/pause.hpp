@@ -6,12 +6,12 @@
 
 class Pause : public Scene {
 private:
-    std::string gameTitle;
-    std::string quitButton;
-    std::string continueButton;
-    std::string background;
-    std::string backgroundMusic;
-    std::string buttonSound;
+    const Texture CONTINUE, CONTINUE_CLICKED;
+    const Texture QUIT, QUIT_CLICKED;
+
+    bool isExit;
+
+    Button* buttons[2];
 
 public:
     Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
