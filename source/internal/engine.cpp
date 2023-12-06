@@ -45,6 +45,7 @@ void Engine::fill(byte r, byte g, byte b) {
 void Engine::textureFill(int x, int y, Texture const * const texture) {
     for(int j = 0; j < texture->height; j++) {
         for(int i = 0; i < texture->width; i++) {
+            if(x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) continue;
             Color* pixel = (Color*)(pixels + ((x + i) + (y + j) * width) * 4);
             *pixel += texture->data[(i % texture->width) + (j % texture->height) * texture->width];
         }
