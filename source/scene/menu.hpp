@@ -18,9 +18,10 @@ private:
     const Texture LEADERBOARD, LEADERBOARD_CLICKED;
     const Texture CREDIT, CREDIT_CLICKED;
     const Texture QUIT, QUIT_CLICKED;
-
+    const Texture DUCK_X2;
     Sound background;
     Object title;
+    Object duck_x2;
 
     std::vector<Button*> buttons;
 

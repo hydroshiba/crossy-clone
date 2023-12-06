@@ -21,7 +21,6 @@ Scene* Pause::process() {
 
     Scene* nextScene = this;
 
-    keyboard->refresh();
     Key pressedKey = keyboard->key();
 
     if (pressedKey == Key::LEFT) {
