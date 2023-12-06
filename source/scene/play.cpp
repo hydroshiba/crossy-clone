@@ -246,7 +246,10 @@ std::vector<std::vector<char>> Play::createGamestate() const {
     {
         std::vector<char> tmpLane = iToS((int)(player->Y() - offset), 1);
         std::vector<char> tmpPos = fToS(player->X(), 4);
-        std::vector<char> tmpName = std::vector<char>(player->getName().begin(), player->getName().end());
+        std::vector<char> tmpName;
+        for (int i = 0; i < player->getName().size(); i++) {
+            tmpName.push_back(player->getName()[i]);
+        }
         gamestate[2].push_back(tmpLane[0]);
         for (int i = 0; i < 4; i++) {
             gamestate[2].push_back(tmpPos[i]);

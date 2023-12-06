@@ -9,9 +9,10 @@ private:
     const Texture CONTINUE, CONTINUE_CLICKED;
     const Texture QUIT, QUIT_CLICKED;
 
-    bool isExit;
+    int button;
 
-    Button* buttons[2];
+    Button quitButton;
+    Button continueButton;
 
 public:
     Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
