@@ -27,6 +27,11 @@ Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos, 
 	project();
 }
 
+void Isometric::render(Engine* engine) {
+	project();
+	Object::render(engine);
+}
+
 void Isometric::project() {
 	Vec2 res = transform * pos + offset3D;
 	x = res.x;

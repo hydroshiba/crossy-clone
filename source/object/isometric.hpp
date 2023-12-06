@@ -21,6 +21,8 @@ public:
 	Isometric(const Texture& texture, const Vec2& size, const Vec2& pos);
 	Isometric(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D);
 
+	void render(Engine* engine) override;
+
 	// Logical position
 
 	float width() const;

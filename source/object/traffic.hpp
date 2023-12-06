@@ -4,23 +4,21 @@
 #include <iostream>
 #include "typedef.hpp"
 #include "isometric.hpp"
-using hrClock_TP = high_resolution_clock::time_point;
 
 class Traffic : public Isometric {
 private:
+    const Texture& RED;
     bool isRed;  // true = red, false = green
-    hrClock_TP prev, now;
-    const Texture& trafficRed, trafficGreen;
+
+    int interval;
+    int clock;
+    
 
 public:
-    Traffic(const float& pos, const Texture& red, const Texture& green);
-    Traffic(const int& pos, const Texture& red, const Texture& green);
-    Traffic(const float& pos, const bool& isRed, const Texture& red, const Texture& green);
-    Traffic(const int& pos, const bool& isRed, const Texture& red, const Texture& green);
+    Traffic(const Texture& green, const Texture& red, const Vec2& size, const Vec2& pos, const Vec2& off = {0, 0}, bool isRed = false, int clock = 0);
 
-    void process(const uint64_t& milliTime);
+    void process();
     bool isRedLight() const;
-    void render(Engine* engine);
 
     ~Traffic() = default;
 };

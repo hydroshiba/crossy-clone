@@ -1,57 +1,22 @@
 #include "traffic.hpp"
 
-Traffic::Traffic(const float& pos, const Texture& red, const Texture& green) :
-    Isometric(green, {100.0f, 100.0f}, {pos, 0.0f}),
-    isRed(false),
-    trafficRed(red),
-    trafficGreen(green)
-    {
-        hrClock_TP now = high_resolution_clock::now();
-        prev = now;
-    }
-
-Traffic::Traffic(const int& pos, const Texture& red, const Texture& green) :
-    Isometric(green, {100.0f, 100.0f}, {static_cast<float>(pos), 0.0f}),
-    isRed(false),
-    trafficRed(red),
-    trafficGreen(green)
-    {
-        hrClock_TP now = high_resolution_clock::now();
-        prev = now;
-    }
-
-Traffic::Traffic(const float& pos, const bool& isRed, const Texture& red, const Texture& green) :
-    Isometric(green, {100.0f, 100.0f}, {pos, 0.0f}),
+Traffic::Traffic(const Texture& green, const Texture& red, const Vec2& size, const Vec2& pos, const Vec2& off, bool isRed, int clock): 
+    Isometric(green, size, pos, off),
+    RED(red),
     isRed(isRed),
-    trafficRed(red),
-    trafficGreen(green)
-    {
-        hrClock_TP now = high_resolution_clock::now();
-        prev = now;
-    }
+    interval(300),
+    clock(clock) {}
 
-Traffic::Traffic(const int& pos, const bool& isRed, const Texture& red, const Texture& green) :
-    Isometric(green, {100.0f, 100.0f}, {static_cast<float>(pos), 0.0f}),
-    isRed(isRed),
-    trafficRed(red),
-    trafficGreen(green)
-    {
-        hrClock_TP now = high_resolution_clock::now();
-        prev = now;
-    }
-
-void Traffic::process(const uint64_t& milliTime) {
-    now = high_resolution_clock::now();
-    uint64_t interval = duration_cast<milliseconds>(now - prev).count();
-    if (interval >= milliTime) {
+void Traffic::process() {
+    if (clock >= interval) {
         isRed = !isRed;
-        prev = now;
+        clock = 0;
+        return;
     }
+
+    ++clock;
 }
 
 bool Traffic::isRedLight() const {
     return isRed;
-}
-
-void Traffic::render(Engine* engine) {
 }
