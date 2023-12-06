@@ -19,6 +19,7 @@ public:
 
     void process();
     bool isRedLight() const;
+    int getClock() const;
 
     ~Traffic() = default;
 };

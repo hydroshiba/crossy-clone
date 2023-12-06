@@ -8,20 +8,17 @@
 
 class Play : public Scene {
 private:
-    // std::string background;
-    // std::string backgroundMusic;
-    // std::string buttonSound;
     Player *player;
     std::vector<Lane*> lanes;
+    bool isGameover;
     int score;
     int offset;
 
-    const Texture GRASS1, GRASS2, GRASS3;
-    const Texture ROAD;
-    const Texture PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT;
-    std::vector<const Texture*> laneTextures;
+    std::vector<const Texture*> LANE_TEXTURES;
+    std::vector<const Texture*> PLAYER_TEXTURES;
+    std::vector<std::pair<const Texture&, const Texture&>> VEHICLE_TEXTURE;
+    std::pair<const Texture&, const Texture&> TRAFFIC_TEXTURE;
 
-    void loadGamestate(const std::vector<std::vector<char>>& gamestate);
     std::vector<std::vector<char>> createGamestate() const;
     void createNewGame(const std::string& name);
     void updateProcess();
@@ -32,6 +29,7 @@ public:
     Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Play();
 
+    void loadGamestate(const std::vector<std::vector<char>>& gamestate);
     Scene* process() override;
     void render() override;
     void playsound() override;

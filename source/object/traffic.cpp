@@ -20,3 +20,7 @@ void Traffic::process() {
 bool Traffic::isRedLight() const {
     return isRed;
 }
+
+int Traffic::getClock() const {
+    return clock;
+}

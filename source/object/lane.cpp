@@ -18,19 +18,65 @@ Lane::Lane(const Texture& texture, int pos, int len, float speed, const std::vec
             blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i), float(pos)}));
     }
 
-void Lane::render(Engine* engine) {
+void Lane::render(Engine* engine, int playerPos) {
+    int realPos = pos.y + playerPos + 19;
     for(auto& block : blocks)
         block.render(engine);
 }
 
-void Lane::process() {
+void Lane::process(bool& isGameover, float playerPos) {
     // Use VEHICLE_TEXTURE[] to random a texture for vehicle
     // Remember to random spawn and reset clock after clock >= spawn
+
+    if (clock >= spawn) {
+        clock = 0;
+        int random = rand() % 3;
+        if (speed > 0.0f) {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(length)}, {0.0f, 0.0f}));
+        } else {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), 0.0f}, {0.0f, 0.0f}));
+        }
+
+        for (auto& vehicle : vehicles) {
+            vehicle->move(speed);
+            isGameover |= vehicle->collide(playerPos);
+        }
+
+        if (vehicles[0]->X() > length) {
+            delete vehicles[0];
+            vehicles.erase(vehicles.begin());
+        }
+
+        traffic.process();
+
+        if (!isGameover) {
+            return;
+        }
+
+        for (auto& vehicle : vehicles) {
+            delete vehicle;
+        }
+        vehicles.clear();
+        if (speed > 0.0f) {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[3].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(length)}, {0.0f, 0.0f}));
+        } else {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[3].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), 0.0f}, {0.0f, 0.0f}));
+        }
+
+        return;
+    }
+
+    ++clock;
+}
+
+void Lane::gameoverProcess(bool& isStopped, float playerPos) {
+    vehicles[0]->move(speed);
+    isStopped |= vehicles[0]->collide(playerPos);
 }
 
 bool Lane::collide(float pos) {
     for (auto& vehicle : vehicles) {
-        if (vehicle.collide(pos)) return true;
+        if (vehicle->collide(pos)) return true;
     }
     return false;
 }
@@ -39,8 +85,43 @@ float Lane::getSpeed() const {
     return speed;
 }
 
-bool Lane::getTrafficState() const {
-    return traffic.isRedLight();
+int Lane::getSpawn() const {
+    return spawn;
+}
+
+void Lane::addVehicle(float pos) {
+    int random = rand() % 3;
+    if (speed > 0.0f) {
+        vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(length)}, {0.0f, 0.0f}));
+    } else {
+        vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), 0.0f}, {0.0f, 0.0f}));
+    }
+}
+
+std::vector<char> Lane::getTrafficGamestate() const {
+    auto iToS = [](int num, int strSize) -> std::string {
+        std::string str = "";
+        for (int i = 0; i < strSize; i++) {
+            str += *reinterpret_cast<char*>(&num);
+            num >>= 8;
+        }
+        return str;
+    };
+
+    auto bToS = [](bool num) -> std::string {
+        std::string str = "";
+        str += *reinterpret_cast<char*>(&num);
+        return str;
+    };
+
+    std::vector<char> gamestate;
+    std::string tmpState = bToS(traffic.isRedLight());
+    std::string tmpClock = iToS(traffic.getClock(), 4);
+    gamestate.push_back(tmpState[0]);
+    for (int i = 0; i < 4; i++) {
+        gamestate.push_back(tmpClock[i]);
+    }
+    return gamestate;
 }
 
 std::vector<char> Lane::getVehiclesGamestate() const {
@@ -59,10 +140,17 @@ std::vector<char> Lane::getVehiclesGamestate() const {
 
     std::vector<char> gamestate;
     for (auto& vehicle : vehicles) {
-        std::string tmpPos = fToS(vehicle.X(), 4);
-        for (int i = 0; i < 8; i++) {
+        std::string tmpPos = fToS(vehicle->X(), 4);
+        for (int i = 0; i < 4; i++) {
             gamestate.push_back(tmpPos[i]);
         }
     }
     return gamestate;
+}
+
+Lane::~Lane() {
+    for (auto& vehicle : vehicles) {
+        delete vehicle;
+    }
+    vehicles.clear();
 }

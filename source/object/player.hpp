@@ -2,29 +2,21 @@
 #define PLAYER_HPP_
 
 #include <iostream>
+#include <vector>
 
 #include "typedef.hpp"
 #include "isometric.hpp"
 
 class Player : public Isometric {
 private:
-    int lane;
-    float pos;
     std::string name;
-    std::string sound;   // sound
-    std::string sprite;  // sprite
 
-    const Texture playerSpriteUp;
-    const Texture playerSpriteDown;
-    const Texture playerSpriteLeft;
-    const Texture playerSpriteRight;
+    std::vector<std::pair<const std::string, const Texture&>> PLAYER_TEXTURES;
 
 public:
-    Player(const int& lane, const float& pos, const std::string& name, const Texture& up, const Texture& down, const Texture& left, const Texture& right, const std::string& sound);
+    Player(const int& lane, const float& pos, const std::string& name, std::vector<const Texture*>& PT);
 
     void move(const Key& key);
-    int getLane();
-    float getPos();
     std::string getName();
     void render();
     void playSound();

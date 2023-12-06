@@ -1,43 +1,33 @@
 #include "player.hpp"
 
-Player::Player(const int& lane, const float& pos, const std::string& name, const Texture& up, const Texture& down, const Texture& left, const Texture& right, const std::string& sound) :
-    Isometric(up, {100.0f, 100.0f}, {pos, 0.0f}),
-    lane(lane),
-    pos(pos),
+Player::Player(const int& lane, const float& pos, const std::string& name, std::vector<const Texture*>& PT) :
+    Isometric(*PT[0], {100.0f, 100.0f}, {pos, 0.0f}),
     name(name),
-    sound(sound),
-    playerSpriteUp(up),
-    playerSpriteDown(down),
-    playerSpriteLeft(left),
-    playerSpriteRight(right)
+    PLAYER_TEXTURES({{"UP", *PT[0]},
+                     {"DOWN", *PT[1]},
+                     {"LEFT", *PT[2]},
+                     {"RIGHT", *PT[3]}
+                     })
     {
     }
 
 void Player::move(const Key& key) {
     switch (key) {
         case Key::UP:
-            lane += 1;
+            pos.y += 1;
             break;
         case Key::DOWN:
-            lane -= 1;
+            pos.y -= 1;
             break;
         case Key::LEFT:
-            pos -= 1;
+            pos.x -= 1;
             break;
         case Key::RIGHT:
-            pos += 1;
+            pos.x += 1;
             break;
         default:
             break;
     }
-}
-
-int Player::getLane() {
-    return lane;
-}
-
-float Player::getPos() {
-    return pos;
 }
 
 std::string Player::getName() {

@@ -23,13 +23,15 @@ D    E     F    C     A    D
 - Score: 4 bytes ------------------------------------- ($gamestate[0][0] -> gamestate[0][3]$)
 - Offset: 4 bytes ------------------------------------- ($gamestate[0][4] -> gamestate[0][7]$)
 
-### Lanes: $13N$ bytes
+### Lanes: $17N$ bytes
 
 - Number of lanes: $N$ (this isn't a stored data)
-- Lanes data: $9N$ bytes ----------------------------- ($gamestate[1][0] -> gamestate[1][13 * N - 1]$)
+- Lanes data: $17N$ bytes ----------------------------- ($gamestate[1][0] -> gamestate[1][17 * N - 1]$)
   - $y$ coordinate: $4$ bytes
   - Speed: $4$ bytes
+  - Spawn clock: $4$ bytes
   - Traffic state: $1$ bytes
+  - Traffic clock: $4$ bytes
 
 ### Player: $5 + ???$ bytes
 
@@ -43,4 +45,4 @@ D    E     F    C     A    D
 - Number of cars (and trucks): $N$ (this isn't a stored data)
 - Objects data: $9N$ bytes ---------------------------- ($gamestate[n][0] -> gamestate[n][9 * N - 1]$)
   - The numerical order of lane: 1 bytes ($lanes[this]$ contains this vehicles)
-  - $x$ coordinate: 5 bytes
+  - $x$ coordinate: 4 bytes
