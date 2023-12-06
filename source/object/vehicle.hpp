@@ -5,20 +5,12 @@
 #include <isometric.hpp>
 
 class Vehicle : public Isometric {
-    const Texture& vehicleSprite;
-    std::string sound;
 
 public:
-    Vehicle(const float& lane, const float& pos, const Texture& sprite, const std::string& sound);
-    Vehicle(const int& lane, const float& pos, const Texture& sprite, const std::string& sound);
+    Vehicle(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D);
 
-    bool move(const float& speed, const float& playerPos);
-    bool isCollision(const float& pos);
-    bool isOut(const float& pos);
-    void render();
-    void playSound();
-
-    ~Vehicle() = default;
+    void move(const float& speed);
+    bool collide(const float& pos);
 };
 
 #endif
