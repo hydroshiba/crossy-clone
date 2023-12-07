@@ -47,13 +47,19 @@ Scene* Menu::process() {
         break;
     case Key::ENTER:
         switch(button) {
-        case 0:
+        case 0: {
             next = sceneRegistry->scene(SceneID::PLAY); //continue
+            Play* play = dynamic_cast<Play*>(next);
+            play->loadGamestate(setting->getGamestate());
             break;
-        case 1:
+        }
+        case 1: {
             next = sceneRegistry->scene(SceneID::PLAY);
             setting->setGamestate({});
+            Play* play = dynamic_cast<Play*>(next);
+            play->createNewGame("");
             break;
+        }
         case 2:
             next = sceneRegistry->scene(SceneID::OPTION);
             break;
