@@ -70,7 +70,12 @@ void Lane::process(bool& isGameover, float playerPos) {
 }
 
 void Lane::gameoverProcess(bool& isStopped, float playerPos) {
-    vehicles[0]->move(speed);
+    if (speed > 0.0f) {
+        vehicles[0]->move(120);
+    }
+    else {
+        vehicles[0]->move(-120);
+    }
     isStopped |= vehicles[0]->collide(playerPos);
 }
 
