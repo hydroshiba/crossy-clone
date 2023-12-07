@@ -11,8 +11,10 @@ private:
     const Texture GOLD;
     const Texture SILVER;
     const Texture COPPER;
-
+    const Texture L, E, A, D, R, B, O;
+    Sound sound;
     std::vector<Object*> cups;
+    std::vector<Object*> leaderboard;
 public:
     Leaderboard(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Leaderboard();

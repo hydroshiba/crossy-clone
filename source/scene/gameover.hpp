@@ -6,11 +6,9 @@
 
 class Gameover : public Scene {
 private:
-    std::string gameTitle;
-    std::string quitButton;
-    std::string background;
-    std::string backgroundMusic;
-    std::string buttonSound;
+    const Texture QUIT_CLICKED;
+
+    Object quit;
 
 public:
     Gameover(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
