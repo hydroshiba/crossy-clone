@@ -1,6 +1,6 @@
 #include "lane.hpp"
 
-Lane::Lane(const Texture& texture, int pos, int len, float speed, const std::vector<std::pair<const Texture&, const Texture&>>& VT, const std::pair<const Texture&, const Texture&>& TT, bool trafficState, int clock):
+Lane::Lane(const Texture& texture, int pos, int len, float speed, const std::vector<std::pair<const Texture&, const Texture&>>& VT, const std::pair<const Texture&, const Texture&>& TT, bool trafficState, int clock, int spawn):
     Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(pos)}),
     length(len),
     speed(speed),
@@ -12,7 +12,7 @@ Lane::Lane(const Texture& texture, int pos, int len, float speed, const std::vec
         {0.0f, 0.0f},
         trafficState,
         clock),
-    clock(clock),
+    clock(spawn),
     spawn(120) {
         for(int i = 0; i < length; ++i)
             blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i), float(pos)}));
@@ -27,6 +27,9 @@ void Lane::render(Engine* engine, int playerPos) {
 void Lane::process(bool& isGameover, float playerPos) {
     // Use VEHICLE_TEXTURE[] to random a texture for vehicle
     // Remember to random spawn and reset clock after clock >= spawn
+    if (speed == 0) {
+        return;
+    }
 
     if (clock >= spawn) {
         clock = 0;
