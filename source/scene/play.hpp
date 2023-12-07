@@ -19,7 +19,6 @@ private:
     std::vector<std::pair<const Texture&, const Texture&>> VEHICLE_TEXTURE;
     std::pair<const Texture&, const Texture&> TRAFFIC_TEXTURE;
 
-    void createNewGame(const std::string& name);
     void updateProcess();
     bool needCreateGrassLane() const;
     const Texture& getGrassTexture() const;
@@ -29,6 +28,7 @@ public:
     ~Play();
 
     void loadGamestate(const std::vector<std::vector<char>>& gamestate);
+    void createNewGame(const std::string& name);
     std::vector<std::vector<char>> createGamestate() const;
     Scene* process() override;
     void render() override;
