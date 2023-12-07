@@ -9,5 +9,5 @@ void Vehicle::move(const float& speed) {
 
 bool Vehicle::collide(const float& pos) {
     if (pos == -1.0f) return false;
-    return (this->pos.x + size.x >= pos && this->pos.x <= pos);
+    return (this->pos.x + size.x >= pos);
 }

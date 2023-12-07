@@ -78,7 +78,7 @@ Scene* Play::process() {
     // Return next scene
     Scene* next = this;
     if (isGameover && isStopped) {
-        next = sceneRegistry->scene(SceneID::MENU);
+        next = sceneRegistry->scene(SceneID::GAMEOVER);
     }
     else if (isStopped) {
         next = sceneRegistry->scene(SceneID::PAUSE);
