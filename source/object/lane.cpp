@@ -73,6 +73,13 @@ void Lane::process(bool& isGameover, float playerPos) {
 }
 
 void Lane::gameoverProcess(bool& isStopped, float playerPos) {
+    if (vehicles.size() == 0) {
+        if (speed > 0.0f) {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[3].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(length)}, {0.0f, 0.0f}));
+        } else {
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[3].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), 0.0f}, {0.0f, 0.0f}));
+        }
+    }
     if (speed > 0.0f) {
         vehicles[0]->move(120);
     }
