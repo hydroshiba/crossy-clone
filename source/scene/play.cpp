@@ -282,6 +282,7 @@ void Play::createNewGame(const std::string& name) {
     // Score and offset
     score = 0;
     offset = 0;
+    isGameover = false;
 
     // Lanes initialization
     lanes.push_back(new Lane(*LANE_TEXTURES[0], 0 - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, 120));
