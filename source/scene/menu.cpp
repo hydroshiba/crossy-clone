@@ -21,7 +21,7 @@ Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistr
                                                                                                                                     button_clicked("asset/sound/sfx/button-click-2.wav"),
                                                                                                                                     title(TITLE, (width - TITLE.getWidth()) / 5, (height - TITLE.getHeight()) / 2),
                                                                                                                                     duck_x2(DUCK_X2, (width - DUCK_X2.getWidth()) * 4 / 5, (height - DUCK_X2.getHeight()) / 2){
-    buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, (height - CONTINUE.getHeight()) / 3.3));
+    buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, (height - CONTINUE.getHeight()) / 2.75));
     buttons.push_back(new Button(START, START_CLICKED, (width - START.getWidth()) / 2, isContinueEnabled ? buttons.back()->getY() + buttons.back()->getHeight() * 0.55 : (height - START.getHeight()) / 2.75));
     buttons.push_back(new Button(OPTION, OPTION_CLICKED, (width - OPTION.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55));
     buttons.push_back(new Button(LEADERBOARD, LEADERBOARD_CLICKED, (width - LEADERBOARD.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55));

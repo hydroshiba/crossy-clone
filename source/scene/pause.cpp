@@ -9,7 +9,7 @@ Pause::Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegis
     quitButton(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) * 3 / 4, height * 2 / 3),
     continueButton(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 4, height * 2 / 3),
     button(0),
-    pause("PAUSE", width / 2 - width / 8, height / 3 - height / 6, 0.8f, 0.2f)
+    pause("PAUSE", width / 2 - width / 10, height / 3 - height / 6, 0.8f, 0.2f)
     {
     }
 

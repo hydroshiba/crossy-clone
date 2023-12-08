@@ -9,7 +9,7 @@ Credit::Credit(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         FOX("asset/texture/credit/fox.bmp"),
                                                                                                                                         SEAL("asset/texture/credit/seal.bmp"),
                                                                                                                                         background("asset/sound/background.wav"),
-                                                                                                                                        credit("credit", width / 2 - width / 8, height / 3 - height / 4, 0.8f, 0.2f),
+                                                                                                                                        credit("credit", width / 2 - width / 9.5, height / 3 - height / 4, 0.8f, 0.2f),
                                                                                                                                         name("", 0, 0, 0, 0),
                                                                                                                                         studentId("", 0, 0, 0, 0){
     avatars.push_back(new Object(TEACHER, (width - TEACHER.getWidth()) / 2, height / 4));
