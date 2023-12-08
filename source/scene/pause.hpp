@@ -14,6 +14,8 @@ private:
     Button quitButton;
     Button continueButton;
 
+    Textbox pause;
+
 public:
     Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Pause();

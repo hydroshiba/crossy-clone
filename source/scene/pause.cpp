@@ -8,7 +8,8 @@ Pause::Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegis
     QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
     quitButton(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) * 3 / 4, height * 2 / 3),
     continueButton(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 4, height * 2 / 3),
-    button(0)
+    button(0),
+    pause("PAUSE", width / 2 - width / 8, height / 3 - height / 6, 0.8f, 0.2f)
     {
     }
 
@@ -54,7 +55,7 @@ Scene* Pause::process() {
 
 void Pause::render() {
     engine->fill(0, 162, 232);
-
+    pause.render(engine);
     quitButton.render(engine);
     continueButton.render(engine);
 }

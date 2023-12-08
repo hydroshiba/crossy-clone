@@ -9,6 +9,7 @@ private:
     const Texture QUIT_CLICKED;
 
     Object quit;
+    Textbox gameover;
 
 public:
     Gameover(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);

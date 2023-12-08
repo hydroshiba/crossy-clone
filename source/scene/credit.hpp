@@ -7,7 +7,9 @@
 
 class Credit : public Scene {
 private:
-    // const Texture TITLE;
+    bool view;
+    int avatarSelected, xSelected, ySelected;
+
     const Texture TEACHER;
     const Texture ASTRAUNAUT;
     const Texture CAT;
@@ -16,11 +18,11 @@ private:
 
     Sound background;
     // Object title;
-    Object teacher;
-    Object astraunaut;
-    Object cat;
-    Object fox;
-    Object seal;
+    std::vector<Object*> avatars;
+
+    Textbox credit;
+    Textbox name;
+    Textbox studentId;
 
 public:
     Credit(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
