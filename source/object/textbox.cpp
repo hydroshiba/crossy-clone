@@ -41,22 +41,7 @@ std::vector<Texture> Textbox::FONT = {
 };
 
 Textbox::Textbox(std::string textStr, float x, float y, float ratioX, float ratioY) {
-    //Create isometric objects for each character in textStr
-    float idx = 0.0f;
-    float w, h;
-    for(char c : textStr){
-        if(c >= '0' && c <= '9'){
-            w = FONT[c - '0'].getWidth();
-            h = FONT[c - '0'].getHeight();
-            text.push_back(new Isometric(FONT[c - '0'], {w, h}, {0.0f, 0.0f}, {x + idx * w * ratioX, y + idx * h * ratioY}));
-        } else if(isalnum(c)){
-            c = toupper(c);
-            w = FONT[c - 'A' + 10].getWidth();
-            h = FONT[c - 'A' + 10].getHeight();
-            text.push_back(new Isometric(FONT[c - 'A' + 10], {w, h}, {0.0f, 0.0f}, {x + idx * w * ratioX, y + idx * h * ratioY}));
-        }
-        idx++;
-    }
+    setText(textStr, x, y, ratioX, ratioY);
 }
 
 Textbox::~Textbox() {
@@ -74,13 +59,22 @@ void Textbox::setText(std::string textStr, float x, float y, float ratioX, float
 
     //Create new text
     float idx = 0.0f;
-    float w, h;
+    float w = 1, h = 1;
     for(char c : textStr){
+        if(c == ' '){
+            idx++;
+            continue;
+        }
+        if(c == '\n'){
+            idx = 0.0f;
+            y += 1.2 * h;
+            continue;
+        }
         if(c >= '0' && c <= '9'){
             w = FONT[c - '0'].getWidth();
             h = FONT[c - '0'].getHeight();
             text.push_back(new Isometric(FONT[c - '0'], {w, h}, {0.0f, 0.0f}, {x + idx * w * ratioX, y + idx * h * ratioY}));
-        } else if(isalnum(c)){
+        } else if(isalpha(c)){
             c = toupper(c);
             w = FONT[c - 'A' + 10].getWidth();
             h = FONT[c - 'A' + 10].getHeight();
