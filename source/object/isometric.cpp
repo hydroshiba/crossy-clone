@@ -3,7 +3,7 @@
 Isometric::Isometric(const Texture& texture, const Vec2& size) : Object(texture), size(size), pos({0, 0}), offset3D({0, 0}) {
 	transform = {
 		0.5f * size.x, -0.5f * size.x,
-		0.5f * size.y, 0.5f * size.y
+		0.25f * size.y, 0.25f * size.y
 	};
 
 	project();
@@ -12,7 +12,7 @@ Isometric::Isometric(const Texture& texture, const Vec2& size) : Object(texture)
 Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos) : Object(texture), size(size), pos(pos), offset3D({0, 0}) {
 	transform = {
 		0.5f * size.x, -0.5f * size.x,
-		0.5f * size.y, 0.5f * size.y
+		0.25f * size.y, 0.25f * size.y
 	};
 
 	project();
@@ -21,7 +21,7 @@ Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos) 
 Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D) : Object(texture), size(size), pos(pos), offset3D(offset3D) {
 	transform = {
 		0.5f * size.x, -0.5f * size.x,
-		0.5f * size.y, 0.5f * size.y
+		0.25f * size.y, 0.25f * size.y
 	};
 
 	project();
