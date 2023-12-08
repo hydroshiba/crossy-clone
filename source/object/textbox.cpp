@@ -65,6 +65,31 @@ Textbox::~Textbox() {
     }
 }
 
+void Textbox::setText(std::string textStr, float x, float y, float ratioX, float ratioY) {
+    //Delete old text
+    for (Isometric* i : text) {
+        delete i;
+    }
+    text.clear();
+
+    //Create new text
+    float idx = 0.0f;
+    float w, h;
+    for(char c : textStr){
+        if(c >= '0' && c <= '9'){
+            w = FONT[c - '0'].getWidth();
+            h = FONT[c - '0'].getHeight();
+            text.push_back(new Isometric(FONT[c - '0'], {w, h}, {0.0f, 0.0f}, {x + idx * w * ratioX, y + idx * h * ratioY}));
+        } else if(isalnum(c)){
+            c = toupper(c);
+            w = FONT[c - 'A' + 10].getWidth();
+            h = FONT[c - 'A' + 10].getHeight();
+            text.push_back(new Isometric(FONT[c - 'A' + 10], {w, h}, {0.0f, 0.0f}, {x + idx * w * ratioX, y + idx * h * ratioY}));
+        }
+        idx++;
+    }
+}
+
 void Textbox::render(Engine* engine) {
     for (Isometric* i : text) {
         i->render(engine);

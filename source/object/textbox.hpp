@@ -10,6 +10,8 @@ class Textbox {
 public:
     Textbox(std::string textStr, float x, float y, float ratioX, float ratioY);
     ~Textbox();
+
+    void setText(std::string textStr, float x, float y, float ratioX, float ratioY);
     void render(Engine* engine);
 };
 #endif
