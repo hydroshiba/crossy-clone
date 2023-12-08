@@ -10,6 +10,7 @@
 #include "typedef.hpp"
 #include "object.hpp"
 #include "button.hpp"
+#include "textbox.hpp"
 
 class SceneRegistry;
 

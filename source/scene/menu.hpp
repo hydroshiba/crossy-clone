@@ -8,7 +8,8 @@
 
 class Menu : public Scene {
 private:
-    const int defaultButton;
+    bool isContinueEnabled;
+    int defaultButton;
     int button; // 0 = continue, 1 = start, 2 = option, 3 = leaderboard, 4 = credit, 5 = quit
 
     const Texture TITLE;
@@ -19,7 +20,7 @@ private:
     const Texture CREDIT, CREDIT_CLICKED;
     const Texture QUIT, QUIT_CLICKED;
     const Texture DUCK_X2;
-    Sound background;
+    Sound button_clicked;
     Object title;
     Object duck_x2;
 
@@ -29,6 +30,7 @@ public:
     Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Menu();
 
+    void updateButton();
     Scene* process() override;
     void render() override;
     void playsound() override;

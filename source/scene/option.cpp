@@ -7,7 +7,7 @@ Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneReg
                                                                                                                                         SPRITE_CLICKED("asset/texture/button/choose-sprite-clicked.bmp"),
                                                                                                                                         CHICKEN("asset/texture/sprite/chicken/down.bmp"),
                                                                                                                                         DUCK("asset/texture/sprite/duck/down.bmp"),
-                                                                                                                                        CAT("asset/texture/sprite/chicken/down.bmp"), //cat sprite
+                                                                                                                                        CAT("asset/texture/sprite/cat/down.bmp"),
                                                                                                                                         MUSIC("asset/texture/volume/bgm.bmp"),
                                                                                                                                         MUSIC_CLICKED("asset/texture/volume/bgm-clicked.bmp"),
                                                                                                                                         SFX("asset/texture/volume/sfx.bmp"), 
