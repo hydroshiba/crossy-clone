@@ -17,6 +17,9 @@ void Keyboard::refresh() {
     for(int i = static_cast<int>(Key::LEFT); i <= static_cast<int>(Key::DOWN); i++)
         last = (pressed(static_cast<Key>(i)) ? static_cast<Key>(i) : last);
 
+    for(int i = static_cast<int>(Key::ZERO); i <= static_cast<int>(Key::NINE); i++)
+        last = (pressed(static_cast<Key>(i)) ? static_cast<Key>(i) : last);
+
     last = (pressed(Key::SPACE) ? Key::SPACE : last);
     last = (pressed(Key::BACK) ? Key::BACK : last);
     last = (pressed(Key::ENTER) ? Key::ENTER : last);
