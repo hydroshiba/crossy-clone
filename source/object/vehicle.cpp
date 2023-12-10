@@ -11,3 +11,8 @@ bool Vehicle::collide(const float& pos) {
     if (pos == -1.0f) return false;
     return (this->pos.x + size.x >= pos);
 }
+
+void Vehicle::render(Engine* engine) {
+    project();
+    Isometric::render(engine);
+}

@@ -18,7 +18,7 @@ public:
 
     void move(const Key& key);
     std::string getName();
-    void render();
+    void render(Engine* engine);
     void playSound();
 };
 
