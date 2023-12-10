@@ -34,7 +34,11 @@ std::string Player::getName() {
     return name;
 }
 
-void Player::render() {
+void Player::render(Engine* engine) {
+    pos.y = -pos.y + 15;
+    project();
+    Isometric::render(engine);
+    pos.y = -pos.y + 15;
 }
 
 void Player::playSound() {

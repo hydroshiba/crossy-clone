@@ -14,17 +14,46 @@ Lane::Lane(const Texture& texture, int pos, int len, float speed, const std::vec
         clock),
     clock(spawn),
     spawn(120) {
-        for(int i = 0; i < length; ++i)
-            blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i), float(pos)}));
     }
 
 void Lane::render(Engine* engine, int playerPos) {
-    int realPos = pos.y + playerPos + 19;
-    for(auto& block : blocks)
+    // int realPos = pos.y + playerPos + 19;
+    // for(auto& block : blocks)
+    //     block.render(engine);
+
+    
+    // Calculate render offset
+    // int offset = playerPos + Y();
+
+    for(int i = 0; i < length; ++i)
+        blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i - 1) * 2, float(Y() + playerPos + (engine->getWidth() / texture.getWidth() + engine->getHeight() * 2 / texture.getHeight() + 1) / 2 ) * 2}));
+
+    // Render lane texture
+    // for (int i = 0; i < engine->getWidth() / texture.getWidth() * 2; ++i) {
+    //     engine->textureFill(i * texture.getWidth(), Y() * texture.getHeight(), texture);
+    // }
+
+    // Render additional elements (blocks)
+    for (auto& block : blocks) {
         block.render(engine);
+    }
+
+    // // Render traffic light
+    // if (trafficState) {
+    //     engine->drawTexture(trafficTexture[0], (engine->getWidth() - trafficTexture[0].getWidth()) / 2, Y() * texture.getHeight());
+    // } else {
+    //     engine->drawTexture(trafficTexture[1], (engine->getWidth() - trafficTexture[1].getWidth()) / 2, Y() * texture.getHeight());
+    // }
+
+    // Render vehicles
+    for (auto& vehicle : vehicles) {
+        vehicle->render(engine);
+    }
+
+    blocks.clear();
 }
 
-void Lane::process(bool& isGameover, float playerPos) {
+void Lane::process(bool& isGameover, Engine* engine, float playerPos) {
     // Use VEHICLE_TEXTURE[] to random a texture for vehicle
     // Remember to random spawn and reset clock after clock >= spawn
     if (speed == 0) {
@@ -35,9 +64,9 @@ void Lane::process(bool& isGameover, float playerPos) {
         clock = 0;
         int random = rand() % 3;
         if (speed > 0.0f) {
-            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(length)}, {0.0f, 0.0f}));
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].first, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {0.0f, float(Y() + playerPos + (engine->getWidth() / texture.getWidth() + engine->getHeight() * 2 / texture.getHeight() + 1) / 2 ) * 2}, {0.0f, 0.0f}));
         } else {
-            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), 0.0f}, {0.0f, 0.0f}));
+            vehicles.push_back(new Vehicle(VEHICLE_TEXTURE[random].second, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(length), float(Y() + playerPos + (engine->getWidth() / texture.getWidth() + engine->getHeight() * 2 / texture.getHeight() + 1) / 2 ) * 2}, {0.0f, 0.0f}));
         }
 
         for (auto& vehicle : vehicles) {
@@ -45,7 +74,7 @@ void Lane::process(bool& isGameover, float playerPos) {
             isGameover |= vehicle->collide(playerPos);
         }
 
-        if (vehicles[0]->X() > length) {
+        if (vehicles[0]->X() > length || vehicles[0]->X() < 0) {
             delete vehicles[0];
             vehicles.erase(vehicles.begin());
         }
