@@ -324,8 +324,8 @@ void Play::updateProcess() {
     if (!lanes.empty()) delete lanes.front();
     lanes.erase(lanes.begin());
 
-    if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 11) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
-    else lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 11) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
+    if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 10) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
+    else lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 10) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
 }
 
 bool Play::needCreateGrassLane() const {
