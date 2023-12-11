@@ -23,10 +23,10 @@ void Lane::render(Engine* engine, int playerPos) {
 
     
     // Calculate render offset
-    // int offset = playerPos + Y();
+    int offset = playerPos + Y() + (engine->getWidth() / texture.getWidth() + engine->getHeight() * 2 / texture.getHeight() + 1) / 2;
 
     for(int i = 0; i < length; ++i)
-        blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i - 1) * 2, float(Y() + playerPos + (engine->getWidth() / texture.getWidth() + engine->getHeight() * 2 / texture.getHeight() + 1) / 2 ) * 2}));
+        blocks.push_back(Isometric(texture, {texture.getWidth() / 2.0f, texture.getHeight() / 2.0f}, {float(i - 1) * 2, float(offset) * 2}));
 
     // Render lane texture
     // for (int i = 0; i < engine->getWidth() / texture.getWidth() * 2; ++i) {
