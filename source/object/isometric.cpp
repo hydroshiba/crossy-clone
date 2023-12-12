@@ -1,55 +1,52 @@
 #include "isometric.hpp"
 
-Isometric::Isometric(const Texture& texture, const Vec2& size) : Object(texture), size(size), pos({0, 0}), offset3D({0, 0}) {
-	transform = {
-		0.5f * size.x, -0.5f * size.x,
-		0.25f * size.y, 0.25f * size.y
-	};
+Isometric::Isometric(Texture const * const texture, const Vec2& size) : Object(texture),
+	x(0), y(0),
+	width(size.x), height(size.y),
+	offset({0, 0}),
+	transform({
+		0.5f * x, -0.5f * x,
+		0.25f * y, 0.25f * y
+	}) {}
 
-	project();
-}
+Isometric::Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos) : Object(texture),
+	x(pos.x), y(pos.y),
+	width(size.x), height(size.y),
+	offset({0, 0}),
+	transform({
+		0.5f * x, -0.5f * x,
+		0.25f * y, 0.25f * y
+	}) {}
 
-Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos) : Object(texture), size(size), pos(pos), offset3D({0, 0}) {
-	transform = {
-		0.5f * size.x, -0.5f * size.x,
-		0.25f * size.y, 0.25f * size.y
-	};
-
-	project();
-}
-
-Isometric::Isometric(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D) : Object(texture), size(size), pos(pos), offset3D(offset3D) {
-	transform = {
-		0.5f * size.x, -0.5f * size.x,
-		0.25f * size.y, 0.25f * size.y
-	};
-
-	project();
-}
+Isometric::Isometric(Texture const* const texture, const Vec2& size, const Vec2& pos, const Vec2& off) : Object(texture),
+	x(pos.x), y(pos.y),
+	width(size.x), height(size.y),
+	offset(off),
+	transform({
+		0.5f * x, -0.5f * x,
+		0.25f * y, 0.25f * y
+	}) {}
 
 void Isometric::render(Engine* engine) {
 	project();
 	Object::render(engine);
 }
 
+void Isometric::shift(int dx, int dy) {
+	offset.x += dx;
+	offset.y += dy;
+}
+
 void Isometric::project() {
-	Vec2 res = transform * pos + offset3D;
+	Vec2 res = transform * Vec2({x, y}) + offset;
 	x = res.x;
 	y = res.y;
 }
 
-float Isometric::width() const {
-	return size.x;
+Vec2 Isometric::position() const {
+	return Vec2({x, y});
 }
 
-float Isometric::height() const {
-	return size.y;
-}
-
-float Isometric::X() const {
-	return pos.x;
-}
-
-float Isometric::Y() const {
-	return pos.y;
+Vec2 Isometric::size() const {
+	return Vec2({width, height});
 }

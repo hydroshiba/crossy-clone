@@ -25,6 +25,7 @@ public:
     word getWidth() const;
     word getHeight() const;
 
+    friend class Object;
     friend class Engine;
 };
 

@@ -11,25 +11,27 @@
 
 class Isometric : public Object {
 protected:
+	float x, y;
+	float width, height;
+
+	Vec2 offset;
 	Mat2 transform;
-	Vec2 size, pos, offset3D;
 
 	void project();
 
 public:
-	Isometric(const Texture& texture, const Vec2& size);
-	Isometric(const Texture& texture, const Vec2& size, const Vec2& pos);
-	Isometric(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D);
+	Isometric(Texture const * const texture, const Vec2& size);
+	Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos);
+	Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos, const Vec2& off);
 
 	void render(Engine* engine) override;
+	void shift(int dx, int dy) override;
 
-	// Logical position
+	// Virtual gird properties
+	// Use Object::position() and Object::size() to get physical grid properties instead
 
-	float width() const;
-	float height() const;
-
-	float X() const;
-	float Y() const;
+	Vec2 position() const;
+	Vec2 size() const;
 };
 
 #endif
