@@ -7,10 +7,10 @@
 class Button : public Object {
 private:
 	bool selected = false;
-	const Texture& pressed;
+	Texture const * const pressed;
 
 public:
-	Button(const Texture& idle, const Texture& pressed, int x, int y);
+	Button(Texture const * const idle, Texture const * const pressed, int x, int y);
 
 	void press();
 	void release();

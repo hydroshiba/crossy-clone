@@ -4,6 +4,12 @@ Vec2 Vec2::operator+(const Vec2& other) const {
 	return {x + other.x, y + other.y};
 }
 
+Vec2& Vec2::operator=(std::initializer_list<float> list) {
+	this->x = *list.begin();
+	this->y = *(list.begin() + 1);
+	return *this;
+}
+
 Mat2::Mat2() : data{0, 0, 0, 0} {}
 
 Mat2::Mat2(std::initializer_list<float> list) {
