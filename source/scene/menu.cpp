@@ -1,6 +1,6 @@
 #include "menu.hpp"
 
-Menu::Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard),
+Menu::Menu(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                     defaultButton(setting->getGamestate().size() ? 0 : 1),
                                                                                                                                     isContinueEnabled(setting->getGamestate().size() ? true : false),
                                                                                                                                     button(defaultButton),

@@ -30,7 +30,7 @@ private:
     std::vector<Object*> sprites;
     std::vector<Button*> buttons;
 public:
-    Option(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Option();
 
     Scene* process() override;

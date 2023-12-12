@@ -16,7 +16,7 @@ private:
     std::vector<Object*> cups;
     std::vector<Object*> leaderboard;
 public:
-    Leaderboard(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Leaderboard();
 
     Scene* process() override;

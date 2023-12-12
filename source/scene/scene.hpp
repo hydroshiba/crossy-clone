@@ -7,6 +7,7 @@
 #include "speaker.hpp"
 #include "engine.hpp"
 #include "keyboard.hpp"
+#include "texture_holder.hpp"
 #include "typedef.hpp"
 #include "object.hpp"
 #include "button.hpp"
@@ -16,16 +17,15 @@ class SceneRegistry;
 
 class Scene {
 protected:
-    int width, height;
-
     Engine* engine;
     Speaker* speaker;
     Setting* setting;
-    SceneRegistry* sceneRegistry;
     Keyboard* keyboard;
+    TextureHolder* holder;
+    SceneRegistry* sceneRegistry;
 
 public:
-    Scene(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Scene(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     virtual ~Scene();
 
     virtual Scene* process() = 0;

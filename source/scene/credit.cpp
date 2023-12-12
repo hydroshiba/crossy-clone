@@ -1,6 +1,6 @@
 #include "credit.hpp"
 
-Credit::Credit(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard),
+Credit::Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                         view(false),
                                                                                                                                         avatarSelected(0),
                                                                                                                                         TEACHER("asset/texture/credit/3T.bmp"),

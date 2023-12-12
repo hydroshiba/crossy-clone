@@ -17,7 +17,7 @@ private:
     Textbox pause;
 
 public:
-    Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Pause();
 
     Scene* process() override;

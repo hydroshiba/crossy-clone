@@ -75,6 +75,44 @@ TextureHolder::TextureHolder() {
 	map["VOLUME_MEDIUM"] = new Texture("asset/texture/volume/50.bmp");
 	map["VOLUME_HIGH"] = new Texture("asset/texture/volume/75.bmp");
 	map["VOLUME_MAX"] = new Texture("asset/texture/volume/100.bmp");
+
+	map["A"] = new Texture("asset/font/A.bmp");
+	map["B"] = new Texture("asset/font/B.bmp");
+	map["C"] = new Texture("asset/font/C.bmp");
+	map["D"] = new Texture("asset/font/D.bmp");
+	map["E"] = new Texture("asset/font/E.bmp");
+	map["F"] = new Texture("asset/font/F.bmp");
+	map["G"] = new Texture("asset/font/G.bmp");
+	map["H"] = new Texture("asset/font/H.bmp");
+	map["I"] = new Texture("asset/font/I.bmp");
+	map["J"] = new Texture("asset/font/J.bmp");
+	map["K"] = new Texture("asset/font/K.bmp");
+	map["L"] = new Texture("asset/font/L.bmp");
+	map["M"] = new Texture("asset/font/M.bmp");
+	map["N"] = new Texture("asset/font/N.bmp");
+	map["O"] = new Texture("asset/font/O.bmp");
+	map["P"] = new Texture("asset/font/P.bmp");
+	map["Q"] = new Texture("asset/font/Q.bmp");
+	map["R"] = new Texture("asset/font/R.bmp");
+	map["S"] = new Texture("asset/font/S.bmp");
+	map["T"] = new Texture("asset/font/T.bmp");
+	map["U"] = new Texture("asset/font/U.bmp");
+	map["V"] = new Texture("asset/font/V.bmp");
+	map["W"] = new Texture("asset/font/W.bmp");
+	map["X"] = new Texture("asset/font/X.bmp");
+	map["Y"] = new Texture("asset/font/Y.bmp");
+	map["Z"] = new Texture("asset/font/Z.bmp");
+	
+	map["0"] = new Texture("asset/font/0.bmp");
+	map["1"] = new Texture("asset/font/1.bmp");
+	map["2"] = new Texture("asset/font/2.bmp");
+	map["3"] = new Texture("asset/font/3.bmp");
+	map["4"] = new Texture("asset/font/4.bmp");
+	map["5"] = new Texture("asset/font/5.bmp");
+	map["6"] = new Texture("asset/font/6.bmp");
+	map["7"] = new Texture("asset/font/7.bmp");
+	map["8"] = new Texture("asset/font/8.bmp");
+	map["9"] = new Texture("asset/font/9.bmp");
 }
 
 TextureHolder::~TextureHolder() {
@@ -82,5 +120,6 @@ TextureHolder::~TextureHolder() {
 }
 
 Texture* const TextureHolder::get(const std::string& name) const {
+	if(map.find(name) == map.end()) throw std::runtime_error("TextureHolder::get() : Texture not found");
 	return map.at(name);
 }

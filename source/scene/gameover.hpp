@@ -12,7 +12,7 @@ private:
     Textbox gameover;
 
 public:
-    Gameover(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Gameover(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Gameover();
 
     Scene* process() override;
