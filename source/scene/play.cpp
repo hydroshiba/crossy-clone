@@ -4,11 +4,12 @@ Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
     Scene(engine, speaker, registry, setting, keyboard, holder),
     player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
     score(0),
-    offset(0)
+    offset(0),
+    isGameover(false)
     {
         // Load gamestate
-        if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
-        else createNewGame();
+        // if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
+        // else createNewGame();
     }
 
 Scene* Play::process() {
@@ -82,7 +83,7 @@ void Play::render() {
     // Lane rendering
     int minRenderPos = player.position().y - offset - 5;
     minRenderPos = minRenderPos < 0 ? 0 : minRenderPos;
-    int maxRenderPos = minRenderPos + lanes.size() - 10;
+    int maxRenderPos = minRenderPos + lanes.size() - 11;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
         lanes[i]->render(engine);
@@ -179,12 +180,12 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
             // tmpPos += gamestate[2][i];
             tmpPos.push_back(gamestate[2][i]);
         }
-        for (int i = 5; i < gamestate[2].size(); i++) {
-            // tmpName += gamestate[2][i];
-            tmpName.push_back(gamestate[2][i]);
-        }
+        // for (int i = 5; i < gamestate[2].size(); i++) {
+        //     // tmpName += gamestate[2][i];
+        //     tmpName.push_back(gamestate[2][i]);
+        // }
 
-        player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {float(toInt(tmpLane) + offset), toFloat(tmpPos)}, setting);
+        player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {toFloat(tmpPos), float(toInt(tmpLane) + offset)}, setting);
             // toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
     }
 
@@ -304,11 +305,6 @@ std::vector<std::vector<char>> Play::createGamestate() const {
 }
 
 void Play::createNewGame() {
-    // Score and offset
-    isGameover = false;
-    score = 0;
-    offset = 0;
-
     // Create lanes
     for (int i = 0; i < 6; i++) {
         lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() + 5, 0.0f));

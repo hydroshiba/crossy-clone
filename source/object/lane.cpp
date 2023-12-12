@@ -96,25 +96,25 @@ void Lane::addVehicle(float pos) {
 }
 
 std::vector<char> Lane::getTrafficGamestate() const {
-    auto iToS = [](int num, int strSize) -> std::string {
-        std::string str = "";
+    auto iToS = [](int num, int strSize) -> std::vector<char> {
+        std::vector<char> str;
         for (int i = 0; i < strSize; i++) {
-            str += *reinterpret_cast<char*>(&num);
+            str.push_back(*reinterpret_cast<char*>(&num));
             num >>= 8;
         }
         return str;
     };
 
-    auto bToS = [](bool num) -> std::string {
-        std::string str = "";
-        str += *reinterpret_cast<char*>(&num);
+    auto bToS = [](bool num) -> std::vector<char> {
+        std::vector<char> str;
+        str.push_back(*reinterpret_cast<char*>(&num));
         return str;
     };
 
     // Something
     std::vector<char> gamestate;
-    std::string tmpState = bToS(traffic.isRedLight());
-    std::string tmpClock = iToS(traffic.getClock(), 4);
+    std::vector<char> tmpState = bToS(traffic.isRedLight());
+    std::vector<char> tmpClock = iToS(traffic.getClock(), 4);
     gamestate.push_back(tmpState[0]);
     for (int i = 0; i < 4; i++) {
         gamestate.push_back(tmpClock[i]);
