@@ -5,7 +5,7 @@ Pause::Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting*
     quitButton(holder->get("QUIT"), holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT")->getWidth()) * 3 / 4, engine->getHeight() * 2 / 3),
     continueButton(holder->get("CONTINUE"), holder->get("CONTINUE_CLICKED"), (engine->getWidth() - holder->get("CONTINUE")->getWidth()) / 4, engine->getHeight() * 2 / 3),
     button(0),
-    pause("PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6, 0.8f, 0.2f)
+    pause(holder, "PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6)
     {
     }
 

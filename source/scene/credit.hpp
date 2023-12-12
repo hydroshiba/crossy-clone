@@ -15,7 +15,7 @@ private:
     std::vector<Object*> avatars;
 
     Textbox credit;
-    Textbox name;
+    std::vector<Textbox> name;
     Textbox studentId;
 
 public:

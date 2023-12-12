@@ -3,22 +3,21 @@
 
 #include <vector>
 #include "isometric.hpp"
+#include "texture_holder.hpp"
 
 class Textbox {
-    float x, y;
-    float idxX;
-    float idxY;
-    float ratioX, ratioY;
+    int x, y;
+    int numText;
     std::vector<Isometric*> text;
-    static std::vector<Texture> FONT;
+    TextureHolder* holder;
+    
 public:
-    Textbox(std::string textStr, float x, float y, float ratioX, float ratioY);
+    Textbox(TextureHolder* holder, std::string textStr, float x, float y);
     ~Textbox();
 
-    Vec2 getOffset3D(int idxChar);
     void replaceChar(char c, int idx);
     void addText(std::string textStr);
-    void setText(std::string textStr, float x, float y, float ratioX, float ratioY);
+    void setText(std::string textStr, float x, float y);
     void render(Engine* engine);
 };
 #endif
