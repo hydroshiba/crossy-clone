@@ -84,10 +84,10 @@ void Play::render() {
     // Lane rendering
     int minRenderPos = player.position().y - offset - 5;
     minRenderPos = minRenderPos < 0 ? 0 : minRenderPos;
-    int maxRenderPos = minRenderPos + lanes.size() - 11;
+    int maxRenderPos = minRenderPos + lanes.size() - 8;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
-        lanes[i]->render(engine);
+        lanes[i]->render(engine, player.position().y);
     }
 
     // Player rendering

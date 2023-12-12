@@ -42,6 +42,13 @@ std::string Player::spriteID() {
     return str;
 }
 
+// void Player::render(Engine* engine, int offset) {
+//     Isometric::y += offset;
+//     project();
+//     Isometric::render(engine);
+//     Isometric::y -= offset;
+// }
+
 // std::string Player::setName(std::string name) {
 //     this->name = name;
 //     return name;

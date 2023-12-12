@@ -20,6 +20,7 @@ private:
     float speed;
     int spawn;
     int clock;
+    int grassType;
     
     Traffic traffic;
     std::vector<Vehicle> vehicles;
@@ -28,7 +29,7 @@ private:
 public:
     Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock = 120, bool isRed = false, int trafficClock = 0);
 
-    void render(Engine* engine);
+    void render(Engine* engine, int playerLane);
     void process();
     void gameoverProcess();
 

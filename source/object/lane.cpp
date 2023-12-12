@@ -9,18 +9,43 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     traffic(holder, gridSize, {speed > 0 ? 0.0f : float(len + 5), float(pos)}, {float(0), float(0)}, isRed, trafficClock),
     clock(spawnClock - 1),
     spawn(spawnClock) {
-        for(int i = 0; i < len; ++i)
-            blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({(float)i, (float)pos})));
+        if (speed == 0) {
+            grassType = rand() % 3;
+        }
     }
 
-void Lane::render(Engine* engine) {
+void Lane::render(Engine* engine, int playerLane) {
+    int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 2;
+
+    for(int i = 0; i < length; ++i) {
+        if (speed != 0) {
+            blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
+        }
+        else {
+            switch (grassType)
+            {
+                case 0:
+                    blocks.push_back(Isometric(holder->get("GRASS"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
+                    break;
+                case 1:
+                    blocks.push_back(Isometric(holder->get("GRASSFLOWER"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
+                    break;
+                case 2:
+                    blocks.push_back(Isometric(holder->get("GRASSPEBBLE"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
+                    break;
+            }
+        }
+    }
+
     for(auto& block : blocks)
         block.render(engine);
 
     traffic.render(engine);
 
     for(auto& vehicle : vehicles)
-        vehicle.render(engine);
+        vehicle.render(engine, offset);
+
+    blocks.clear();
 }
 
 void Lane::process() {
@@ -96,7 +121,7 @@ void Lane::addVehicle(float pos) {
     if(speed > 0) color += "_FRONT";
     else color += "_BACK";
 
-    Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
+    Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, float(this->pos - 0.5)}), Vec2({0, 0}));
     vehicles.push_back(vehicle);
 }
 

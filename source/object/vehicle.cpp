@@ -13,7 +13,9 @@ bool Vehicle::collide(float pos) {
     return ((Isometric::x <= pos) && (this->Isometric::x + Isometric::width >= pos));
 }
 
-void Vehicle::render(Engine* engine) {
+void Vehicle::render(Engine* engine, int offset) {
+    Isometric::y += offset;
     project();
     Isometric::render(engine);
+    Isometric::y -= offset;
 }

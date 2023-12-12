@@ -11,7 +11,7 @@ public:
 
     void move(float speed);
     bool collide(float pos);
-    void render(Engine* engine);
+    void render(Engine* engine, int offset);
 };
 
 #endif
