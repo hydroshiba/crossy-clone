@@ -5,8 +5,8 @@ Isometric::Isometric(Texture const * const texture, const Vec2& size) : Object(t
 	width(size.x), height(size.y),
 	offset({0, 0}),
 	transform({
-		0.5f * x, -0.5f * x,
-		0.25f * y, 0.25f * y
+		0.5f * width, -0.5f * width,
+		0.25f * height, 0.25f * height
 	}) {}
 
 Isometric::Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos) : Object(texture),
@@ -14,8 +14,8 @@ Isometric::Isometric(Texture const * const texture, const Vec2& size, const Vec2
 	width(size.x), height(size.y),
 	offset({0, 0}),
 	transform({
-		0.5f * x, -0.5f * x,
-		0.25f * y, 0.25f * y
+		0.5f * width, -0.5f * width,
+		0.25f * height, 0.25f * height
 	}) {}
 
 Isometric::Isometric(Texture const* const texture, const Vec2& size, const Vec2& pos, const Vec2& off) : Object(texture),
@@ -23,8 +23,8 @@ Isometric::Isometric(Texture const* const texture, const Vec2& size, const Vec2&
 	width(size.x), height(size.y),
 	offset(off),
 	transform({
-		0.5f * x, -0.5f * x,
-		0.25f * y, 0.25f * y
+		0.5f * width, -0.5f * width,
+		0.25f * height, 0.25f * height
 	}) {}
 
 void Isometric::render(Engine* engine) {
