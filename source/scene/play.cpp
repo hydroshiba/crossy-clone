@@ -37,7 +37,7 @@ Scene* Play::process() {
             isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
             break;
         case Key::ESC:
-            return sceneRegistry->scene(SceneID::MENU);
+            isStopped = true;
             break;
         default:
             break;
@@ -77,7 +77,8 @@ Scene* Play::process() {
 
 void Play::render() {
     // Lane rendering
-    int minRenderPos = player.position().y - offset;
+    int minRenderPos = player.position().y - offset - 5;
+    minRenderPos = minRenderPos < 0 ? 0 : minRenderPos;
     int maxRenderPos = minRenderPos + lanes.size() - 10;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {

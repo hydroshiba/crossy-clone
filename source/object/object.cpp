@@ -6,11 +6,11 @@ Object::Object(Texture const * const texture) : x(0), y(0), texture(texture) {}
 Object::Object(Texture const * const texture, int x, int y) : x(x), y(y), texture(texture) {}
 
 Vec2 Object::position() const {
-	return {x, y};
+	return { float(x), float(y) };
 }
 
 Vec2 Object::size() const {
-	return {texture->width, texture->height};
+	return {float(texture->width), float(texture->height)};
 }
 
 void Object::shift(int dx, int dy) {
