@@ -50,7 +50,13 @@ void Setting::save() {
 
     // Gamestate (??? byte)
     for(int i = 0; i < gamestate.size(); i++) {
-        file.write((char*)&gamestate[i], gamestate[i].size());
+        char* buffer = new char[gamestate[i].size() + 1];
+        for(int j = 0; j < gamestate[i].size(); j++) {
+            buffer[j] = gamestate[i][j];
+        }
+        buffer[gamestate[i].size()] = '\0';
+        file.write(buffer, gamestate[i].size());
+        delete[] buffer;
     }
 
     file.close();

@@ -33,7 +33,7 @@ D    E     F    C     A    D
   - Traffic state: $1$ bytes
   - Traffic clock: $4$ bytes
 
-### Player: $5 + ???$ bytes
+### Player: $5$ bytes
 
 - The numerical order of lane: $1$ bytes ------------- ($gamestate[2][0]$) ($lanes[this]$ has this player)
 - $x$ coordinate: $4$ bytes ----------------------------- ($gamestate[2][1] -> gamestate[2][8]$)

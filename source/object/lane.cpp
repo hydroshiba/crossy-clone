@@ -1,7 +1,6 @@
 #include "lane.hpp"
 
-Lane::
-    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock, bool isRed, int trafficClock) :
+Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock, bool isRed, int trafficClock) :
     gridSize(size),
     holder(holder),
     pos(pos),

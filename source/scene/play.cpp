@@ -97,24 +97,37 @@ void Play::playsound() {
 }
 
 void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
-    auto toInt = [](std::string str) -> int {
-        return *reinterpret_cast<int*>(&str[0]);
+    auto toInt = [](std::vector<char> str) -> int {
+        // return *reinterpret_cast<int*>(&str[0]);
+        int num = 0;
+        for (int i = 0; i < str.size(); i++) {
+            num += str[i] << (8 * i);
+        }
+        return num;
     };
 
-    auto toFloat = [](std::string str) -> float {
-        return *reinterpret_cast<float*>(&str[0]);
+    auto toFloat = [](std::vector<char> str) -> float {
+        // return *reinterpret_cast<float*>(&str[0]);
+        int num = 0;
+        for (int i = 0; i < str.size(); i++) {
+            num += str[i] << (8 * i);
+        }
+        return *reinterpret_cast<float*>(&num);
     };
 
-    auto toBool = [](std::string str) -> bool {
+    auto toBool = [](std::vector<char> str) -> bool {
+        // return *reinterpret_cast<bool*>(&str[0]);
         return *reinterpret_cast<bool*>(&str[0]);
     };
 
     // Handle gamestate[0] : Score and offset
     {
-        std::string tmpScore = "", tmpOffset = "";
+        std::vector<char> tmpScore, tmpOffset;
         for (int i = 0; i < 4; i++) {
-            tmpScore += gamestate[0][i];
-            tmpOffset += gamestate[0][i + 4];
+            // tmpScore += gamestate[0][i];
+            tmpScore.push_back(gamestate[0][i]);
+            // tmpOffset += gamestate[0][i + 4];
+            tmpOffset.push_back(gamestate[0][i + 4]);
         }
 
         score = toInt(tmpScore);
@@ -123,24 +136,29 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[1] : lanes
     for (int i = 0; i < gamestate[1].size(); i += 17) {
-        std::string tmpPos = "", tmpSpeed = "", tmpSpawn = "", tmpTraffic = "", tmpClock = "";
+        std::vector<char> tmpPos, tmpSpeed, tmpSpawn, tmpTraffic, tmpClock;
         
         for (int j = i; j < i + 4; j++) {
-            tmpPos += gamestate[1][j];
+            // tmpPos += gamestate[1][j];
+            tmpPos.push_back(gamestate[1][j]);
         }
         
         for (int j = i + 4; j < i + 8; j++) {
-            tmpSpeed += gamestate[1][j];
+            // tmpSpeed += gamestate[1][j];
+            tmpSpeed.push_back(gamestate[1][j]);
         }
 
         for (int j = i + 8; j < i + 12; j++) {
-            tmpSpawn += gamestate[1][j];
+            // tmpSpawn += gamestate[1][j];
+            tmpSpawn.push_back(gamestate[1][j]);
         }
 
-        tmpTraffic += gamestate[1][i + 12];
+        // tmpTraffic += gamestate[1][i + 12];
+        tmpTraffic.push_back(gamestate[1][i + 12]);
 
         for (int j = i + 13; j < i + 17; j++) {
-            tmpClock += gamestate[1][j];
+            // tmpClock += gamestate[1][j];
+            tmpClock.push_back(gamestate[1][j]);
         }
 
         if (toFloat(tmpSpeed) == 0) {
@@ -154,13 +172,16 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[2] : Player
     {
-        std::string tmpLane = "", tmpPos = "", tmpName = "";
-        tmpLane += gamestate[2][0];
+        std::vector<char> tmpLane, tmpPos, tmpName;
+        // tmpLane += gamestate[2][0];
+        tmpLane.push_back(gamestate[2][0]);
         for (int i = 1; i < 5; i++) {
-            tmpPos += gamestate[2][i];
+            // tmpPos += gamestate[2][i];
+            tmpPos.push_back(gamestate[2][i]);
         }
         for (int i = 5; i < gamestate[2].size(); i++) {
-            tmpName += gamestate[2][i];
+            // tmpName += gamestate[2][i];
+            tmpName.push_back(gamestate[2][i]);
         }
 
         player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {float(toInt(tmpLane) + offset), toFloat(tmpPos)}, setting);
@@ -169,12 +190,14 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[3] : Vehicles
     for (int i = 0; i < gamestate[3].size(); i += 5) {
-        std::string tmpLane = "", tmpPos = "";
-        tmpLane += gamestate[3][i];
+        std::vector<char> tmpLane, tmpPos;
+        // tmpLane += gamestate[3][i];
+        tmpLane.push_back(gamestate[3][i]);
         for (int j = i + 1; j < i + 5; j++) {
-            tmpPos += gamestate[3][j];
+            // tmpPos += gamestate[3][j];
+            tmpPos.push_back(gamestate[3][j]);
         }
-        lanes[toInt(tmpLane) - offset]->addVehicle(toFloat(tmpPos));
+        lanes[toInt(tmpLane)]->addVehicle(toFloat(tmpPos));
     }
 }
 
@@ -188,6 +211,16 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         }
         return str;
     };
+
+    
+    // auto toInt = [](std::vector<char> str) -> int {
+    //     // return *reinterpret_cast<int*>(&str[0]);
+    //     int num = 0;
+    //     for (int i = 0; i < str.size(); i++) {
+    //         num += str[i] << (8 * i);
+    //     }
+    //     return num;
+    // };
 
     auto fToS = [&](float num, int strSize) -> std::vector<char> {
         return iToS(*reinterpret_cast<int*>(&num), strSize);
@@ -228,6 +261,12 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         for (int j = 0; j < tmpSpeed.size(); j++) {
             gamestate[1].push_back(tmpSpeed[j]);
         }
+        for (int j = 0; j < tmpSpawn.size(); j++) {
+            gamestate[1].push_back(tmpSpawn[j]);
+        }
+        for (int j = 0; j < tmpTraffic.size(); j++) {
+            gamestate[1].push_back(tmpTraffic[j]);
+        }
     }
 
     // Handle gamestate[2] : Player
@@ -254,7 +293,7 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         std::vector<char> tmpLane = iToS(i, 1);
         std::vector<char> tmpGamestate = lanes[i]->getVehiclesGamestate();
         for (int j = 0; j < tmpGamestate.size(); j += 4) {
-            gamestate[3].push_back(tmpLane[j]);
+            gamestate[3].push_back(tmpLane[0]);
             for (int k = 0; k < 4; k++) {
                 gamestate[3].push_back(tmpGamestate[j + k]);
             }
