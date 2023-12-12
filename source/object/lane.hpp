@@ -4,39 +4,37 @@
 #include <vector>
 #include <utility>
 
-#include "lincal.hpp"
 #include "vehicle.hpp"
 #include "traffic.hpp"
-#include "isometric.hpp"
-#include "texture_holder.hpp"
 
-class Lane {
+class Lane : public Isometric {
 private:
-    Vec2 gridSize;
-    TextureHolder* holder;
-
     int length;
     float speed;
+
     int spawn;
     int clock;
+
+    std::vector<std::pair<const Texture&, const Texture&>> VEHICLE_TEXTURE;
+    std::pair<const Texture&, const Texture&> TRAFFIC_TEXTURE;
     
+    std::vector<Vehicle*> vehicles;
     Traffic traffic;
-    std::vector<Vehicle> vehicles;
+
     std::vector<Isometric> blocks;
 
+
 public:
-    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, const Traffic& traffic, int clock = 0, int spawn = 120);
+    Lane(const Texture& texture, int pos, int len, float speed, const std::vector<std::pair<const Texture&, const Texture&>>& VT, const std::pair<const Texture&, const Texture&>& TT, bool trafficState = false, int clock = 0, int spawn = 120);
 
-    void render(Engine* engine);
-    void process();
+    void render(Engine* engine, int playerPos);
+    void process(bool& isGameover, Engine* engine, float playerPos = -1.0f);
+    void gameoverProcess(bool& isStopped, float playerPos = -1.0f);
 
-    void addVehicle(float pos);
     bool collide(float pos);
-    bool direction();
-
     float getSpeed() const;
     int getSpawn() const;
-    
+    void addVehicle(float pos);
     std::vector<char> getTrafficGamestate() const;
     std::vector<char> getVehiclesGamestate() const;
 

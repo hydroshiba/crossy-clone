@@ -2,15 +2,15 @@
 #define VEHICLE_HPP_
 
 #include <iostream>
-#include "isometric.hpp"
+#include <isometric.hpp>
 
 class Vehicle : public Isometric {
 
 public:
-    Vehicle(Texture const * const texture, const Vec2& size, const Vec2& pos, const Vec2& off);
+    Vehicle(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& offset3D);
 
-    void move(float speed);
-    bool collide(float pos);
+    void move(const float& speed);
+    bool collide(const float& pos);
     void render(Engine* engine);
 };
 

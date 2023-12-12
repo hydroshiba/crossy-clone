@@ -8,31 +8,23 @@
 
 class Play : public Scene {
 private:
-    const Texture ROAD;
-    const Texture GRASS[3];
-
-    const Texture PLAYER_UP;
-    const Texture PLAYER_DOWN;
-    const Texture PLAYER_LEFT;
-    const Texture PLAYER_RIGHT;
-
-    const Texture VEHICLE_FRONT[4];
-    const Texture VEHICLE_BACK[4];
-    const Texture TRAFFIC[2];
-
-    Player player;
+    Player *player;
     std::vector<Lane*> lanes;
     bool isGameover;
     int score;
     int offset;
 
-    void createNewGame();
+    std::vector<const Texture*> LANE_TEXTURES;
+    std::vector<const Texture*> PLAYER_TEXTURES;
+    std::vector<std::pair<const Texture&, const Texture&>> VEHICLE_TEXTURE;
+    std::pair<const Texture&, const Texture&> TRAFFIC_TEXTURE;
+
     void updateProcess();
     bool needCreateGrassLane() const;
-    const Texture& randomGrass() const;
+    const Texture& getGrassTexture() const;
 
 public:
-    Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
+    Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
     ~Play();
 
     void loadGamestate(const std::vector<std::vector<char>>& gamestate);

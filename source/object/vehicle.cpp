@@ -1,16 +1,15 @@
 #include "vehicle.hpp"
 
-Vehicle::Vehicle(Texture const * const texture, const Vec2& size, const Vec2& pos, const Vec2& off) : Isometric(texture, size, pos) {
-    shift(off.x, off.y);
+Vehicle::Vehicle(const Texture& texture, const Vec2& size, const Vec2& pos, const Vec2& off) : Isometric(texture, size, pos, off) {}
+
+void Vehicle::move(const float& speed) {
+    pos.x += speed;
+    project();
 }
 
-void Vehicle::move(float speed) {
-    Isometric::x += speed;
-}
-
-bool Vehicle::collide(float pos) {
+bool Vehicle::collide(const float& pos) {
     if (pos == -1.0f) return false;
-    return ((Isometric::x <= pos) && (this->Isometric::x + Isometric::width >= pos));
+    return (this->pos.x + size.x >= pos);
 }
 
 void Vehicle::render(Engine* engine) {
