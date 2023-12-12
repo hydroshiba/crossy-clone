@@ -8,12 +8,13 @@
 
 class Play : public Scene {
 private:
-
     Player player;
     std::vector<Lane*> lanes;
     bool isGameover;
     int score;
     int offset;
+
+    Vec2 gridSize;
     
     void updateProcess();
     bool needCreateGrassLane() const;
