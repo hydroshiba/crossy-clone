@@ -1,45 +1,42 @@
 #include "player.hpp"
 
-Player::Player(const int& lane, const float& pos, const std::string& name, std::vector<const Texture*>& PT) :
-    Isometric(*PT[0], {100.0f, 100.0f}, {pos, 0.0f}),
-    name(name),
-    PLAYER_TEXTURES({{"UP", *PT[0]},
-                     {"DOWN", *PT[1]},
-                     {"LEFT", *PT[2]},
-                     {"RIGHT", *PT[3]}
-                     })
-    {
+Player::Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting) :
+    holder(holder),
+    setting(setting),
+    Isometric(holder->get("CHICKEN_UP"), size, pos) {
+        texture = holder->get(spriteID());
     }
 
-void Player::move(const Key& key) {
-    switch (key) {
-        case Key::UP:
-            pos.y += 1;
-            break;
-        case Key::DOWN:
-            pos.y -= 1;
-            break;
-        case Key::LEFT:
-            pos.x -= 1;
-            break;
-        case Key::RIGHT:
-            pos.x += 1;
-            break;
-        default:
-            break;
+void Player::move(Key key) {
+    if(key == Key::UP) {
+        direction = 0;
+        ++Isometric::y;
+    } else if(key == Key::DOWN) {
+        direction = 1;
+        --Isometric::y;
     }
+    else if(key == Key::LEFT) {
+        direction = 2;
+        ++Isometric::x;
+    } else if(key == Key::RIGHT) {
+        direction = 3;
+        --Isometric::x;
+    }
+
+    texture = holder->get(spriteID());
 }
 
-std::string Player::getName() {
-    return name;
-}
+std::string Player::spriteID() {
+    std::string str;
+    
+    if(setting->spriteID() == Sprite::chicken) str = "CHICKEN";
+    else if(setting->spriteID() == Sprite::cat) str = "CAT";
+    else str = "DUCK";
 
-void Player::render(Engine* engine) {
-    pos.y = -pos.y + 15;
-    project();
-    Isometric::render(engine);
-    pos.y = -pos.y + 15;
-}
+    if(direction == 0) str += "_UP";
+    else if(direction == 1) str += "_DOWN";
+    else if(direction == 2) str += "_LEFT";
+    else if(direction == 3) str += "_RIGHT";
 
-void Player::playSound() {
+    return str;
 }

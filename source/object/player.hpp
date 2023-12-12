@@ -6,20 +6,22 @@
 
 #include "typedef.hpp"
 #include "isometric.hpp"
+#include "keyboard.hpp"
+#include "setting.hpp"
+#include "texture_holder.hpp"
 
 class Player : public Isometric {
 private:
-    std::string name;
-
-    std::vector<std::pair<const std::string, const Texture&>> PLAYER_TEXTURES;
+    TextureHolder* holder;
+    Setting* setting;
+    int direction; // 0 = up, 1 = down, 2 = left, 3 = right
 
 public:
-    Player(const int& lane, const float& pos, const std::string& name, std::vector<const Texture*>& PT);
+    Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting);
 
-    void move(const Key& key);
+    void move(Key key);
     std::string getName();
-    void render(Engine* engine);
-    void playSound();
+    std::string spriteID();
 };
 
 #endif

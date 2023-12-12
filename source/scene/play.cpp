@@ -1,79 +1,85 @@
 #include "play.hpp"
 
-Play::Play(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
-    Scene(width, height, engine, speaker, registry, setting, keyboard),
-    player(nullptr),
-    lanes(),
-    isGameover(false),
+Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
+    Scene(engine, speaker, registry, setting, keyboard, holder),
+    GRASS({Texture("asset/texture/lane/grass.bmp"),
+                   Texture("asset/texture/lane/grassflower.bmp"),
+                   Texture("asset/texture/lane/grasspebble.bmp")
+    }),
+    ROAD(Texture("asset/texture/lane/road.bmp")),
+    PLAYER_UP(Texture("asset/texture/sprite/" + setting->spriteObject() + "/up.bmp")),
+    PLAYER_DOWN(Texture("asset/texture/sprite/" + setting->spriteObject() + "/down.bmp")),
+    PLAYER_LEFT(Texture("asset/texture/sprite/" + setting->spriteObject() + "/left.bmp")),
+    PLAYER_RIGHT(Texture("asset/texture/sprite/" + setting->spriteObject() + "/right.bmp")),
+    VEHICLE_FRONT({
+        Texture("asset/texture/car/blue/front.bmp"),
+        Texture("asset/texture/car/orange/front.bmp"),
+        Texture("asset/texture/truck/front.bmp"),
+        Texture("asset/texture/ambulance/front.bmp")
+    }),
+    VEHICLE_BACK({
+        Texture("asset/texture/car/blue/back.bmp"),
+        Texture("asset/texture/car/orange/back.bmp"),
+        Texture("asset/texture/truck/back.bmp"),
+        Texture("asset/texture/ambulance/back.bmp")
+    }),
+    TRAFFIC({Texture("asset/texture/traffic/red.bmp"), Texture("asset/texture/traffic/green.bmp")}),
+    player(PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, {ROAD.getWidth() * 1.0f, ROAD.getHeight() * 0.95f}, {engine->getWidth() / 2.0f, engine->getHeight() - ROAD.getWidth() / 2.0f}),
     score(0),
-    offset(0),
-    LANE_TEXTURES({new Texture("asset/texture/lane/grass.bmp"),
-                   new Texture("asset/texture/lane/grassflower.bmp"),
-                   new Texture("asset/texture/lane/grasspebble.bmp"),
-                   new Texture("asset/texture/lane/road.bmp")
-    }),
-    PLAYER_TEXTURES({new Texture("asset/texture/sprite/" + setting->spriteObject() + "/up.bmp"),
-                     new Texture("asset/texture/sprite/" + setting->spriteObject() + "/down.bmp"),
-                     new Texture("asset/texture/sprite/" + setting->spriteObject() + "/left.bmp"),
-                     new Texture("asset/texture/sprite/" + setting->spriteObject() + "/right.bmp")
-    }),
-    VEHICLE_TEXTURE({{Texture("asset/texture/car/blue/front.bmp"), Texture("asset/texture/car/blue/back.bmp")},
-                     {Texture("asset/texture/car/orange/front.bmp"), Texture("asset/texture/car/orange/back.bmp")},
-                     {Texture("asset/texture/truck/front.bmp"), Texture("asset/texture/truck/back.bmp")},
-                     {Texture("asset/texture/ambulance/front.bmp"), Texture("asset/texture/ambulance/back.bmp")}
-    }),
-    TRAFFIC_TEXTURE(Texture("asset/texture/traffic/red.bmp"), Texture("asset/texture/traffic/green.bmp"))
+    offset(0)
     {
+        // Load gamestate
+        if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
+        else createNewGame();
     }
 
 Scene* Play::process() {
-    bool isStopped = false;
 
-    keyboard->refresh();
+    bool isStopped = false;
     Key pressedKey = keyboard->key();
 
     switch (pressedKey) {
-        case Key::UP:
-            player->move(pressedKey);
-            score += 1000 * lanes[player->Y() - offset]->getSpeed() / lanes[player->Y() - offset]->getSpawn();
-            isGameover |= lanes[player->Y() - offset]->collide(player->X());
-            break;
-        case Key::DOWN:
-            if (player->Y() == offset) {
-                isGameover = true;
-                break;
-            }
-            player->move(pressedKey);
-            score -= 333;
-            isGameover |= lanes[player->Y() - offset]->collide(player->X());
-            break;
-        case Key::LEFT: case Key::RIGHT:
-            if (player->X() == 0 || player->X() == engine->getWidth() - player->getWidth()) break;
-            player->move(pressedKey);
-            isGameover |= lanes[player->Y() - offset]->collide(player->X());
-            break;
+    //     case Key::UP:
+    //         player->move(pressedKey);
+    //         score += 1000 * lanes[player->Y() - offset]->getSpeed() / lanes[player->Y() - offset]->getSpawn();
+    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
+    //         break;
+    //     case Key::DOWN:
+    //         if (player->Y() == offset) {
+    //             isGameover = true;
+    //             break;
+    //         }
+    //         player->move(pressedKey);
+    //         score -= 333;
+    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
+    //         break;
+    //     case Key::LEFT: case Key::RIGHT:
+    //         if (player->X() == 0 || player->X() == engine->getWidth() - player->getWidth()) break;
+    //         player->move(pressedKey);
+    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
+    //         break;
         case Key::ESC:
-            isStopped |= true;
+            return sceneRegistry->scene(SceneID::MENU);
             break;
         default:
             break;
     }
 
-    // Update process data
-    if (player->Y() - offset > 10) {
-        updateProcess();
-    }
+    // // Update process data
+    // if (player->Y() - offset > 10) {
+    //     updateProcess();
+    // }
 
-    // Lane processing
-    if (isGameover) {
-        for (auto lane : lanes) {
-            lane->gameoverProcess(isStopped, player->X());
-        }
-    }
-    else for (int i = 0; i < lanes.size(); i++) {
-        if (i == player->Y() - offset) lanes[i]->process(isGameover, engine, player->X());
-        else lanes[i]->process(isGameover, engine);
-    }
+    // // Lane processing
+    // if (isGameover) {
+    //     for (auto lane : lanes) {
+    //         lane->gameoverProcess(isStopped, player->X());
+    //     }
+    // }
+    // else for (int i = 0; i < lanes.size(); i++) {
+    //     if (i == player->Y() - offset) lanes[i]->process(isGameover, player->X());
+    //     else lanes[i]->process(isGameover);
+    // }
 
     // Return next scene
     Scene* next = this;
@@ -88,29 +94,16 @@ Scene* Play::process() {
 }
 
 void Play::render() {
-    // // Lane rendering
-    // int minRenderPos = player->Y() - offset;
-    // int maxRenderPos = minRenderPos + 19;
+    // Lane rendering
+    int minRenderPos = player.Y() - offset;
+    int maxRenderPos = minRenderPos + 19;
 
-    // for (int i = maxRenderPos; i >= minRenderPos; i--) {
-    //     lanes[i]->render(engine, player->Y());
-    // }
-
-    // // Player rendering
-    // player->render();
-
-
-
-    // Render lanes
-    int minRenderPos = player->Y() - offset;
-    int maxRenderPos = minRenderPos + engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight();
-
-    for (int i = maxRenderPos - 1; i >= minRenderPos; i--) {
-        lanes[i]->render(engine, player->Y());
+    for (int i = maxRenderPos; i >= minRenderPos; i--) {
+        lanes[i]->render(engine);
     }
 
-    // Render player
-    player->render(engine);
+    // Player rendering
+    player.render(engine);
 }
 
 void Play::playsound() {
@@ -165,11 +158,16 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
         }
 
         if (toFloat(tmpSpeed) == 0) {
-            const Texture& GRASS = getGrassTexture();
-            lanes.push_back(new Lane(GRASS, toInt(tmpPos), engine->getWidth() / GRASS.getWidth() * 2 + 5, toFloat(tmpSpeed), VEHICLE_TEXTURE, TRAFFIC_TEXTURE, toBool(tmpTraffic), toInt(tmpClock), toInt(tmpSpawn)));
+            const Texture& GRASS = randomGrass();
+            lanes.push_back(new Lane(GRASS, toInt(tmpPos), engine->getWidth() / GRASS.getWidth(), toFloat(tmpSpeed),
+                {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
+                {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
         }
         else {
-            lanes.push_back(new Lane(*LANE_TEXTURES[3], toInt(tmpPos), engine->getWidth() / LANE_TEXTURES[3]->getWidth() * 2 + 5, toFloat(tmpSpeed), VEHICLE_TEXTURE, TRAFFIC_TEXTURE, toBool(tmpTraffic), toInt(tmpClock), toInt(tmpSpawn)));
+            lanes.push_back(new Lane(ROAD, toInt(tmpPos), engine->getWidth() / ROAD.getWidth(), toFloat(tmpSpeed),
+                {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
+                {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
+
         }
     }
 
@@ -184,7 +182,8 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
             tmpName += gamestate[2][i];
         }
 
-        player = new Player(toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
+        player = new Player(PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, {ROAD.getWidth() * 1.0f, ROAD.getHeight() * 0.95f}, {toInt(tmpLane) + offset, toFloat(tmpPos)});
+            toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
     }
 
     // Handle gamestate[3] : Vehicles
@@ -284,33 +283,12 @@ std::vector<std::vector<char>> Play::createGamestate() const {
     return gamestate;
 }
 
-void Play::createNewGame(const std::string& name) {
-    std::cout << "Creating new game" << std::endl;
-    delete player;
-    for (auto lane : lanes) {
-        delete lane;
+void Play::createNewGame() {
+    // Create lanes
+    for (int i = 0; i < 20; i++) {
+        if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0].getWidth(), 0.0f, VEHICLE_TEXTURE, TRAFFIC));
+        else lanes.push_back(new Lane(LANE_TEXTURES[3], 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0].getWidth(), rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC));
     }
-    lanes.clear();
-
-    // Score and offset
-    score = 0;
-    offset = 0;
-    isGameover = false;
-
-    // Lanes initialization
-    lanes.push_back(new Lane(*LANE_TEXTURES[0], 0 - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, 120));
-    for (int i = 1; i < engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 11; i++) {
-        std::cout << "Creating lane " << i << std::endl;
-        if (needCreateGrassLane()) {
-            lanes.push_back(new Lane(getGrassTexture(), 0 - i - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
-        }
-        else {
-            lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - i - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
-        }
-    }
-
-    // Player
-    player = new Player(0, (engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5) / 2.0f, name, PLAYER_TEXTURES);
 }
 
 void Play::updateProcess() {
@@ -324,28 +302,18 @@ void Play::updateProcess() {
     if (!lanes.empty()) delete lanes.front();
     lanes.erase(lanes.begin());
 
-    if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 10) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, 0.0f, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
-    else lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - (engine->getWidth() / LANE_TEXTURES[0]->getWidth() + engine->getHeight() * 2 / LANE_TEXTURES[0]->getHeight() + 10) - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth() * 2 + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC_TEXTURE, false, 0, rand() % 60 + 60));
+    if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - 30 - offset, engine->getWidth() / GRASS[0]->getWidth(), 0.0f, VEHICLE_TEXTURE, TRAFFIC));
+    else lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth(), rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC));
 }
 
 bool Play::needCreateGrassLane() const {
     return rand() % 100 < (50 - offset / 2);
 }
 
-const Texture& Play::getGrassTexture() const {
-    return *LANE_TEXTURES[rand() % 3];
+const Texture& Play::randomGrass() const {
+    return GRASS[rand() % 3];
 }
 
 Play::~Play() {
-    // this->audio->stopSound(this->buttonSound);
-    delete player;
-    for (auto lane : lanes) {
-        delete lane;
-    }
-    for (auto texture : LANE_TEXTURES) {
-        delete texture;
-    }
-    for (auto texture : PLAYER_TEXTURES) {
-        delete texture;
-    }
+
 }
