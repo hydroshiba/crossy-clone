@@ -16,6 +16,11 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
 void Lane::render(Engine* engine) {
     for(auto& block : blocks)
         block.render(engine);
+
+    traffic.render(engine);
+
+    for(auto& vehicle : vehicles)
+        vehicle.render(engine);
 }
 
 void Lane::process() {
