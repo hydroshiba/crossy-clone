@@ -3,20 +3,17 @@
 Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
-                                                                                                                                                 sound("asset/sound/sfx/long-honk.wav", 0){
-    cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight() * 1.2)));
-    cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 2 / 5));
-    cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight() * 1.2)));
+                                                                                                                                                 sound("asset/sound/sfx/long-honk.wav", 0),
+                                                                                                                                                 score(holder, "", 0, 0){
+    cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight()) * 3 / 5));
+    cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5 - 50));
+    cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight()) * 3 / 5));
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {
     for(auto cup : cups) {
         delete cup;
         cup = nullptr;
-    }
-    for(auto font : leaderboard) {
-        delete font;
-        font = nullptr;
     }
 }
 
@@ -49,7 +46,7 @@ Scene* Leaderboard::process() {
         }
         break;
     }
-    cups[cupSelected]->shift(0, - 50);
+    cups[cupSelected]->shift(0, -50);
     return next;
 }
 
@@ -64,11 +61,12 @@ void Leaderboard::render() {
     else{
         xSelected = cups[cupSelected]->position().x;
         ySelected = cups[cupSelected]->position().y;
-        if(cupSelected == 1) ySelected -= 50;
-        cups[cupSelected]->shift(cups[1]->position().x / 2 - xSelected, cups[1]->position().y - ySelected);
+        cups[cupSelected]->shift(engine->getWidth() / 5 - xSelected, engine->getHeight() / 5 - ySelected);
         cups[cupSelected]->render(engine);
-        if(cupSelected == 1) ySelected += 50;
-        cups[cupSelected]->shift(xSelected - cups[cupSelected]->position().x, ySelected - cups[cupSelected]->position().y);
+
+        score.setText(std::to_string(setting->highscore(cupSelected == 0 ? 2 : cupSelected == 1 ? 0 : 1)), engine->getWidth() / 2, engine->getHeight() / 3);
+        score.render(engine);
+        cups[cupSelected]->shift(xSelected - engine->getWidth() / 5, ySelected - engine->getHeight() / 5);
     }
     cups[cupSelected]->shift(0, 50);
 

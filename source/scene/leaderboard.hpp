@@ -10,7 +10,7 @@ private:
     int cupSelected, xSelected, ySelected;
     Sound sound;
     std::vector<Object*> cups;
-    std::vector<Object*> leaderboard;
+    Textbox score;
 public:
     Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Leaderboard();
