@@ -10,7 +10,7 @@ void Vehicle::move(float speed) {
 
 bool Vehicle::collide(float pos) {
     if (pos == -1.0f) return false;
-    return ((Isometric::x <= pos) && (this->Isometric::x + Isometric::width >= pos));
+    return ((this->Isometric::x + Isometric::width >= pos));
 }
 
 void Vehicle::render(Engine* engine, int offset) {

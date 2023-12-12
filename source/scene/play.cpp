@@ -83,17 +83,18 @@ void Play::render() {
     // Background fill
     engine->fill(0, 162, 232);
 
-    // Lane rendering
+    // Lane and player rendering
     int minRenderPos = player.position().y - offset - 5;
     minRenderPos = minRenderPos < 0 ? 0 : minRenderPos;
     int maxRenderPos = minRenderPos + lanes.size() - 8;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
-        lanes[i]->render(engine, player.position().y);
+        if (i == player.position().y - offset) {
+            lanes[i]->render(engine, player.position().y);
+            player.render(engine, offset + engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3);
+        }
+        else lanes[i]->render(engine, player.position().y);
     }
-
-    // Player rendering
-    player.render(engine);
 }
 
 void Play::playsound() {
@@ -145,10 +146,14 @@ void Play::loadGamestate(const std::vector<std::vector<byte>>& gamestate) {
     //     return str;
     // };
 
+    // Clear old data
     for (auto lane : lanes) {
         delete lane;
     }
     lanes.clear();
+    score = 0;
+    offset = 0;
+    isGameover = false;
 
     // Handle gamestate[0] : Score and offset
     {
@@ -190,8 +195,6 @@ void Play::loadGamestate(const std::vector<std::vector<byte>>& gamestate) {
             // tmpClock += gamestate[1][j];
             tmpClock.push_back(gamestate[1][j]);
         }
-
-        std::cout << i << " " << toInt(tmpPos) << " " << toFloat(tmpSpeed) << " " << toInt(tmpSpawn) << " " << toBool(tmpTraffic) << " " << toInt(tmpClock) << std::endl;
 
         if (toFloat(tmpSpeed) == 0) {
             lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
@@ -326,23 +329,28 @@ std::vector<std::vector<byte>> Play::createGamestate() const {
 }
 
 void Play::createNewGame() {
+    // Clear old data
     for (auto lane : lanes) {
         delete lane;
     }
     lanes.clear();
+    score = 0;
+    offset = 0;
+    isGameover = false;
 
     // Create lanes
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
     }
 
-    for (int i = 6; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
+    for (int i = 7; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
         if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
         else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % 10) * 0.1f));
     }
 
     // Create player
-    player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {engine->getWidth() / 2.0f, 5.0f}, setting);
+    player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {20.0f, 6.0f}, setting);
+    player.shift(gridSize.x * -0.25f, gridSize.y * -0.15f);
 }
 
 void Play::updateProcess() {

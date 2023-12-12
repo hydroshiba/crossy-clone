@@ -67,14 +67,14 @@ void Lane::process() {
 }
 
 void Lane::gameoverProcess() {
-    // if (vehicles.empty()) {
-    //     std::string ambulance = "AMBULANCE";
-    //     if (speed > 0) ambulance += "_FRONT";
-    //     else ambulance += "_BACK";
-    //     Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
-    //     vehicles.push_back(vehicle);
-    // }
-    vehicles[0].move(10.0f);
+    if (vehicles.empty()) {
+        std::string ambulance = "AMBULANCE";
+        if (speed > 0) ambulance += "_FRONT";
+        else ambulance += "_BACK";
+        Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
+        vehicles.push_back(vehicle);
+    }
+    vehicles[0].move(0.01f);
 }
 
 bool Lane::collide(float pos) {
@@ -84,9 +84,9 @@ bool Lane::collide(float pos) {
             std::string ambulance = "AMBULANCE";
             if (speed > 0) ambulance += "_FRONT";
             else ambulance += "_BACK";
-            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
+            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
             vehicles.push_back(vehicle);
-                        
+
             return true;
         }
     }
@@ -185,4 +185,5 @@ std::vector<byte> Lane::getVehiclesGamestate() const {
 }
 
 Lane::~Lane() {
+    vehicles.clear();
 }

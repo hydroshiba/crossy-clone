@@ -18,10 +18,10 @@ void Player::move(Key key) {
     }
     else if(key == Key::LEFT) {
         direction = 2;
-        ++Isometric::x;
+        --Isometric::x;
     } else if(key == Key::RIGHT) {
         direction = 3;
-        --Isometric::x;
+        ++Isometric::x;
     }
 
     texture = holder->get(spriteID());
@@ -42,12 +42,12 @@ std::string Player::spriteID() {
     return str;
 }
 
-// void Player::render(Engine* engine, int offset) {
-//     Isometric::y += offset;
-//     project();
-//     Isometric::render(engine);
-//     Isometric::y -= offset;
-// }
+void Player::render(Engine* engine, int offset) {
+    Isometric::y = offset - Isometric::y;
+    // project();
+    Isometric::render(engine);
+    Isometric::y = offset - Isometric::y;
+}
 
 // std::string Player::setName(std::string name) {
 //     this->name = name;
