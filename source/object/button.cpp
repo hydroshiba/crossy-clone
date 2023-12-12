@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(const Texture& idle, const Texture& pressed, int x, int y) : Object(idle, x, y), pressed(pressed) {
+Button::Button(Texture const * const idle, Texture const * const pressed, int x, int y) : Object(idle, x, y), pressed(pressed) {
 }
 
 void Button::press() {
