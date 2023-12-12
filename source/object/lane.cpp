@@ -9,9 +9,6 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     traffic(holder, gridSize, {speed > 0 ? 0.0f : float(len + 5), float(pos)}, {float(0), float(0)}, isRed, trafficClock),
     clock(spawnClock / 2),
     spawn(spawnClock) {
-        if (speed == 0) {
-            grassType = rand() % 3;
-        }
     }
 
 void Lane::render(Engine* engine, int playerLane) {
@@ -22,6 +19,7 @@ void Lane::render(Engine* engine, int playerLane) {
             blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
         }
         else {
+            int grassType = rand() % 3;
             switch (grassType)
             {
                 case 0:
@@ -75,6 +73,16 @@ void Lane::gameoverProcess() {
         vehicles.push_back(vehicle);
     }
     vehicles[0].move(0.01f);
+}
+
+void Lane::shift(Vec2 offset) {
+    for (auto& vehicle : vehicles) {
+        vehicle.shift(offset);
+    }
+    for (auto& block : blocks) {
+        block.shift(offset);
+    }
+    traffic.shift(offset);
 }
 
 bool Lane::collide(float pos) {

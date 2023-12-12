@@ -26,6 +26,7 @@ public:
 
 	void render(Engine* engine) override;
 	void shift(int dx, int dy) override;
+	void shift(const Vec2& df);
 
 	// Virtual gird properties
 	// Use Object::position() and Object::size() to get physical grid properties instead

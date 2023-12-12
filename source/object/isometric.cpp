@@ -37,6 +37,11 @@ void Isometric::shift(int dx, int dy) {
 	offset.y += dy;
 }
 
+void Isometric::shift(const Vec2& df) {
+	offset.x += df.x;
+	offset.y += df.y;
+}
+
 void Isometric::project() {
 	Vec2 res = transform * Vec2({x, y}) + offset;
 	Object::x = res.x;

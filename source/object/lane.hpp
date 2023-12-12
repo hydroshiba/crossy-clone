@@ -20,7 +20,6 @@ private:
     float speed;
     int spawn;
     int clock;
-    int grassType;
     
     Traffic traffic;
     std::vector<Vehicle> vehicles;
@@ -32,6 +31,7 @@ public:
     void render(Engine* engine, int playerLane);
     void process();
     void gameoverProcess();
+    void shift(Vec2 offset);
 
     void addVehicle(float pos);
     bool collide(float pos = -1.0f);
