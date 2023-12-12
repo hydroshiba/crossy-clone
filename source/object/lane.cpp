@@ -67,6 +67,13 @@ void Lane::process() {
 }
 
 void Lane::gameoverProcess() {
+    if (vehicles.empty()) {
+        std::string ambulance = "AMBULANCE";
+        if (speed > 0) ambulance += "_FRONT";
+        else ambulance += "_BACK";
+        Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
+        vehicles.push_back(vehicle);
+    }
     vehicles[0].move(120.0f);
 }
 
