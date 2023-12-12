@@ -7,7 +7,7 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     length(len),
     speed(speed),
     traffic(holder, gridSize, {speed > 0 ? 0.0f : float(len + 5), float(pos)}, {float(0), float(0)}, isRed, trafficClock),
-    clock(spawnClock - 1),
+    clock(spawnClock / 2),
     spawn(spawnClock) {
         if (speed == 0) {
             grassType = rand() % 3;
@@ -67,14 +67,14 @@ void Lane::process() {
 }
 
 void Lane::gameoverProcess() {
-    if (vehicles.empty()) {
-        std::string ambulance = "AMBULANCE";
-        if (speed > 0) ambulance += "_FRONT";
-        else ambulance += "_BACK";
-        Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
-        vehicles.push_back(vehicle);
-    }
-    vehicles[0].move(120.0f);
+    // if (vehicles.empty()) {
+    //     std::string ambulance = "AMBULANCE";
+    //     if (speed > 0) ambulance += "_FRONT";
+    //     else ambulance += "_BACK";
+    //     Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
+    //     vehicles.push_back(vehicle);
+    // }
+    vehicles[0].move(10.0f);
 }
 
 bool Lane::collide(float pos) {
@@ -132,9 +132,9 @@ void Lane::addVehicle(float pos) {
     vehicles.push_back(vehicle);
 }
 
-std::vector<char> Lane::getTrafficGamestate() const {
-    auto iToS = [](int num, int strSize) -> std::vector<char> {
-        std::vector<char> str;
+std::vector<byte> Lane::getTrafficGamestate() const {
+    auto iToS = [](int num, int strSize) -> std::vector<byte> {
+        std::vector<byte> str;
         for (int i = 0; i < strSize; i++) {
             str.push_back(*reinterpret_cast<char*>(&num));
             num >>= 8;
@@ -142,16 +142,16 @@ std::vector<char> Lane::getTrafficGamestate() const {
         return str;
     };
 
-    auto bToS = [](bool num) -> std::vector<char> {
-        std::vector<char> str;
+    auto bToS = [](bool num) -> std::vector<byte> {
+        std::vector<byte> str;
         str.push_back(*reinterpret_cast<char*>(&num));
         return str;
     };
 
     // Something
-    std::vector<char> gamestate;
-    std::vector<char> tmpState = bToS(traffic.isRedLight());
-    std::vector<char> tmpClock = iToS(traffic.getClock(), 4);
+    std::vector<byte> gamestate;
+    std::vector<byte> tmpState = bToS(traffic.isRedLight());
+    std::vector<byte> tmpClock = iToS(traffic.getClock(), 4);
     gamestate.push_back(tmpState[0]);
     for (int i = 0; i < 4; i++) {
         gamestate.push_back(tmpClock[i]);
@@ -159,24 +159,24 @@ std::vector<char> Lane::getTrafficGamestate() const {
     return gamestate;
 }
 
-std::vector<char> Lane::getVehiclesGamestate() const {
-    auto iToS = [](int num, int strSize) -> std::string {
-        std::string str = "";
+std::vector<byte> Lane::getVehiclesGamestate() const {
+    auto iToS = [](int num, int strSize) -> std::vector<byte> {
+        std::vector<byte> str;
         for (int i = 0; i < strSize; i++) {
-            str += *reinterpret_cast<char*>(&num);
+            str.push_back(*reinterpret_cast<char*>(&num));
             num >>= 8;
         }
         return str;
     };
 
-    auto fToS = [&](float num, int strSize) -> std::string {
+    auto fToS = [&](float num, int strSize) -> std::vector<byte> {
         return iToS(*reinterpret_cast<int*>(&num), strSize);
     };
 
     // Something
-    std::vector<char> gamestate;
+    std::vector<byte> gamestate;
     for (auto& vehicle : vehicles) {
-        std::string tmpPos = fToS(vehicle.position().x, 4);
+        std::vector<byte> tmpPos = fToS(vehicle.position().x, 4);
         for (int i = 0; i < 4; i++) {
             gamestate.push_back(tmpPos[i]);
         }

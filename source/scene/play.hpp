@@ -23,9 +23,9 @@ public:
     Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Play();
 
-    void loadGamestate(const std::vector<std::vector<char>>& gamestate);
+    void loadGamestate(const std::vector<std::vector<byte>>& gamestate);
     void createNewGame();
-    std::vector<std::vector<char>> createGamestate() const;
+    std::vector<std::vector<byte>> createGamestate() const;
     Scene* process() override;
     void render() override;
     void playsound() override;

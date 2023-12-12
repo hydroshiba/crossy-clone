@@ -18,31 +18,33 @@ Scene* Play::process() {
     bool isStopped = false;
     Key pressedKey = keyboard->key();
 
-    switch (pressedKey) {
-        case Key::UP:
-            player.move(pressedKey);
-            score += 1000 * lanes[player.position().y - offset]->getSpeed() / lanes[player.position().y - offset]->getSpawn();
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::DOWN:
-            if (player.position().y == offset) {
-                isGameover = true;
+    if (!isGameover) {
+        switch (pressedKey) {
+            case Key::UP:
+                player.move(pressedKey);
+                score += 1000 * lanes[player.position().y - offset]->getSpeed() / lanes[player.position().y - offset]->getSpawn();
+                isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
                 break;
-            }
-            player.move(pressedKey);
-            score -= 333;
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::LEFT: case Key::RIGHT:
-            if (player.position().x == 0 || player.position().x == engine->getWidth() - player.size().x) break;
-            player.move(pressedKey);
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::ESC:
-            isStopped = true;
-            break;
-        default:
-            break;
+            case Key::DOWN:
+                if (player.position().y == offset) {
+                    isGameover = true;
+                    break;
+                }
+                player.move(pressedKey);
+                score -= 333;
+                isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
+                break;
+            case Key::LEFT: case Key::RIGHT:
+                if (player.position().x == 0 || player.position().x == engine->getWidth() - player.size().x) break;
+                player.move(pressedKey);
+                isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
+                break;
+            case Key::ESC:
+                isStopped = true;
+                break;
+            default:
+                break;
+        }
     }
 
     // Update process data
@@ -98,8 +100,8 @@ void Play::playsound() {
     // this->audio->playSound(this->buttonSound);
 }
 
-void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
-    auto toInt = [](std::vector<char> str) -> int {
+void Play::loadGamestate(const std::vector<std::vector<byte>>& gamestate) {
+    auto toInt = [](std::vector<byte> str) -> int {
         // return *reinterpret_cast<int*>(&str[0]);
         int num = 0;
         for (int i = 0; i < str.size(); i++) {
@@ -108,7 +110,7 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
         return num;
     };
 
-    auto toFloat = [](std::vector<char> str) -> float {
+    auto toFloat = [](std::vector<byte> str) -> float {
         // return *reinterpret_cast<float*>(&str[0]);
         int num = 0;
         for (int i = 0; i < str.size(); i++) {
@@ -117,14 +119,40 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
         return *reinterpret_cast<float*>(&num);
     };
 
-    auto toBool = [](std::vector<char> str) -> bool {
+    auto toBool = [](std::vector<byte> str) -> bool {
         // return *reinterpret_cast<bool*>(&str[0]);
         return *reinterpret_cast<bool*>(&str[0]);
     };
 
+    // auto iToS = [](int num, int strSize) -> std::vector<byte> {
+    //     std::vector<byte> str;
+    //     str.clear();
+    //     for (int i = 0; i < strSize; i++) {
+    //         str.push_back(*reinterpret_cast<char*>(&num));
+    //         num >>= 8;
+    //     }
+    //     return str;
+    // };
+
+    // auto fToS = [&](float num, int strSize) -> std::vector<byte> {
+    //     return iToS(*reinterpret_cast<int*>(&num), strSize);
+    // };
+
+    // auto bToS = [](bool num) -> std::vector<byte> {
+    //     std::vector<byte> str;
+    //     str.clear();
+    //     str.push_back(*reinterpret_cast<char*>(&num));
+    //     return str;
+    // };
+
+    for (auto lane : lanes) {
+        delete lane;
+    }
+    lanes.clear();
+
     // Handle gamestate[0] : Score and offset
     {
-        std::vector<char> tmpScore, tmpOffset;
+        std::vector<byte> tmpScore, tmpOffset;
         for (int i = 0; i < 4; i++) {
             // tmpScore += gamestate[0][i];
             tmpScore.push_back(gamestate[0][i]);
@@ -138,7 +166,7 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[1] : lanes
     for (int i = 0; i < gamestate[1].size(); i += 17) {
-        std::vector<char> tmpPos, tmpSpeed, tmpSpawn, tmpTraffic, tmpClock;
+        std::vector<byte> tmpPos, tmpSpeed, tmpSpawn, tmpTraffic, tmpClock;
         
         for (int j = i; j < i + 4; j++) {
             // tmpPos += gamestate[1][j];
@@ -163,6 +191,8 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
             tmpClock.push_back(gamestate[1][j]);
         }
 
+        std::cout << i << " " << toInt(tmpPos) << " " << toFloat(tmpSpeed) << " " << toInt(tmpSpawn) << " " << toBool(tmpTraffic) << " " << toInt(tmpClock) << std::endl;
+
         if (toFloat(tmpSpeed) == 0) {
             lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
         }
@@ -174,7 +204,7 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[2] : Player
     {
-        std::vector<char> tmpLane, tmpPos, tmpName;
+        std::vector<byte> tmpLane, tmpPos, tmpName;
         // tmpLane += gamestate[2][0];
         tmpLane.push_back(gamestate[2][0]);
         for (int i = 1; i < 5; i++) {
@@ -192,7 +222,7 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
     // Handle gamestate[3] : Vehicles
     for (int i = 0; i < gamestate[3].size(); i += 5) {
-        std::vector<char> tmpLane, tmpPos;
+        std::vector<byte> tmpLane, tmpPos;
         // tmpLane += gamestate[3][i];
         tmpLane.push_back(gamestate[3][i]);
         for (int j = i + 1; j < i + 5; j++) {
@@ -203,9 +233,9 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
     }
 }
 
-std::vector<std::vector<char>> Play::createGamestate() const {
-    auto iToS = [](int num, int strSize) -> std::vector<char> {
-        std::vector<char> str;
+std::vector<std::vector<byte>> Play::createGamestate() const {
+    auto iToS = [](int num, int strSize) -> std::vector<byte> {
+        std::vector<byte> str;
         str.clear();
         for (int i = 0; i < strSize; i++) {
             str.push_back(*reinterpret_cast<char*>(&num));
@@ -214,34 +244,24 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         return str;
     };
 
-    
-    // auto toInt = [](std::vector<char> str) -> int {
-    //     // return *reinterpret_cast<int*>(&str[0]);
-    //     int num = 0;
-    //     for (int i = 0; i < str.size(); i++) {
-    //         num += str[i] << (8 * i);
-    //     }
-    //     return num;
-    // };
-
-    auto fToS = [&](float num, int strSize) -> std::vector<char> {
+    auto fToS = [&](float num, int strSize) -> std::vector<byte> {
         return iToS(*reinterpret_cast<int*>(&num), strSize);
     };
 
-    auto bToS = [](bool num) -> std::vector<char> {
-        std::vector<char> str;
+    auto bToS = [](bool num) -> std::vector<byte> {
+        std::vector<byte> str;
         str.clear();
         str.push_back(*reinterpret_cast<char*>(&num));
         return str;
     };
 
-    std::vector<std::vector<char>> gamestate;
+    std::vector<std::vector<byte>> gamestate;
 
-    // Handle gamestate[0] : Score and offset
-    gamestate.push_back(std::vector<char>());
+    // Create gamestate[0] : Score and offset
+    gamestate.push_back(std::vector<byte>());
     {
-        std::vector<char> tmpScore = iToS(score, 4);
-        std::vector<char> tmpOffset = iToS(offset, 4);
+        std::vector<byte> tmpScore = iToS(score, 4);
+        std::vector<byte> tmpOffset = iToS(offset, 4);
         for (int i = 0; i < 4; i++) {
             gamestate[0].push_back(tmpScore[i]);
         }
@@ -250,13 +270,13 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         }
     }
 
-    // Handle gamestate[1] : lanes
-    gamestate.push_back(std::vector<char>());
+    // Create gamestate[1] : lanes
+    gamestate.push_back(std::vector<byte>());
     for (int i = 0; i < lanes.size(); i++) {
-        std::vector<char> tmpPos = iToS(lanes[i]->Y(), 4);
-        std::vector<char> tmpSpeed = fToS(lanes[i]->getSpeed(), 4);
-        std::vector<char> tmpSpawn = iToS(lanes[i]->getSpawn(), 4);
-        std::vector<char> tmpTraffic = lanes[i]->getTrafficGamestate();
+        std::vector<byte> tmpPos = iToS(lanes[i]->Y(), 4);
+        std::vector<byte> tmpSpeed = fToS(lanes[i]->getSpeed(), 4);
+        std::vector<byte> tmpSpawn = iToS(lanes[i]->getSpawn(), 4);
+        std::vector<byte> tmpTraffic = lanes[i]->getTrafficGamestate();
         for (int j = 0; j < tmpPos.size(); j++) {
             gamestate[1].push_back(tmpPos[j]);
         }
@@ -271,12 +291,12 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         }
     }
 
-    // Handle gamestate[2] : Player
-    gamestate.push_back(std::vector<char>());
+    // Create gamestate[2] : Player
+    gamestate.push_back(std::vector<byte>());
     {
-        std::vector<char> tmpLane = iToS((int)(player.position().y - offset), 1);
-        std::vector<char> tmpPos = fToS(player.position().x, 4);
-        // std::vector<char> tmpName;
+        std::vector<byte> tmpLane = iToS((int)(player.position().y - offset), 1);
+        std::vector<byte> tmpPos = fToS(player.position().x, 4);
+        // std::vector<byte> tmpName;
         // for (int i = 0; i < player.getName().size(); i++) {
         //     tmpName.push_back(player.getName()[i]);
         // }
@@ -289,11 +309,11 @@ std::vector<std::vector<char>> Play::createGamestate() const {
         // }
     }
     
-    // Handle gamestate[3] : Vehicles
-    gamestate.push_back(std::vector<char>());
+    // Create gamestate[3] : Vehicles
+    gamestate.push_back(std::vector<byte>());
     for (int i = 0; i < lanes.size(); i++) {
-        std::vector<char> tmpLane = iToS(i, 1);
-        std::vector<char> tmpGamestate = lanes[i]->getVehiclesGamestate();
+        std::vector<byte> tmpLane = iToS(i, 1);
+        std::vector<byte> tmpGamestate = lanes[i]->getVehiclesGamestate();
         for (int j = 0; j < tmpGamestate.size(); j += 4) {
             gamestate[3].push_back(tmpLane[0]);
             for (int k = 0; k < 4; k++) {
@@ -306,6 +326,11 @@ std::vector<std::vector<char>> Play::createGamestate() const {
 }
 
 void Play::createNewGame() {
+    for (auto lane : lanes) {
+        delete lane;
+    }
+    lanes.clear();
+
     // Create lanes
     for (int i = 0; i < 6; i++) {
         lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
@@ -338,7 +363,7 @@ void Play::updateProcess() {
 }
 
 bool Play::needCreateGrassLane() const {
-    return rand() % 100 < (35 - offset / 2 < 35 ? offset / 2 : 35);
+    return rand() % 100 < (35 - (offset / 2 < 35 ? offset / 2 : 35));
 }
 
 Play::~Play() {

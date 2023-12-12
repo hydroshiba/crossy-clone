@@ -41,8 +41,8 @@ public:
     float getSpeed() const;
     int getSpawn() const;
     
-    std::vector<char> getTrafficGamestate() const;
-    std::vector<char> getVehiclesGamestate() const;
+    std::vector<byte> getTrafficGamestate() const;
+    std::vector<byte> getVehiclesGamestate() const;
 
     ~Lane();
 };

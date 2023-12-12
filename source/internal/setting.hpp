@@ -15,7 +15,7 @@ private:
     byte score[12];  // Saving 3 highscores as a byte array to keep endianess consistent
     Volume music, sfx;
     Sprite sprite;
-    std::vector<std::vector<char>> gamestate;
+    std::vector<std::vector<byte>> gamestate;
 
     bool load();
     void save();
@@ -29,10 +29,10 @@ public:
     Volume volSFX() const;
     Sprite spriteID() const;
     std::string spriteObject() const;
-    std::vector<std::vector<char>> getGamestate() const;
+    std::vector<std::vector<byte>> getGamestate() const;
 
     bool setScore(word score);
-    void setGamestate(std::vector<std::vector<char>> state);
+    void setGamestate(std::vector<std::vector<byte>> state);
 
     void incMusic(Speaker* speaker);
     void decMusic(Speaker* speaker);

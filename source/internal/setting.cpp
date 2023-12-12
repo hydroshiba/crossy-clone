@@ -111,7 +111,7 @@ bool Setting::load() {
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
         if (top == 35) break;
 
-        gamestate.push_back(std::vector<char>());
+        gamestate.push_back(std::vector<byte>());
 
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
@@ -215,5 +215,5 @@ void Setting::decSFX(Speaker* speaker) {
 void Setting::incSprite() { ++sprite; }
 void Setting::decSprite() { --sprite; }
 
-std::vector<std::vector<char>> Setting::getGamestate() const { return gamestate; }
-void Setting::setGamestate(std::vector<std::vector<char>> state) { gamestate = state; }
+std::vector<std::vector<byte>> Setting::getGamestate() const { return gamestate; }
+void Setting::setGamestate(std::vector<std::vector<byte>> state) { gamestate = state; }
