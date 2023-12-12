@@ -4,23 +4,21 @@
 #include "typedef.hpp"
 #include "texture.hpp"
 #include "engine.hpp"
+#include "lincal.hpp"
 
 class Object {
 protected:
-	const Texture& texture;
+	Texture const * const texture;
 	int x, y;
 
 public:
-	Object(const Texture& texture);
-	Object(const Texture& texture, int x, int y);
+	Object(Texture const * const texture);
+	Object(Texture const * const texture, int x, int y);
 
-	int getX();
-	int getY();
+	Vec2 position() const;
+	Vec2 size() const;
 
-	int getWidth();
-	int getHeight();
-
-	void setOffset(int x, int y);
+	virtual void shift(int dx, int dy);
 	virtual void render(Engine* engine);
 };
 
