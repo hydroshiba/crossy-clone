@@ -1,6 +1,6 @@
 #include "leaderboard.hpp"
 
-Leaderboard::Leaderboard(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard),
+Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
                                                                                                                                                  GOLD("asset/texture/cup/gold.bmp"),

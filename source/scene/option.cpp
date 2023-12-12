@@ -1,6 +1,6 @@
 #include "option.hpp"
 
-Option::Option(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : Scene(width, height, engine, speaker, registry, setting, keyboard), 
+Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder), 
                                                                                                                                         button(0),
                                                                                                                                         spriteId(0),
                                                                                                                                         SPRITE("asset/texture/button/choose-sprite.bmp"),

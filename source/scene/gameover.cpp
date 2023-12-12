@@ -1,7 +1,7 @@
 #include "gameover.hpp"
 
-Gameover::Gameover(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
-    Scene(width, height, engine, speaker, registry, setting, keyboard),
+Gameover::Gameover(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
+    Scene(engine, speaker, registry, setting, keyboard, holder),
     QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
     quit(QUIT_CLICKED, (width - QUIT_CLICKED.getWidth()) / 2, height * 2 / 3),
     gameover("Gameover", width / 2 - width / 7, height / 3 - height / 6, 0.8f, 0.2f) {}

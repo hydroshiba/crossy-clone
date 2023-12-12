@@ -10,12 +10,6 @@ private:
     bool view;
     int avatarSelected, xSelected, ySelected;
 
-    const Texture TEACHER;
-    const Texture ASTRAUNAUT;
-    const Texture CAT;
-    const Texture FOX;
-    const Texture SEAL;
-
     Sound background;
     // Object title;
     std::vector<Object*> avatars;
@@ -25,7 +19,7 @@ private:
     Textbox studentId;
 
 public:
-    Credit(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Credit();
 
     Scene* process() override;

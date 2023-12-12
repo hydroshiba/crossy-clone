@@ -14,6 +14,7 @@
 #include "resource.hpp"
 #include "setting.hpp"
 #include "scene_registry.hpp"
+#include "texture_holder.hpp"
 
 class Game {
 private:
@@ -28,8 +29,9 @@ private:
     Engine* engine;
     Setting* setting;
     Speaker* speaker;
-    SceneRegistry* registry;
     Keyboard* keyboard;
+    TextureHolder* holder;
+    SceneRegistry* registry;
 
     Scene* current;
 

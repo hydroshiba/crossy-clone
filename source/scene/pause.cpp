@@ -1,7 +1,7 @@
 #include "pause.hpp"
 
-Pause::Pause(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard) : 
-    Scene(width, height, engine, speaker, registry, setting, keyboard),
+Pause::Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
+    Scene(engine, speaker, registry, setting, keyboard, holder),
     CONTINUE("asset/texture/button/continue.bmp"),
     CONTINUE_CLICKED("asset/texture/button/continue_clicked.bmp"),
     QUIT("asset/texture/button/quit.bmp"),

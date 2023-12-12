@@ -13,7 +13,8 @@ Game::Game() : title("Crossy Clone"), framerate(60), sound("asset/sound/backgrou
     setting = new Setting(speaker);
     engine = new Engine(hdc, width, height, framerate);
     keyboard = new Keyboard();
-    registry = new SceneRegistry(width, height, engine, speaker, setting, keyboard);
+    holder = new TextureHolder();
+    registry = new SceneRegistry(engine, speaker, setting, keyboard, holder);
 
     // Set scene
     current = registry->scene(SceneID::MENU);

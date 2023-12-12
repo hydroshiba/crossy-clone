@@ -27,7 +27,7 @@ private:
     std::vector<Button*> buttons;
 
 public:
-    Menu(int width, int height, Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard);
+    Menu(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Menu();
 
     void updateButton();
