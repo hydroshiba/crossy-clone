@@ -30,6 +30,7 @@ public:
 
     void render(Engine* engine);
     void process();
+    void gameoverProcess();
 
     void addVehicle(float pos);
     bool collide(float pos = -1.0f);

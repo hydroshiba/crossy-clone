@@ -31,13 +31,28 @@ void Lane::process() {
         clock = 0;
     }
 
-    for (auto& vehicle : vehicles) vehicle.move(speed);
+    for (auto& vehicle : vehicles) {
+        vehicle.move(speed);
+    }
     ++clock;
+}
+
+void Lane::gameoverProcess() {
+    vehicles[0].move(120.0f);
 }
 
 bool Lane::collide(float pos) {
     for (auto& vehicle : vehicles) {
-        if (vehicle.collide(pos)) return true;
+        if (vehicle.collide(pos)) {
+            vehicles.clear();
+            std::string ambulance = "AMBULANCE";
+            if (speed > 0) ambulance += "_FRONT";
+            else ambulance += "_BACK";
+            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({pos, 0}), Vec2({0, 0}));
+            vehicles.push_back(vehicle);
+                        
+            return true;
+        }
     }
     return false;
 }
@@ -98,6 +113,14 @@ std::vector<char> Lane::getTrafficGamestate() const {
     };
 
     // Something
+    std::vector<char> gamestate;
+    std::string tmpState = bToS(traffic.isRedLight());
+    std::string tmpClock = iToS(traffic.getClock(), 4);
+    gamestate.push_back(tmpState[0]);
+    for (int i = 0; i < 4; i++) {
+        gamestate.push_back(tmpClock[i]);
+    }
+    return gamestate;
 }
 
 std::vector<char> Lane::getVehiclesGamestate() const {
@@ -115,6 +138,14 @@ std::vector<char> Lane::getVehiclesGamestate() const {
     };
 
     // Something
+    std::vector<char> gamestate;
+    for (auto& vehicle : vehicles) {
+        std::string tmpPos = fToS(vehicle.position().x, 4);
+        for (int i = 0; i < 4; i++) {
+            gamestate.push_back(tmpPos[i]);
+        }
+    }
+    return gamestate;
 }
 
 Lane::~Lane() {

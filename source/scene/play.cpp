@@ -17,25 +17,25 @@ Scene* Play::process() {
     Key pressedKey = keyboard->key();
 
     switch (pressedKey) {
-    //     case Key::UP:
-    //         player->move(pressedKey);
-    //         score += 1000 * lanes[player->Y() - offset]->getSpeed() / lanes[player->Y() - offset]->getSpawn();
-    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
-    //         break;
-    //     case Key::DOWN:
-    //         if (player->Y() == offset) {
-    //             isGameover = true;
-    //             break;
-    //         }
-    //         player->move(pressedKey);
-    //         score -= 333;
-    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
-    //         break;
-    //     case Key::LEFT: case Key::RIGHT:
-    //         if (player->X() == 0 || player->X() == engine->getWidth() - player->getWidth()) break;
-    //         player->move(pressedKey);
-    //         isGameover |= lanes[player->Y() - offset]->collide(player->X());
-    //         break;
+        case Key::UP:
+            player.move(pressedKey);
+            score += 1000 * lanes[player.position().y - offset]->getSpeed() / lanes[player.position().y - offset]->getSpawn();
+            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
+            break;
+        case Key::DOWN:
+            if (player.position().y == offset) {
+                isGameover = true;
+                break;
+            }
+            player.move(pressedKey);
+            score -= 333;
+            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
+            break;
+        case Key::LEFT: case Key::RIGHT:
+            if (player.position().x == 0 || player.position().x == engine->getWidth() - player.size().x) break;
+            player.move(pressedKey);
+            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
+            break;
         case Key::ESC:
             return sceneRegistry->scene(SceneID::MENU);
             break;
@@ -43,21 +43,25 @@ Scene* Play::process() {
             break;
     }
 
-    // // Update process data
-    // if (player->Y() - offset > 10) {
-    //     updateProcess();
-    // }
+    // Update process data
+    if (player.position().y - offset > 10) {
+        updateProcess();
+    }
 
-    // // Lane processing
-    // if (isGameover) {
-    //     for (auto lane : lanes) {
-    //         lane->gameoverProcess(isStopped, player->X());
-    //     }
-    // }
-    // else for (int i = 0; i < lanes.size(); i++) {
-    //     if (i == player->Y() - offset) lanes[i]->process(isGameover, player->X());
-    //     else lanes[i]->process(isGameover);
-    // }
+    // Lane processing
+    if (isGameover) {
+        lanes[player.position().y - offset]->gameoverProcess();
+        isStopped |= lanes[player.position().y - offset]->collide(player.position().x);
+    }
+    else for (int i = 0; i < lanes.size(); i++) {
+        if (i == player.position().y - offset) {
+            lanes[i]->process();
+            isGameover |= lanes[i]->collide(player.position().x);
+        }
+        else {
+            lanes[i]->process();
+        }
+    }
 
     // Return next scene
     Scene* next = this;
@@ -74,7 +78,7 @@ Scene* Play::process() {
 void Play::render() {
     // Lane rendering
     int minRenderPos = player.position().y - offset;
-    int maxRenderPos = minRenderPos + 19;
+    int maxRenderPos = minRenderPos + lanes.size() - 10;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
         lanes[i]->render(engine);
