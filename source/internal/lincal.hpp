@@ -2,10 +2,12 @@
 #define LINCAL_HPP_
 
 #include <initializer_list>
+#include <utility>
 
 struct Vec2 {
 	float x, y;
 	Vec2 operator+(const Vec2& other) const;
+	Vec2& operator=(std::initializer_list<float> list);
 };
 
 class Mat2 {
