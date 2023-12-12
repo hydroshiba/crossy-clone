@@ -7,6 +7,7 @@ Pause::Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting*
     button(0),
     pause(holder, "PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6)
     {
+        continueButton.press();
     }
 
 Pause::~Pause() {   
