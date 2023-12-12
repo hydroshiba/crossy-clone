@@ -10,18 +10,6 @@ private:
     int musicId;
     int sfxId;
     int spriteId;
-    
-    const Texture SPRITE, SPRITE_CLICKED;
-    const Texture CHICKEN, DUCK, CAT;
-    const Texture MUSIC, MUSIC_CLICKED;
-    const Texture SFX, SFX_CLICKED;
-    const Texture MIN_VOLUME;
-    const Texture LOW_VOLUME;
-    const Texture MEDIUM_VOLUME;
-    const Texture HIGH_VOLUME;
-    const Texture MAX_VOLUME;
-    const Texture LEFT_ARROW, LEFT_ARROW_CLICKED;
-    const Texture RIGHT_ARROW, RIGHT_ARROW_CLICKED;
 
     Sound background;
 

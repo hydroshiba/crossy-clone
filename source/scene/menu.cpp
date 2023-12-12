@@ -4,29 +4,15 @@ Menu::Menu(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
                                                                                                                                     defaultButton(setting->getGamestate().size() ? 0 : 1),
                                                                                                                                     isContinueEnabled(setting->getGamestate().size() ? true : false),
                                                                                                                                     button(defaultButton),
-                                                                                                                                    TITLE("asset/texture/title.bmp"),
-                                                                                                                                    CONTINUE("asset/texture/button/continue.bmp"),
-                                                                                                                                    CONTINUE_CLICKED("asset/texture/button/continue_clicked.bmp"),
-                                                                                                                                    START("asset/texture/button/start.bmp"),
-                                                                                                                                    START_CLICKED("asset/texture/button/start_clicked.bmp"),
-                                                                                                                                    OPTION("asset/texture/button/option.bmp"),
-                                                                                                                                    OPTION_CLICKED("asset/texture/button/option_clicked.bmp"),
-                                                                                                                                    LEADERBOARD("asset/texture/button/leaderboard.bmp"),
-                                                                                                                                    LEADERBOARD_CLICKED("asset/texture/button/leaderboard_clicked.bmp"),
-                                                                                                                                    CREDIT("asset/texture/button/credit.bmp"), //credit
-                                                                                                                                    CREDIT_CLICKED("asset/texture/button/credit_clicked.bmp"), //credit clicked
-                                                                                                                                    QUIT("asset/texture/button/quit.bmp"),
-                                                                                                                                    QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
-                                                                                                                                    DUCK_X2("asset/texture/sprite/duck/duck_x2.bmp"),
                                                                                                                                     button_clicked("asset/sound/sfx/button-click-2.wav"),
-                                                                                                                                    title(TITLE, (width - TITLE.getWidth()) / 5, (height - TITLE.getHeight()) / 2),
-                                                                                                                                    duck_x2(DUCK_X2, (width - DUCK_X2.getWidth()) * 4 / 5, (height - DUCK_X2.getHeight()) / 2){
-    buttons.push_back(new Button(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 2, (height - CONTINUE.getHeight()) / 2.75));
-    buttons.push_back(new Button(START, START_CLICKED, (width - START.getWidth()) / 2, isContinueEnabled ? buttons.back()->getY() + buttons.back()->getHeight() * 0.55 : (height - START.getHeight()) / 2.75));
-    buttons.push_back(new Button(OPTION, OPTION_CLICKED, (width - OPTION.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55));
-    buttons.push_back(new Button(LEADERBOARD, LEADERBOARD_CLICKED, (width - LEADERBOARD.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55));
-    buttons.push_back(new Button(CREDIT, CREDIT_CLICKED, (width - CREDIT.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55));
-    buttons.push_back(new Button(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) / 2, buttons.back()->getY() + buttons.back()->getHeight() * 0.55)); 
+                                                                                                                                    title(holder->get("TITLE"), (engine->getWidth() - holder->get("TITLE")->getWidth()) / 5, (engine->getHeight() - holder->get("TITLE")->getHeight()) / 2),
+                                                                                                                                    duck_large(holder->get("DUCK_LARGE"), (engine->getWidth() - holder->get("DUCK_LARGE")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("DUCK_LARGE")->getHeight()) / 2){
+    buttons.push_back(new Button(holder->get("CONTINUE"), holder->get("CONTINUE_CLICKED"), (engine->getWidth() - holder->get("CONTINUE")->getWidth()) / 2, (engine->getHeight() - holder->get("CONTINUE")->getHeight()) / 2.75));
+    buttons.push_back(new Button(holder->get("START"), holder->get("START_CLICKED"), (engine->getWidth() - holder->get("START")->getWidth()) / 2, isContinueEnabled ? buttons.back()->position().y + buttons.back()->size().y * 0.55 : (engine->getHeight() - holder->get("START")->getHeight()) / 2.75));
+    buttons.push_back(new Button(holder->get("OPTION"), holder->get("OPTION_CLICKED"), (engine->getWidth() - holder->get("OPTION")->getWidth()) / 2, buttons.back()->position().y + buttons.back()->size().y * 0.55));
+    buttons.push_back(new Button(holder->get("LEADERBOARD"), holder->get("LEADERBOARD_CLICKED"), (engine->getWidth() - holder->get("LEADERBOARD")->getWidth()) / 2, buttons.back()->position().y + buttons.back()->size().y * 0.55));
+    buttons.push_back(new Button(holder->get("CREDIT"), holder->get("CREDIT_CLICKED"), (engine->getWidth() - holder->get("CREDIT")->getWidth()) / 2, buttons.back()->position().y + buttons.back()->size().y * 0.55));
+    buttons.push_back(new Button(holder->get("QUIT"), holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT")->getWidth()) / 2, buttons.back()->position().y + buttons.back()->size().y * 0.55));
 }
 
 void Menu::updateButton() {
@@ -34,10 +20,10 @@ void Menu::updateButton() {
         isContinueEnabled = !isContinueEnabled;
         buttons[button]->release();
         button = defaultButton = isContinueEnabled ? 0 : 1;
-        int y = isContinueEnabled ? buttons[0]->getY() + buttons[0]->getHeight() * 0.55 : (height - START.getHeight()) / 2.75;
-        buttons[1]->setOffset(buttons[1]->getX(), y);
+        int y = isContinueEnabled ? buttons[0]->position().y + buttons[0]->size().y * 0.55 : (engine->getHeight() - holder->get("START")->getHeight()) / 2.75;
+        buttons[1]->shift(0, y - buttons[1]->position().y);
         for(int i = 2; i < buttons.size(); i++) {
-            buttons[i]->setOffset(buttons[i]->getX(), buttons[i - 1]->getY() + buttons[i - 1]->getHeight() * 0.55);
+            buttons[i]->shift(0, buttons[i - 1]->position().y - buttons[i]->position().y + (buttons[i - 1]->size().y - buttons[i]->size().y ) * 0.55);
         }
     }
 
@@ -101,7 +87,7 @@ void Menu::render() {
     updateButton();
     engine->fill(0, 162, 232);
     title.render(engine);
-    duck_x2.render(engine);
+    duck_large.render(engine);
 
     for(int i = defaultButton; i < buttons.size(); i++) {
         buttons[i]->render(engine);

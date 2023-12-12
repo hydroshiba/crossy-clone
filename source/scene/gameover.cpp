@@ -2,9 +2,8 @@
 
 Gameover::Gameover(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
     Scene(engine, speaker, registry, setting, keyboard, holder),
-    QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
-    quit(QUIT_CLICKED, (width - QUIT_CLICKED.getWidth()) / 2, height * 2 / 3),
-    gameover("Gameover", width / 2 - width / 7, height / 3 - height / 6, 0.8f, 0.2f) {}
+    quit(holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT_CLICKED")->getWidth()) / 2, engine->getHeight() * 2 / 3),
+    gameover("Gameover", engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6, 0.8f, 0.2f) {}
 
 Gameover::~Gameover() {
 }

@@ -3,32 +3,10 @@
 Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
-                                                                                                                                                 GOLD("asset/texture/cup/gold.bmp"),
-                                                                                                                                                 SILVER("asset/texture/cup/silver.bmp"),
-                                                                                                                                                 COPPER("asset/texture/cup/copper.bmp"),
-                                                                                                                                                 L("asset/font/L.bmp"),
-                                                                                                                                                 E("asset/font/E.bmp"),
-                                                                                                                                                 A("asset/font/A.bmp"),
-                                                                                                                                                 D("asset/font/D.bmp"),
-                                                                                                                                                 R("asset/font/R.bmp"),
-                                                                                                                                                 B("asset/font/B.bmp"),
-                                                                                                                                                 O("asset/font/O.bmp"),
                                                                                                                                                  sound("asset/sound/sfx/long-honk.wav", 0){
-    cups.push_back(new Object(SILVER, (width - SILVER.getWidth()) / 5, (height - SILVER.getHeight())));
-    cups.push_back(new Object(GOLD, (width - GOLD.getWidth()) / 2, (height - GOLD.getHeight()) * 3 / 5));
-    cups.push_back(new Object(COPPER, (width - COPPER.getWidth()) * 4 / 5, (height - COPPER.getHeight())));
-
-    leaderboard.push_back(new Object(L, width / 4, height / 16));
-    leaderboard.push_back(new Object(E, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(A, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(D, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(E, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(R, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(B, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(O, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(A, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(R, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
-    leaderboard.push_back(new Object(D, leaderboard.back()->getX() + 5 * L.getWidth() / 6, leaderboard.back()->getY() + L.getHeight() / 4));
+    cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight())));
+    cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5));
+    cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getWidth())));
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {
@@ -71,7 +49,7 @@ Scene* Leaderboard::process() {
         }
         break;
     }
-    cups[cupSelected]->setOffset(cups[cupSelected]->getX(), cups[cupSelected]->getY() - 50);
+    cups[cupSelected]->shift(0, - 50);
     return next;
 }
 
@@ -82,19 +60,16 @@ void Leaderboard::render() {
         for(auto cup : cups) {
             cup->render(engine);
         }
-        // for(auto font : leaderboard) {
-        //     font->render(engine);
-        // }
     }
     else{
-        xSelected = cups[cupSelected]->getX();
-        ySelected = cups[cupSelected]->getY();
-        if(cupSelected == 1) cups[cupSelected]->setOffset(cups[1]->getX(), cups[1]->getY() + 50);
-        cups[cupSelected]->setOffset(cups[1]->getX() / 2, cups[1]->getY() / 2);
+        xSelected = cups[cupSelected]->position().x;
+        ySelected = cups[cupSelected]->position().y;
+        // if(cupSelected == 1) cups[cupSelected]->setOffset(cups[1]->getX(), cups[1]->getY() + 50);
+        cups[cupSelected]->shift(cups[1]->position().x / 2 - xSelected, cups[1]->position().y / 2 - ySelected);
         cups[cupSelected]->render(engine);
-        cups[cupSelected]->setOffset(xSelected, ySelected);
+        cups[cupSelected]->shift(xSelected, ySelected);
     }
-    cups[cupSelected]->setOffset(cups[cupSelected]->getX(), cups[cupSelected]->getY() + 50);
+    cups[cupSelected]->shift(0, 50);
 
 }
 

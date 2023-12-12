@@ -6,8 +6,6 @@
 
 class Pause : public Scene {
 private:
-    const Texture CONTINUE, CONTINUE_CLICKED;
-    const Texture QUIT, QUIT_CLICKED;
 
     int button;
 

@@ -3,24 +3,6 @@
 Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder), 
                                                                                                                                         button(0),
                                                                                                                                         spriteId(0),
-                                                                                                                                        SPRITE("asset/texture/button/choose-sprite.bmp"),
-                                                                                                                                        SPRITE_CLICKED("asset/texture/button/choose-sprite-clicked.bmp"),
-                                                                                                                                        CHICKEN("asset/texture/sprite/chicken/down.bmp"),
-                                                                                                                                        DUCK("asset/texture/sprite/duck/down.bmp"),
-                                                                                                                                        CAT("asset/texture/sprite/cat/down.bmp"),
-                                                                                                                                        MUSIC("asset/texture/volume/bgm.bmp"),
-                                                                                                                                        MUSIC_CLICKED("asset/texture/volume/bgm-clicked.bmp"),
-                                                                                                                                        SFX("asset/texture/volume/sfx.bmp"), 
-                                                                                                                                        SFX_CLICKED("asset/texture/volume/sfx-clicked.bmp"),
-                                                                                                                                        MIN_VOLUME("asset/texture/volume/0.bmp"),
-                                                                                                                                        LOW_VOLUME("asset/texture/volume/25.bmp"),
-                                                                                                                                        MEDIUM_VOLUME("asset/texture/volume/50.bmp"),
-                                                                                                                                        HIGH_VOLUME("asset/texture/volume/75.bmp"),
-                                                                                                                                        MAX_VOLUME("asset/texture/volume/100.bmp"),
-                                                                                                                                        LEFT_ARROW("asset/texture/button/arrow-left.bmp"),
-                                                                                                                                        LEFT_ARROW_CLICKED("asset/texture/button/arrow-left-clicked.bmp"),
-                                                                                                                                        RIGHT_ARROW("asset/texture/button/arrow-right.bmp"),
-                                                                                                                                        RIGHT_ARROW_CLICKED("asset/texture/button/arrow-right-clicked.bmp"),
                                                                                                                                         background("asset/sound/background.wav"){
     
     if(setting->volMusic() == Volume::min) musicId = 0;
@@ -35,28 +17,28 @@ Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Settin
     else if(setting->volSFX() == Volume::high) sfxId = 3;
     else sfxId = 4;
 
-    buttons.push_back(new Button(MUSIC, MUSIC_CLICKED, width / 5, height / 2 - height / 4));
-    buttons.push_back(new Button(SFX, SFX_CLICKED, width / 5, height / 2));
-    buttons.push_back(new Button(SPRITE, SPRITE_CLICKED, width / 5, height / 2 + height / 4));
+    buttons.push_back(new Button(holder->get("MUSIC"), holder->get("MUSIC_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2 - engine->getHeight() / 4));
+    buttons.push_back(new Button(holder->get("SFX"), holder->get("SFX_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2));
+    buttons.push_back(new Button(holder->get("SPRITE"), holder->get("SPRITE_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2 + engine->getHeight() / 4));
 
-    buttons.push_back(new Button(LEFT_ARROW, LEFT_ARROW_CLICKED, width / 3, buttons[2]->getY() + buttons[2]->getHeight() / 3));
-    buttons.push_back(new Button(RIGHT_ARROW, RIGHT_ARROW_CLICKED, width / 2 + 7 * buttons.back()->getWidth() / 4, buttons[2]->getY() + buttons[2]->getHeight() / 3));
+    buttons.push_back(new Button(holder->get("LEFT_ARROW"), holder->get("LEFT_ARROW_CLICKED"), engine->getWidth() / 3, buttons[2]->position().y + buttons[2]->size().y / 3));
+    buttons.push_back(new Button(holder->get("RIGHT_ARROW"), holder->get("RIGHT_ARROW_CLICKED"), engine->getWidth() / 2 + 7 * buttons.back()->size().x / 4, buttons[2]->position().y + buttons[2]->size().y / 3));
 
-    music.push_back(new Object(MIN_VOLUME, width / 3, buttons[0]->getY()));
-    music.push_back(new Object(LOW_VOLUME, width / 3, buttons[0]->getY()));
-    music.push_back(new Object(MEDIUM_VOLUME, width / 3, buttons[0]->getY()));
-    music.push_back(new Object(HIGH_VOLUME, width / 3, buttons[0]->getY()));
-    music.push_back(new Object(MAX_VOLUME, width / 3, buttons[0]->getY()));
+    music.push_back(new Object(holder->get("MIN_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("LOW_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("MEDIUM_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("HIGH_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("MAX_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
 
-    sfx.push_back(new Object(MIN_VOLUME, width / 3, buttons[1]->getY()));
-    sfx.push_back(new Object(LOW_VOLUME, width / 3, buttons[1]->getY()));
-    sfx.push_back(new Object(MEDIUM_VOLUME, width / 3, buttons[1]->getY()));
-    sfx.push_back(new Object(HIGH_VOLUME, width / 3, buttons[1]->getY()));
-    sfx.push_back(new Object(MAX_VOLUME, width / 3, buttons[1]->getY()));
+    sfx.push_back(new Object(holder->get("MIN_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("LOW_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("MEDIUM_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("HIGH_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("MAX_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
     
-    sprites.push_back(new Object(CHICKEN, (buttons[3]->getX() + buttons[4]->getX()) / 2, buttons[2]->getY()));
-    sprites.push_back(new Object(DUCK, sprites.back()->getX(), sprites.back()->getY()));
-    sprites.push_back(new Object(CAT, sprites.back()->getX(), sprites.back()->getY()));
+    sprites.push_back(new Object(holder->get("CHICKEN_DOWN"), (buttons[3]->position().x + buttons[4]->position().x) / 2, buttons[2]->position().y));
+    sprites.push_back(new Object(holder->get("DUCK_DOWN"), sprites.back()->position().x, sprites.back()->position().y));
+    sprites.push_back(new Object(holder->get("CAT_DOWN"), sprites.back()->position().x, sprites.back()->position().y));
 }
 
 Option::~Option() {

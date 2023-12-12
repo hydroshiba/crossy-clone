@@ -6,7 +6,6 @@
 
 class Gameover : public Scene {
 private:
-    const Texture QUIT_CLICKED;
 
     Object quit;
     Textbox gameover;

@@ -3,20 +3,15 @@
 Credit::Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                         view(false),
                                                                                                                                         avatarSelected(0),
-                                                                                                                                        TEACHER("asset/texture/credit/3T.bmp"),
-                                                                                                                                        ASTRAUNAUT("asset/texture/credit/astraunaut.bmp"),
-                                                                                                                                        CAT("asset/texture/credit/cat.bmp"),
-                                                                                                                                        FOX("asset/texture/credit/fox.bmp"),
-                                                                                                                                        SEAL("asset/texture/credit/seal.bmp"),
                                                                                                                                         background("asset/sound/background.wav"),
-                                                                                                                                        credit("credit", width / 2 - width / 9.5, height / 3 - height / 4, 0.8f, 0.2f),
+                                                                                                                                        credit("credit", engine->getWidth() / 2 - engine->getWidth() / 9.5, engine->getHeight() / 3 - engine->getHeight() / 4, 0.8f, 0.2f),
                                                                                                                                         name("", 0, 0, 0, 0),
                                                                                                                                         studentId("", 0, 0, 0, 0){
-    avatars.push_back(new Object(TEACHER, (width - TEACHER.getWidth()) / 2, height / 4));
-    avatars.push_back(new Object(ASTRAUNAUT, avatars[0]->getX() - avatars[0]->getWidth() * 5, height / 2 + height / 8));
-    avatars.push_back(new Object(CAT, avatars[0]->getX() - avatars[0]->getWidth() * 2, avatars[1]->getY()));
-    avatars.push_back(new Object(FOX, avatars[0]->getX() + avatars[0]->getWidth() * 2, avatars[2]->getY()));
-    avatars.push_back(new Object(SEAL, avatars[0]->getX() + avatars[0]->getWidth() * 5, avatars[3]->getY()));
+    avatars.push_back(new Object(holder->get("CREDIT_TEACHER"), (engine->getWidth() - holder->get("CREDIT_TEACHER")->getWidth()) / 2, engine->getHeight() / 4));
+    avatars.push_back(new Object(holder->get("CREDIT_ASTRAUNAUT"), avatars[0]->position().x - avatars[0]->size().x * 5, engine->getHeight() / 2 + engine->getHeight() / 8));
+    avatars.push_back(new Object(holder->get("CREDIT_CAT"), avatars[0]->position().x - avatars[0]->size().x * 2, avatars[1]->position().y));
+    avatars.push_back(new Object(holder->get("CREDIT_FOX"), avatars[0]->position().x + avatars[0]->size().x * 2, avatars[2]->position().y));
+    avatars.push_back(new Object(holder->get("CREDIT_SEAL"), avatars[0]->position().x + avatars[0]->size().x * 5, avatars[3]->position().y));
     
 
 }
@@ -68,7 +63,7 @@ Scene* Credit::process() {
             }
             break;
     }
-    avatars[avatarSelected]->setOffset(avatars[avatarSelected]->getX(), avatars[avatarSelected]->getY() - 50);
+    avatars[avatarSelected]->shift(0, - 50);
     return next;
 }
 
@@ -83,35 +78,34 @@ void Credit::render() {
     else{
         switch(avatarSelected) {
                 case 0:
-                    name.setText(" GV Truong\nToan Thinh",  width / 3, height / 3, 0.8f, 0.2f);
+                    name.setText(" GV Truong\nToan Thinh",  engine->getWidth() / 3, engine->getHeight() / 3, 0.8f, 0.2f);
                     break;
                 case 1:
-                    name.setText("Dang Thanh Tu",  width / 3, height / 3, 0.8f, 0.2f);
-                    studentId.setText("22127432",  width / 3, height / 3 + height / 8, 0.8f, 0.2f);
+                    name.setText("Dang Thanh Tu",  engine->getWidth() / 3, engine->getHeight() / 3, 0.8f, 0.2f);
+                    studentId.setText("22127432",  engine->getWidth() / 3, engine->getHeight() / 3 + engine->getHeight() / 8, 0.8f, 0.2f);
                     break;
                 case 2:
-                    name.setText("Nguyen Ngoc\n  Anh Tu",  width / 3, height / 3, 0.8f, 0.2f);
-                    studentId.setText("22127433",  width / 3, height / 3 + 2 * height / 8, 0.8f, 0.2f);
+                    name.setText("Nguyen Ngoc\n  Anh Tu",  engine->getWidth() / 3, engine->getHeight() / 3, 0.8f, 0.2f);
+                    studentId.setText("22127433",  engine->getWidth() / 3, engine->getHeight() / 3 + 2 * engine->getHeight() / 8, 0.8f, 0.2f);
                     break;
                 case 3:
-                    name.setText("Bui Ta Phat",  width / 3, height / 3, 0.8f, 0.2f);
-                    studentId.setText("22127320",  width / 3, height / 3 + height / 8, 0.8f, 0.2f);
+                    name.setText("Bui Ta Phat",  engine->getWidth() / 3, engine->getHeight() / 3, 0.8f, 0.2f);
+                    studentId.setText("22127320",  engine->getWidth() / 3, engine->getHeight() / 3 + engine->getHeight() / 8, 0.8f, 0.2f);
                     break;
                 case 4:
-                    name.setText("Phan Hai Minh",  width / 3, height / 3, 0.8f, 0.2f);
-                    studentId.setText("22127273",  width / 3, height / 3 + height / 8, 0.8f, 0.2f);
+                    name.setText("Phan Hai Minh",  engine->getWidth() / 3, engine->getHeight() / 3, 0.8f, 0.2f);
+                    studentId.setText("22127273",  engine->getWidth() / 3, engine->getHeight() / 3 + engine->getHeight() / 8, 0.8f, 0.2f);
                     break;
         }
-        xSelected = avatars[avatarSelected]->getX();
-        ySelected = avatars[avatarSelected]->getY();
-        if(avatarSelected == 0) avatars[avatarSelected]->setOffset(avatars[0]->getX(), avatars[0]->getY() + 50);
-        avatars[avatarSelected]->setOffset(avatars[0]->getX() / 3, avatars[0]->getY());
+        xSelected = avatars[avatarSelected]->position().x;
+        ySelected = avatars[avatarSelected]->position().y;
+        avatars[avatarSelected]->shift(avatars[0]->position().x / 3 - xSelected, avatars[0]->position().y - ySelected);
         avatars[avatarSelected]->render(engine);
         name.render(engine);
         if(avatarSelected > 0) studentId.render(engine);
-        avatars[avatarSelected]->setOffset(xSelected, ySelected);
+        avatars[avatarSelected]->shift(xSelected, ySelected);
     }
-    avatars[avatarSelected]->setOffset(avatars[avatarSelected]->getX(), avatars[avatarSelected]->getY() + 50);
+    avatars[avatarSelected]->shift(0, 50);
 }
 
 void Credit::playsound() {

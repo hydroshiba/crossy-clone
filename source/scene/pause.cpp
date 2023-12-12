@@ -2,14 +2,10 @@
 
 Pause::Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
     Scene(engine, speaker, registry, setting, keyboard, holder),
-    CONTINUE("asset/texture/button/continue.bmp"),
-    CONTINUE_CLICKED("asset/texture/button/continue_clicked.bmp"),
-    QUIT("asset/texture/button/quit.bmp"),
-    QUIT_CLICKED("asset/texture/button/quit_clicked.bmp"),
-    quitButton(QUIT, QUIT_CLICKED, (width - QUIT.getWidth()) * 3 / 4, height * 2 / 3),
-    continueButton(CONTINUE, CONTINUE_CLICKED, (width - CONTINUE.getWidth()) / 4, height * 2 / 3),
+    quitButton(holder->get("QUIT"), holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT")->getWidth()) * 3 / 4, engine->getHeight() * 2 / 3),
+    continueButton(holder->get("CONTINUE"), holder->get("CONTINUE_CLICKED"), (engine->getWidth() - holder->get("CONTINUE")->getWidth()) / 4, engine->getHeight() * 2 / 3),
     button(0),
-    pause("PAUSE", width / 2 - width / 10, height / 3 - height / 6, 0.8f, 0.2f)
+    pause("PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6, 0.8f, 0.2f)
     {
     }
 
