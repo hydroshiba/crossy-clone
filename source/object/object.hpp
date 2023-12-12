@@ -8,7 +8,7 @@
 
 class Object {
 protected:
-	Texture const * const texture;
+	Texture const * texture;
 	int x, y;
 
 public:
