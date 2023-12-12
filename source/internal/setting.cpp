@@ -172,13 +172,19 @@ std::string Setting::spriteObject() const {
     }
 }
 
-void Setting::setScore(word score) {
+bool Setting::setScore(word score) {
+    bool isHighscore = false;
     word* ptr = reinterpret_cast<word*>(this->score);
 
     for(int i = 0; i < 3; ++i) {
-        if(score > *(ptr - i)) std::swap(*(ptr - i), score);
+        if(score > *(ptr - i)) {
+            std::swap(*(ptr - i), score);
+            isHighscore = true;
+        }
         ++ptr;
     }
+
+    return isHighscore;
 }
 
 void Setting::incMusic(Speaker* speaker) {

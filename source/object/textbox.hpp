@@ -15,6 +15,7 @@ public:
     Textbox(TextureHolder* holder, std::string textStr, float x, float y);
     ~Textbox();
 
+    Vec2 positionChar(int idx);
     void replaceChar(char c, int idx);
     void addText(std::string textStr);
     void setText(std::string textStr, float x, float y);

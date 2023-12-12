@@ -2,29 +2,7 @@
 
 Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
     Scene(engine, speaker, registry, setting, keyboard, holder),
-    GRASS({Texture("asset/texture/lane/grass.bmp"),
-                   Texture("asset/texture/lane/grassflower.bmp"),
-                   Texture("asset/texture/lane/grasspebble.bmp")
-    }),
-    ROAD(Texture("asset/texture/lane/road.bmp")),
-    PLAYER_UP(Texture("asset/texture/sprite/" + setting->spriteObject() + "/up.bmp")),
-    PLAYER_DOWN(Texture("asset/texture/sprite/" + setting->spriteObject() + "/down.bmp")),
-    PLAYER_LEFT(Texture("asset/texture/sprite/" + setting->spriteObject() + "/left.bmp")),
-    PLAYER_RIGHT(Texture("asset/texture/sprite/" + setting->spriteObject() + "/right.bmp")),
-    VEHICLE_FRONT({
-        Texture("asset/texture/car/blue/front.bmp"),
-        Texture("asset/texture/car/orange/front.bmp"),
-        Texture("asset/texture/truck/front.bmp"),
-        Texture("asset/texture/ambulance/front.bmp")
-    }),
-    VEHICLE_BACK({
-        Texture("asset/texture/car/blue/back.bmp"),
-        Texture("asset/texture/car/orange/back.bmp"),
-        Texture("asset/texture/truck/back.bmp"),
-        Texture("asset/texture/ambulance/back.bmp")
-    }),
-    TRAFFIC({Texture("asset/texture/traffic/red.bmp"), Texture("asset/texture/traffic/green.bmp")}),
-    player(PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, {ROAD.getWidth() * 1.0f, ROAD.getHeight() * 0.95f}, {engine->getWidth() / 2.0f, engine->getHeight() - ROAD.getWidth() / 2.0f}),
+    player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
     score(0),
     offset(0)
     {
@@ -95,7 +73,7 @@ Scene* Play::process() {
 
 void Play::render() {
     // Lane rendering
-    int minRenderPos = player.Y() - offset;
+    int minRenderPos = player.position().y - offset;
     int maxRenderPos = minRenderPos + 19;
 
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
@@ -159,12 +137,12 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
 
         if (toFloat(tmpSpeed) == 0) {
             const Texture& GRASS = randomGrass();
-            lanes.push_back(new Lane(GRASS, toInt(tmpPos), engine->getWidth() / GRASS.getWidth(), toFloat(tmpSpeed),
+            lanes.push_back(new Lane(holder, toInt(tmpPos), engine->getWidth() / GRASS.getWidth(), toFloat(tmpSpeed),
                 {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
                 {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
         }
         else {
-            lanes.push_back(new Lane(ROAD, toInt(tmpPos), engine->getWidth() / ROAD.getWidth(), toFloat(tmpSpeed),
+            lanes.push_back(new Lane(ROAD, toInt(tmpPos), engine->getWidth() / holder->get("ROAD")->getWidth(), toFloat(tmpSpeed),
                 {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
                 {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
 
@@ -182,8 +160,8 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
             tmpName += gamestate[2][i];
         }
 
-        player = new Player(PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, {ROAD.getWidth() * 1.0f, ROAD.getHeight() * 0.95f}, {toInt(tmpLane) + offset, toFloat(tmpPos)});
-            toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
+        player = new Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {float(toInt(tmpLane) + offset), toFloat(tmpPos)}, setting);
+            // toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
     }
 
     // Handle gamestate[3] : Vehicles

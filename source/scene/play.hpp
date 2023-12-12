@@ -8,17 +8,6 @@
 
 class Play : public Scene {
 private:
-    const Texture ROAD;
-    const Texture GRASS[3];
-
-    const Texture PLAYER_UP;
-    const Texture PLAYER_DOWN;
-    const Texture PLAYER_LEFT;
-    const Texture PLAYER_RIGHT;
-
-    const Texture VEHICLE_FRONT[4];
-    const Texture VEHICLE_BACK[4];
-    const Texture TRAFFIC[2];
 
     Player player;
     std::vector<Lane*> lanes;

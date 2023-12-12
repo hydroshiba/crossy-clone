@@ -31,7 +31,7 @@ public:
     std::string spriteObject() const;
     std::vector<std::vector<char>> getGamestate() const;
 
-    void setScore(word score);
+    bool setScore(word score);
     void setGamestate(std::vector<std::vector<char>> state);
 
     void incMusic(Speaker* speaker);

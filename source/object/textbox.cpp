@@ -10,6 +10,14 @@ Textbox::~Textbox() {
     }
 }
 
+Vec2 Textbox::positionChar(int idx) {
+    if(idx > text.size()){
+        return {0.0f, 0.0f};
+    }
+    
+    return {x + 0.8f * holder->get("0")->getWidth() * idx, y + 0.2f * holder->get("0")->getHeight() * idx};
+}
+
 void Textbox::replaceChar(char c, int idx) {
     if(idx > text.size()){
         return;
