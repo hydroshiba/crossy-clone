@@ -80,7 +80,7 @@ void Credit::render() {
         switch(avatarSelected) {
                 case 0:
                     name[0].setText("GV Truong", engine->getWidth() / 3, engine->getHeight() / 3);
-                    name[1].setText(" Toan Thinh", engine->getWidth() / 3, engine->getHeight() / 3 + holder->get("A")->getHeight() * 1.2);
+                    name[1].setText("Toan Thinh", engine->getWidth() / 3, engine->getHeight() / 3 + holder->get("A")->getHeight() * 1.2);
                     studentId.setText("", 0 ,0);
                     break;
                 case 1:
@@ -106,13 +106,15 @@ void Credit::render() {
         }
         xSelected = avatars[avatarSelected]->position().x;
         ySelected = avatars[avatarSelected]->position().y;
+        if(avatarSelected == 0) ySelected -= 50;
         avatars[avatarSelected]->shift(avatars[0]->position().x / 3 - xSelected, avatars[0]->position().y - ySelected);
         avatars[avatarSelected]->render(engine);
         for(auto& name_ : name) {
             name_.render(engine);
         }
         if(avatarSelected > 0) studentId.render(engine);
-        avatars[avatarSelected]->shift(xSelected, ySelected);
+        else ySelected += 50;
+        avatars[avatarSelected]->shift(xSelected - avatars[avatarSelected]->position().x, ySelected - avatars[avatarSelected]->position().y);
     }
     avatars[avatarSelected]->shift(0, 50);
 }

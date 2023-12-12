@@ -48,7 +48,6 @@ void Textbox::setText(std::string textStr, float x, float y) {
         c = toupper(c);
         if(c == ' '){
             text.push_back(NULL);
-            continue;
         }
         if(isalnum(c))
             text.push_back(new Isometric(holder->get(std::string(1, c)), {float(holder->get(std::string(1, c))->getWidth()), float(holder->get(std::string(1, c))->getHeight())}, {0.0f, 0.0f}, {x + 0.8f * holder->get(std::string(1, c))->getWidth() * numText, y + 0.2f * holder->get(std::string(1, c))->getHeight() * numText}));

@@ -4,9 +4,9 @@ Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* regist
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
                                                                                                                                                  sound("asset/sound/sfx/long-honk.wav", 0){
-    cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight())));
-    cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5));
-    cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getWidth())));
+    cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight() * 1.2)));
+    cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 2 / 5));
+    cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight() * 1.2)));
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {
@@ -64,10 +64,11 @@ void Leaderboard::render() {
     else{
         xSelected = cups[cupSelected]->position().x;
         ySelected = cups[cupSelected]->position().y;
-        // if(cupSelected == 1) cups[cupSelected]->setOffset(cups[1]->getX(), cups[1]->getY() + 50);
-        cups[cupSelected]->shift(cups[1]->position().x / 2 - xSelected, cups[1]->position().y / 2 - ySelected);
+        if(cupSelected == 1) ySelected -= 50;
+        cups[cupSelected]->shift(cups[1]->position().x / 2 - xSelected, cups[1]->position().y - ySelected);
         cups[cupSelected]->render(engine);
-        cups[cupSelected]->shift(xSelected, ySelected);
+        if(cupSelected == 1) ySelected += 50;
+        cups[cupSelected]->shift(xSelected - cups[cupSelected]->position().x, ySelected - cups[cupSelected]->position().y);
     }
     cups[cupSelected]->shift(0, 50);
 

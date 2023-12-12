@@ -20,10 +20,10 @@ void Menu::updateButton() {
         isContinueEnabled = !isContinueEnabled;
         buttons[button]->release();
         button = defaultButton = isContinueEnabled ? 0 : 1;
-        int y = isContinueEnabled ? buttons[0]->position().y + buttons[0]->size().y * 0.55 : (engine->getHeight() - holder->get("START")->getHeight()) / 2.75;
-        buttons[1]->shift(0, y - buttons[1]->position().y);
-        for(int i = 2; i < buttons.size(); i++) {
-            buttons[i]->shift(0, buttons[i - 1]->position().y - buttons[i]->position().y + (buttons[i - 1]->size().y - buttons[i]->size().y ) * 0.55);
+        int y = isContinueEnabled ? 0.55 * buttons[0]->size().y : -0.55 * buttons[0]->size().y;
+        // buttons[1]->shift(0, y - buttons[1]->position().y);
+        for(int i = 1; i < buttons.size(); i++) {
+            buttons[i]->shift(0, y);
         }
     }
 
