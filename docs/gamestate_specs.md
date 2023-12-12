@@ -37,8 +37,6 @@ D    E     F    C     A    D
 
 - The numerical order of lane: $1$ bytes ------------- ($gamestate[2][0]$) ($lanes[this]$ has this player)
 - $x$ coordinate: $4$ bytes ----------------------------- ($gamestate[2][1] -> gamestate[2][8]$)
-- Name: unknown bytes ---------------------------- ($gamestate[2][9] -> gamestate[2][Name.size() + 4]$)
-
 
 ### Cars, trucks: $5N$ bytes
 

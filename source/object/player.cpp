@@ -3,6 +3,7 @@
 Player::Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting) :
     holder(holder),
     setting(setting),
+    direction(0),
     Isometric(holder->get("CHICKEN_UP"), size, pos) {
         texture = holder->get(spriteID());
     }
@@ -40,3 +41,12 @@ std::string Player::spriteID() {
 
     return str;
 }
+
+// std::string Player::setName(std::string name) {
+//     this->name = name;
+//     return name;
+// }
+
+// std::string Player::getName() const {
+//     return name;
+// }

@@ -57,7 +57,7 @@ Scene* Menu::process() {
             next = sceneRegistry->scene(SceneID::PLAY);
             setting->setGamestate({});
             Play* play = dynamic_cast<Play*>(next);
-            play->createNewGame("");
+            play->createNewGame();
             break;
         }
         case 2:

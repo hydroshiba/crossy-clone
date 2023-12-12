@@ -43,7 +43,9 @@ void Textbox::setText(std::string textStr, float x, float y) {
     this->x = x;
     this->y = y;
     numText = 0;
+
     for(char c : textStr){
+        c = toupper(c);
         if(c == ' '){
             text.push_back(NULL);
             continue;

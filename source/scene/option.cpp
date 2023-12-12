@@ -17,24 +17,24 @@ Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Settin
     else if(setting->volSFX() == Volume::high) sfxId = 3;
     else sfxId = 4;
 
-    buttons.push_back(new Button(holder->get("MUSIC"), holder->get("MUSIC_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2 - engine->getHeight() / 4));
+    buttons.push_back(new Button(holder->get("BGM"), holder->get("BGM_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2 - engine->getHeight() / 4));
     buttons.push_back(new Button(holder->get("SFX"), holder->get("SFX_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2));
     buttons.push_back(new Button(holder->get("SPRITE"), holder->get("SPRITE_CLICKED"), engine->getWidth() / 5, engine->getHeight() / 2 + engine->getHeight() / 4));
 
-    buttons.push_back(new Button(holder->get("LEFT_ARROW"), holder->get("LEFT_ARROW_CLICKED"), engine->getWidth() / 3, buttons[2]->position().y + buttons[2]->size().y / 3));
-    buttons.push_back(new Button(holder->get("RIGHT_ARROW"), holder->get("RIGHT_ARROW_CLICKED"), engine->getWidth() / 2 + 7 * buttons.back()->size().x / 4, buttons[2]->position().y + buttons[2]->size().y / 3));
+    buttons.push_back(new Button(holder->get("LEFT"), holder->get("LEFT_CLICKED"), engine->getWidth() / 3, buttons[2]->position().y + buttons[2]->size().y / 3));
+    buttons.push_back(new Button(holder->get("RIGHT"), holder->get("RIGHT_CLICKED"), engine->getWidth() / 2 + 7 * buttons.back()->size().x / 4, buttons[2]->position().y + buttons[2]->size().y / 3));
 
-    music.push_back(new Object(holder->get("MIN_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
-    music.push_back(new Object(holder->get("LOW_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
-    music.push_back(new Object(holder->get("MEDIUM_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
-    music.push_back(new Object(holder->get("HIGH_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
-    music.push_back(new Object(holder->get("MAX_VOLUME"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("VOLUME_MIN"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("VOLUME_LOW"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("VOLUME_MEDIUM"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("VOLUME_HIGH"), engine->getWidth() / 3, buttons[0]->position().y));
+    music.push_back(new Object(holder->get("VOLUME_MAX"), engine->getWidth() / 3, buttons[0]->position().y));
 
-    sfx.push_back(new Object(holder->get("MIN_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
-    sfx.push_back(new Object(holder->get("LOW_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
-    sfx.push_back(new Object(holder->get("MEDIUM_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
-    sfx.push_back(new Object(holder->get("HIGH_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
-    sfx.push_back(new Object(holder->get("MAX_VOLUME"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("VOLUME_MIN"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("VOLUME_LOW"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("VOLUME_MEDIUM"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("VOLUME_HIGH"), engine->getWidth() / 3, buttons[1]->position().y));
+    sfx.push_back(new Object(holder->get("VOLUME_MAX"), engine->getWidth() / 3, buttons[1]->position().y));
     
     sprites.push_back(new Object(holder->get("CHICKEN_DOWN"), (buttons[3]->position().x + buttons[4]->position().x) / 2, buttons[2]->position().y));
     sprites.push_back(new Object(holder->get("DUCK_DOWN"), sprites.back()->position().x, sprites.back()->position().y));

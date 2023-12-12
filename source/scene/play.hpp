@@ -14,18 +14,16 @@ private:
     bool isGameover;
     int score;
     int offset;
-
-    void createNewGame();
+    
     void updateProcess();
     bool needCreateGrassLane() const;
-    const Texture& randomGrass() const;
 
 public:
     Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Play();
 
     void loadGamestate(const std::vector<std::vector<char>>& gamestate);
-    void createNewGame(const std::string& name);
+    void createNewGame();
     std::vector<std::vector<char>> createGamestate() const;
     Scene* process() override;
     void render() override;

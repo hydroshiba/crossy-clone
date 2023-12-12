@@ -1,15 +1,17 @@
 #include "lane.hpp"
 
-Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, const Traffic& traffic, int clock, int spawn) :
+Lane::
+    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock, bool isRed, int trafficClock) :
     gridSize(size),
     holder(holder),
+    pos(pos),
     length(len),
     speed(speed),
-    traffic(traffic),
-    clock(clock),
-    spawn(spawn) {
+    traffic(holder, gridSize, {speed > 0 ? 0.0f : float(len + 5), float(pos)}, {float(0), float(0)}, isRed, trafficClock),
+    clock(spawnClock - 1),
+    spawn(spawnClock) {
         for(int i = 0; i < len; ++i)
-            blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({i, pos})));
+            blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({(float)i, (float)pos})));
     }
 
 void Lane::render(Engine* engine) {
@@ -42,6 +44,10 @@ bool Lane::collide(float pos) {
 
 bool Lane::direction() {
     return speed > 0;
+}
+
+int Lane::Y() const {
+    return pos;
 }
 
 float Lane::getSpeed() const {

@@ -15,13 +15,15 @@ private:
     TextureHolder* holder;
     Setting* setting;
     int direction; // 0 = up, 1 = down, 2 = left, 3 = right
+    // std::string name;
 
 public:
     Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting);
 
     void move(Key key);
-    std::string getName();
     std::string spriteID();
+    // std::string setName(std::string name);
+    // std::string getName() const;
 };
 
 #endif

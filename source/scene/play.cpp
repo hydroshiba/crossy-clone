@@ -136,15 +136,10 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
         }
 
         if (toFloat(tmpSpeed) == 0) {
-            const Texture& GRASS = randomGrass();
-            lanes.push_back(new Lane(holder, toInt(tmpPos), engine->getWidth() / GRASS.getWidth(), toFloat(tmpSpeed),
-                {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
-                {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
+            lanes.push_back(new Lane(holder, {100.0f, 100.0f}, toInt(tmpPos), engine->getWidth() / holder->get("GRASS")->getWidth() + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
         }
         else {
-            lanes.push_back(new Lane(ROAD, toInt(tmpPos), engine->getWidth() / holder->get("ROAD")->getWidth(), toFloat(tmpSpeed),
-                {{VEHICLE_FRONT[0], VEHICLE_BACK[0]}, {VEHICLE_FRONT[1], VEHICLE_BACK[1]}, {VEHICLE_FRONT[2], VEHICLE_BACK[2]}, {VEHICLE_FRONT[3], VEHICLE_BACK[3]}},
-                {TRAFFIC[0], TRAFFIC[1]}, toBool(tmpTraffic), toInt(tmpClock)));
+            lanes.push_back(new Lane(holder, {100.0f, 100.0f}, toInt(tmpPos), engine->getWidth() / holder->get("ROAD")->getWidth() + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
 
         }
     }
@@ -160,7 +155,7 @@ void Play::loadGamestate(const std::vector<std::vector<char>>& gamestate) {
             tmpName += gamestate[2][i];
         }
 
-        player = new Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {float(toInt(tmpLane) + offset), toFloat(tmpPos)}, setting);
+        player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {float(toInt(tmpLane) + offset), toFloat(tmpPos)}, setting);
             // toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
     }
 
@@ -230,19 +225,19 @@ std::vector<std::vector<char>> Play::createGamestate() const {
     // Handle gamestate[2] : Player
     gamestate.push_back(std::vector<char>());
     {
-        std::vector<char> tmpLane = iToS((int)(player->Y() - offset), 1);
-        std::vector<char> tmpPos = fToS(player->X(), 4);
-        std::vector<char> tmpName;
-        for (int i = 0; i < player->getName().size(); i++) {
-            tmpName.push_back(player->getName()[i]);
-        }
+        std::vector<char> tmpLane = iToS((int)(player.position().y - offset), 1);
+        std::vector<char> tmpPos = fToS(player.position().x, 4);
+        // std::vector<char> tmpName;
+        // for (int i = 0; i < player.getName().size(); i++) {
+        //     tmpName.push_back(player.getName()[i]);
+        // }
         gamestate[2].push_back(tmpLane[0]);
         for (int i = 0; i < 4; i++) {
             gamestate[2].push_back(tmpPos[i]);
         }
-        for (int i = 0; i < tmpName.size(); i++) {
-            gamestate[2].push_back(tmpName[i]);
-        }
+        // for (int i = 0; i < tmpName.size(); i++) {
+        //     gamestate[2].push_back(tmpName[i]);
+        // }
     }
     
     // Handle gamestate[3] : Vehicles
@@ -262,11 +257,23 @@ std::vector<std::vector<char>> Play::createGamestate() const {
 }
 
 void Play::createNewGame() {
+    // Score and offset
+    isGameover = false;
+    score = 0;
+    offset = 0;
+
     // Create lanes
-    for (int i = 0; i < 20; i++) {
-        if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0].getWidth(), 0.0f, VEHICLE_TEXTURE, TRAFFIC));
-        else lanes.push_back(new Lane(LANE_TEXTURES[3], 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0].getWidth(), rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC));
+    for (int i = 0; i < 6; i++) {
+        lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() + 5, 0.0f));
     }
+
+    for (int i = 6; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
+        if (needCreateGrassLane()) lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() + 5, 0.0f));
+        else lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1));
+    }
+
+    // Create player
+    player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {engine->getWidth() / 2.0f, 5.0f}, setting);
 }
 
 void Play::updateProcess() {
@@ -280,18 +287,19 @@ void Play::updateProcess() {
     if (!lanes.empty()) delete lanes.front();
     lanes.erase(lanes.begin());
 
-    if (needCreateGrassLane()) lanes.push_back(new Lane(getGrassTexture(), 0 - 30 - offset, engine->getWidth() / GRASS[0]->getWidth(), 0.0f, VEHICLE_TEXTURE, TRAFFIC));
-    else lanes.push_back(new Lane(*LANE_TEXTURES[3], 0 - 30 - offset, engine->getWidth() / LANE_TEXTURES[0]->getWidth(), rand() % (100 + offset * offset) / 1.0 * 100 + 1, VEHICLE_TEXTURE, TRAFFIC));
+    int numOfLanes = engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 10;
+
+    if (needCreateGrassLane()) lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - numOfLanes - offset, engine->getWidth() / holder->get("GRASS")->getWidth() + 5, 0.0f));
+    else lanes.push_back(new Lane(holder, {100.0f, 100.0f}, 0 - numOfLanes - offset, engine->getWidth() / holder->get("ROAD")->getWidth() + 5, rand() % (100 + offset * offset) / 1.0 * 100 + 1));
 }
 
 bool Play::needCreateGrassLane() const {
-    return rand() % 100 < (50 - offset / 2);
-}
-
-const Texture& Play::randomGrass() const {
-    return GRASS[rand() % 3];
+    return rand() % 100 < (35 - offset / 2 < 35 ? offset / 2 : 35);
 }
 
 Play::~Play() {
-
+    for (auto lane : lanes) {
+        delete lane;
+    }
+    lanes.clear();
 }

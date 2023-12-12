@@ -4,9 +4,10 @@ TextureHolder::TextureHolder() {
 	map["TITLE"] = new Texture("asset/texture/title.bmp");
 
 	map["CREDIT_ASTRAUNAUT"] = new Texture("asset/texture/credit/astraunaut.bmp");
-	map["CREDIT_CAT"] = new Texture("asset/texture/credit/cat-temporary.bmp");
+	map["CREDIT_CAT"] = new Texture("asset/texture/credit/cat.bmp");
 	map["CREDIT_FOX"] = new Texture("asset/texture/credit/fox.bmp");
 	map["CREDIT_SEAL"] = new Texture("asset/texture/credit/seal.bmp");
+	map["CREDIT_TEACHER"] = new Texture("asset/texture/credit/3T.bmp");
 	
 	map["BGM"] = new Texture("asset/texture/button/bgm.bmp");
 	map["BGM_CLICKED"] = new Texture("asset/texture/button/bgm_clicked.bmp");
@@ -120,6 +121,6 @@ TextureHolder::~TextureHolder() {
 }
 
 Texture* const TextureHolder::get(const std::string& name) const {
-	if(map.find(name) == map.end()) throw std::runtime_error("TextureHolder::get() : Texture not found");
+	if(map.find(name) == map.end()) throw std::runtime_error("TextureHolder::get() : Texture " + name + " not found");
 	return map.at(name);
 }

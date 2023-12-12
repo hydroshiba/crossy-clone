@@ -15,6 +15,7 @@ private:
     Vec2 gridSize;
     TextureHolder* holder;
 
+    int pos;
     int length;
     float speed;
     int spawn;
@@ -25,15 +26,16 @@ private:
     std::vector<Isometric> blocks;
 
 public:
-    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, const Traffic& traffic, int clock = 0, int spawn = 120);
+    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock = 120, bool isRed = false, int trafficClock = 0);
 
     void render(Engine* engine);
     void process();
 
     void addVehicle(float pos);
-    bool collide(float pos);
+    bool collide(float pos = -1.0f);
     bool direction();
 
+    int Y() const;
     float getSpeed() const;
     int getSpawn() const;
     
