@@ -4,18 +4,18 @@
 #include <iostream>
 #include "typedef.hpp"
 #include "isometric.hpp"
+#include "texture_holder.hpp"
 
 class Traffic : public Isometric {
 private:
-    const Texture& RED;
+    TextureHolder* holder;
     bool isRed;  // true = red, false = green
 
     int interval;
     int clock;
-    
 
 public:
-    Traffic(const Texture& green, const Texture& red, const Vec2& size, const Vec2& pos, const Vec2& off = {0, 0}, bool isRed = false, int clock = 0);
+    Traffic(TextureHolder* holder, const Vec2& size, const Vec2& pos, const Vec2& off = {0, 0}, bool isRed = false, int clock = 0);
 
     void process();
     bool isRedLight() const;
