@@ -3,9 +3,10 @@
 Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
     Scene(engine, speaker, registry, setting, keyboard, holder),
     gridSize({holder->get("GRASS")->getWidth() * 1.0f, holder->get("GRASS")->getHeight() * 0.95f}),
-    player(holder, gridSize, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
     score(0),
     offset(0),
+    frames(0),
+    player(holder, gridSize, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
     isGameover(false)
     {
         // Load gamestate
@@ -20,6 +21,9 @@ Scene* Play::process() {
             return sceneRegistry->scene(SceneID::GAMEOVER);
         else return this;
     }
+
+    ++frames;
+    if(frames >= 60) frames = 0;
 
     bool pause = false;
     Key key = keyboard->key();
