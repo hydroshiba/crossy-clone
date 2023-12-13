@@ -130,6 +130,8 @@ void Game::playsound() {
 }
 
 void Game::run() {
+    speaker->play(sound);
+
     while(current != nullptr) {
         MSG msg = {};
 
