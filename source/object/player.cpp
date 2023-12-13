@@ -44,7 +44,7 @@ std::string Player::spriteID() {
 
 void Player::render(Engine* engine, int offset) {
     int tmp = Isometric::y;
-    Isometric::y = offset - 6;
+    Isometric::y = offset - 11;
     // project();
     Isometric::render(engine);
     Isometric::y = tmp;

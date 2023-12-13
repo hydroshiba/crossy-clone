@@ -64,7 +64,7 @@ void Play::render() {
     engine->fill(0, 162, 232);
 
     // Lane and player rendering
-    int minRenderPos = player.position().y - offset - 5;
+    int minRenderPos = player.position().y - offset - 10;
     minRenderPos = minRenderPos < 0 ? 0 : minRenderPos;
     int maxRenderPos = minRenderPos + lanes.size() - 8;
 
@@ -299,17 +299,17 @@ void Play::createNewGame() {
     isGameover = false;
 
     // Create lanes
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 11; i++) {
         lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
     }
 
-    for (int i = 7; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
+    for (int i = 11; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
         if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
         else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % (10 + offset / 5) - 5) * 0.05f));
     }
 
     // Create player
-    player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {20.0f, 6.0f}, setting);
+    player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {20.0f, 10.0f}, setting);
     player.shift(gridSize.x * -0.25f, gridSize.y * -0.15f);
 }
 

@@ -12,7 +12,7 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     }
 
 void Lane::render(Engine* engine, float playerLane) {
-    int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 2;
+    int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 7;
 
     for(int i = 0; i < length; ++i) {
         if (speed != 0) {
@@ -38,11 +38,11 @@ void Lane::render(Engine* engine, float playerLane) {
     for(auto& block : blocks)
         block.render(engine);
 
-    if (speed != 0)
-        traffic.render(engine, offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3 + playerLane + pos - 6);
-
     for(auto& vehicle : vehicles)
         vehicle.render(engine, offset);
+
+    if (speed != 0)
+        traffic.render(engine, offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3 + playerLane + pos - 11);
 
     blocks.clear();
 }
