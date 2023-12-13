@@ -107,9 +107,6 @@ void Game::initialize() {
 }
 
 void Game::process() {
-    // Show debug info
-    SetWindowText(window, (title + debugInfo()).c_str());
-
     current = current->process();
     keyboard->refresh();
 }
