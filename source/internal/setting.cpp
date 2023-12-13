@@ -14,8 +14,11 @@ void Setting::save() {
     packed |= static_cast<word>(sprite);
     file.write(reinterpret_cast<char*>(&packed), sizeof(packed));
 
-    // Highscores (12 bytes)
+    // Highscores (12 + 24 bytes)
     file.write(reinterpret_cast<char*>(score), sizeof(score));
+    for (int i = 0; i < 3; i++) {
+        file.write(reinterpret_cast<char*>(name[i]), sizeof(name[i]));
+    }
     file.close();
 
     // Total: 16 bytes
@@ -88,7 +91,11 @@ bool Setting::load() {
     sfx = static_cast<Volume>(((package >> 2U) & 0x7U) * static_cast<word>(Volume::low));
     sprite = static_cast<Sprite>(package & 0x3);
 
+    // Read highscores
     file.read(reinterpret_cast<char*>(score), sizeof(score));
+    for (int i = 0; i < 3; i++) {
+        file.read(reinterpret_cast<char*>(name[i]), sizeof(name[i]));
+    }
     file.close();
 
     // Read gamestate
@@ -178,19 +185,25 @@ std::string Setting::spriteObject() const {
     }
 }
 
-bool Setting::setScore(word score) {
-    bool isHighscore = false;
+int Setting::setScore(word score) {
+    int topHighscore = -1;
     word* ptr = reinterpret_cast<word*>(this->score);
 
     for(int i = 0; i < 3; ++i) {
         if(score > *(ptr - i)) {
             std::swap(*(ptr - i), score);
-            isHighscore = true;
+            topHighscore++;
         }
         ++ptr;
     }
 
-    return isHighscore;
+    return topHighscore;
+}
+
+void Setting::setNames(byte name[8], int rank) {
+    for(int i = 0; i < 8; ++i) {
+        this->name[rank][i] = name[i];
+    }
 }
 
 void Setting::incMusic(Speaker* speaker) {
