@@ -22,7 +22,6 @@ public:
 
     void move(Key key);
     std::string spriteID();
-    void render(Engine* engine, int offset = 0);
     // std::string setName(std::string name);
     // std::string getName() const;
 };

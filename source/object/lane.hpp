@@ -13,7 +13,7 @@
 
 class Lane {
 private:
-    Vec2 gridSize;
+    Vec2 gridSize, offset;
     TextureHolder* holder;
 
     int pos;
@@ -29,10 +29,10 @@ private:
 public:
     Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock = 120, bool isRed = false, int trafficClock = 0);
 
-    void render(Engine* engine, float playerLane);
+    void render(Engine* engine);
     void process();
     void gameoverProcess();
-    void shift(Vec2 offset);
+    void shift(Vec2 off);
 
     void addVehicle(float pos);
     bool collide(Player* player);

@@ -14,7 +14,7 @@ void Player::move(Key key) {
         ++Isometric::y;
     } else if(key == Key::DOWN) {
         direction = 1;
-        --Isometric::y;
+        if(y > 0) --Isometric::y;
     }
     else if(key == Key::LEFT) {
         direction = 2;
@@ -40,14 +40,6 @@ std::string Player::spriteID() {
     else if(direction == 3) str += "_RIGHT";
 
     return str;
-}
-
-void Player::render(Engine* engine, int offset) {
-    int tmp = Isometric::y;
-    Isometric::y = offset - 11;
-    // project();
-    Isometric::render(engine);
-    Isometric::y = tmp;
 }
 
 // std::string Player::setName(std::string name) {

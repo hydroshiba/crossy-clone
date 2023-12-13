@@ -19,10 +19,3 @@ bool Vehicle::collide(Player* player) {
     if(left <= playerRight && playerRight <= right) return true;
     return false;
 }
-
-void Vehicle::render(Engine* engine, int offset) {
-    Isometric::y += offset;
-    project();
-    Isometric::render(engine);
-    Isometric::y -= offset;
-}
