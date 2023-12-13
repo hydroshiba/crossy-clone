@@ -91,6 +91,7 @@ void Gameover::render() {
     }
     else{
         gameover.render(engine);
+        quit.render(engine);
     }
 }
 
