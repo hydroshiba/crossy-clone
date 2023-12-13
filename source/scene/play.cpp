@@ -25,32 +25,15 @@ Scene* Play::process() {
     ++frames;
     if(frames >= 60) frames = 0;
 
-    bool pause = false;
     Key key = keyboard->key();
+    if(key == Key::ESC) {
+        return sceneRegistry->scene(SceneID::PAUSE);
+    }
 
     player.move(key);
-
-    switch (key) {
-        case Key::UP:
-            score += 1000 * lanes[player.position().y - offset]->getSpeed() / lanes[player.position().y - offset]->getSpawn();
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::DOWN:
-            if (player.position().y == offset) {
-                isGameover = true;
-                break;
-            }
-            score -= 333;
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::LEFT: case Key::RIGHT:
-            if (player.position().x == 0 || player.position().x == engine->getWidth() - player.size().x) break;
-            isGameover |= lanes[player.position().y - offset]->collide(player.position().x);
-            break;
-        case Key::ESC:
-            return sceneRegistry->scene(SceneID::PAUSE);
-        default:
-            break;
+    if(lanes[player.position().y - offset]->collide(player.position().x)) {
+        isGameover = true;
+        return this;
     }
 
     // Update process data
