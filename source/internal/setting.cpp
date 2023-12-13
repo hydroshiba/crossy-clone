@@ -50,12 +50,12 @@ void Setting::save() {
 
     // Gamestate (??? byte)
     for(int i = 0; i < gamestate.size(); i++) {
-        char* buffer = new char[gamestate[i].size() + 1];
+        byte* buffer = new byte[gamestate[i].size() + 1];
         for(int j = 0; j < gamestate[i].size(); j++) {
             buffer[j] = gamestate[i][j];
         }
         buffer[gamestate[i].size()] = '\0';
-        file.write(buffer, gamestate[i].size());
+        file.write(reinterpret_cast<char*>(buffer), gamestate[i].size());
         delete[] buffer;
     }
 
@@ -105,7 +105,7 @@ bool Setting::load() {
 
     int bottom = 0;
     int top = 0;
-    char* buffer = nullptr;
+    byte* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
     std::streampos nextAddress = file.tellg();
     while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
@@ -116,9 +116,9 @@ bool Setting::load() {
         nextAddress += 4;
         file.seekg(bottom, std::ios::beg);
 
-        buffer = new char[top - bottom + 1];
+        buffer = new byte[top - bottom + 1];
         buffer[top - bottom] = '\0';
-        file.read(buffer, top - bottom);
+        file.read(reinterpret_cast<char*>(buffer), top - bottom);
         for (int i = 0; i < top - bottom; i++) {
             gamestate.back().push_back(buffer[i]);
         }
