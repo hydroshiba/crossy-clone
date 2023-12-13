@@ -4,6 +4,7 @@ Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
     Scene(engine, speaker, registry, setting, keyboard, holder),
     gridSize({holder->get("GRASS")->getWidth() * 1.0f, holder->get("GRASS")->getHeight() * 0.95f}),
     score(0),
+    scoreBox(holder, std::to_string(score), 0, 0),
     offset(0),
     frames(0),
     player(holder, gridSize, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
@@ -75,6 +76,10 @@ void Play::render() {
         }
         else lanes[i]->render(engine, player.position().y);
     }
+
+    // Score rendering
+    scoreBox.setText(std::to_string(score), holder->get("S")->getHeight() * 2 / 3, holder->get("S")->getHeight() * 2 / 3);
+    scoreBox.render(engine);
 }
 
 void Play::playsound() {
@@ -315,7 +320,7 @@ void Play::createNewGame() {
 
 void Play::updateProcess() {
     // Update score
-    score += 1000 * offset / 10;
+    score++;
 
     // Update offset
     offset++;

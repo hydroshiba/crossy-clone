@@ -79,7 +79,7 @@ void Lane::gameoverProcess() {
         Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 1)}), Vec2({0, 0}));
         vehicles.push_back(vehicle);
     }
-    vehicles[0].move(0.1f);
+    vehicles[0].move(0.25f);
 }
 
 void Lane::shift(Vec2 offset) {

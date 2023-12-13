@@ -5,6 +5,7 @@
 #include "scene_registry.hpp"
 #include "player.hpp"
 #include "lane.hpp"
+#include "textbox.hpp"
 
 class Play : public Scene {
 private:
@@ -12,6 +13,7 @@ private:
 
     bool isGameover;
     int score;
+    Textbox scoreBox;
     int offset;
     int frames;
 
