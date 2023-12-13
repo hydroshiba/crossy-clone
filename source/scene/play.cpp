@@ -71,7 +71,7 @@ void Play::render() {
     for (int i = maxRenderPos; i >= minRenderPos; i--) {
         if (i == player.position().y - offset) {
             lanes[i]->render(engine, player.position().y);
-            player.render(engine, offset + engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3);
+            player.render(engine, engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3);
         }
         else lanes[i]->render(engine, player.position().y);
     }
