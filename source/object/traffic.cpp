@@ -28,3 +28,14 @@ bool Traffic::isRedLight() const {
 int Traffic::getClock() const {
     return clock;
 }
+
+void Traffic::render(Engine* engine, int offsetY, int offsetX) {
+    Isometric::y += offsetY;
+    if (Isometric::x == 1.0f) Isometric::x += offsetX;
+    else Isometric::x -= offsetX;
+    project();
+    Isometric::render(engine);
+    Isometric::y -= offsetY;
+    if (Isometric::x == 1.0f + offsetX) Isometric::x -= offsetX;
+    else Isometric::x += offsetX;
+}

@@ -8,9 +8,19 @@ void Vehicle::move(float speed) {
     Isometric::x += speed;
 }
 
+// bool Vehicle::collide(float pos) {
+//     if (pos == -1.0f) return false;
+//     return ((this->Isometric::x <= pos) && (this->Isometric::x + 2.0f >= pos));
+// }
+
 bool Vehicle::collide(float pos) {
     if (pos == -1.0f) return false;
-    return ((this->Isometric::x + Isometric::width >= pos));
+
+    float dist = (texture->getWidth() - width * 0.5f) / (width * 0.5f);
+    float left = Isometric::x;
+    float right = Isometric::x + dist;
+
+    return (left <= pos && pos <= right);
 }
 
 void Vehicle::render(Engine* engine, int offset) {

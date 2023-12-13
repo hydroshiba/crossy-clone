@@ -179,6 +179,7 @@ void Play::loadGamestate(const std::vector<std::vector<byte>>& gamestate) {
         // }
 
         player = Player(holder, {holder->get("ROAD")->getWidth() * 1.0f, holder->get("ROAD")->getHeight() * 0.95f}, {toFloat(tmpPos), float(toInt(tmpLane) + offset)}, setting);
+        player.shift(gridSize.x * -0.25f, gridSize.y * -0.15f);
             // toInt(tmpLane) + offset, toFloat(tmpPos), tmpName, PLAYER_TEXTURES);
     }
 

@@ -6,12 +6,12 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     pos(pos),
     length(len),
     speed(speed),
-    traffic(holder, gridSize, {speed > 0 ? 0.0f : float(len + 5), float(pos)}, {float(0), float(0)}, isRed, trafficClock),
+    traffic(holder, gridSize, {speed > 0 ? 1.0f : float(len), float(pos)}, {0.0f, 100.0f}, isRed, trafficClock),
     clock(spawnClock / 2),
     spawn(spawnClock) {
     }
 
-void Lane::render(Engine* engine, int playerLane) {
+void Lane::render(Engine* engine, float playerLane) {
     int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 2;
 
     for(int i = 0; i < length; ++i) {
@@ -38,7 +38,8 @@ void Lane::render(Engine* engine, int playerLane) {
     for(auto& block : blocks)
         block.render(engine);
 
-    traffic.render(engine);
+    if (speed != 0)
+        traffic.render(engine, offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3 + playerLane + pos - 6);
 
     for(auto& vehicle : vehicles)
         vehicle.render(engine, offset);
@@ -53,11 +54,14 @@ void Lane::process() {
         return;
     }
 
-    if (clock >= spawn) {
+    if (clock >= spawn && !traffic.isRedLight()) {
         if (speed > 0) addVehicle(float(-1.0f));
         else addVehicle(float(length + 1.0f));
+        spawn = rand() % 60 + 60;
         clock = 0;
     }
+
+    traffic.process();
 
     for (auto& vehicle : vehicles) {
         vehicle.move(speed);
@@ -72,7 +76,7 @@ void Lane::process() {
 void Lane::gameoverProcess() {
     if (vehicles.empty()) {
         std::string ambulance = "AMBULANCE_FRONT";
-        Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
+        Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 1)}), Vec2({0, 0}));
         vehicles.push_back(vehicle);
     }
     vehicles[0].move(0.1f);
@@ -93,7 +97,7 @@ bool Lane::collide(float pos) {
         if (vehicle.collide(pos)) {
             vehicles.clear();
             std::string ambulance = "AMBULANCE_FRONT";
-            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
+            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 1)}), Vec2({0, 0}));
             vehicles.push_back(vehicle);
 
             return true;

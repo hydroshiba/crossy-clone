@@ -20,6 +20,7 @@ public:
     void process();
     bool isRedLight() const;
     int getClock() const;
+    void render(Engine* engine, int offsetY, int offsetX = 0);
 
     ~Traffic() = default;
 };
