@@ -54,25 +54,28 @@ void Lane::process() {
     }
 
     if (clock >= spawn) {
-        addVehicle(0.0f);
+        if (speed > 0) addVehicle(float(-1.0f));
+        else addVehicle(float(length + 1.0f));
         clock = 0;
     }
 
     for (auto& vehicle : vehicles) {
         vehicle.move(speed);
     }
+
+    if (!vehicles.empty() && (vehicles[0].position().x > length + 1.0f || vehicles[0].position().x < -1.0f)) {
+        vehicles.erase(vehicles.begin());
+    }
     ++clock;
 }
 
 void Lane::gameoverProcess() {
     if (vehicles.empty()) {
-        std::string ambulance = "AMBULANCE";
-        if (speed > 0) ambulance += "_FRONT";
-        else ambulance += "_BACK";
+        std::string ambulance = "AMBULANCE_FRONT";
         Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
         vehicles.push_back(vehicle);
     }
-    vehicles[0].move(0.01f);
+    vehicles[0].move(0.1f);
 }
 
 void Lane::shift(Vec2 offset) {
@@ -89,9 +92,7 @@ bool Lane::collide(float pos) {
     for (auto& vehicle : vehicles) {
         if (vehicle.collide(pos)) {
             vehicles.clear();
-            std::string ambulance = "AMBULANCE";
-            if (speed > 0) ambulance += "_FRONT";
-            else ambulance += "_BACK";
+            std::string ambulance = "AMBULANCE_FRONT";
             Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 0.5)}), Vec2({0, 0}));
             vehicles.push_back(vehicle);
 

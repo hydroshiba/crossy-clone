@@ -30,6 +30,11 @@ Scene* Play::process() {
         return sceneRegistry->scene(SceneID::PAUSE);
     }
 
+    if (key == Key::DOWN && player.position().y == offset) {
+        isGameover = true;
+        return this;
+    }
+
     player.move(key);
     if(lanes[player.position().y - offset]->collide(player.position().x)) {
         isGameover = true;
@@ -299,7 +304,7 @@ void Play::createNewGame() {
 
     for (int i = 7; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
         if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
-        else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % 10) * 0.1f));
+        else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % (10 + offset / 5) - 5) * 0.05f));
     }
 
     // Create player
@@ -321,7 +326,7 @@ void Play::updateProcess() {
     int numOfLanes = engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 10;
 
     if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
-    else lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % 10) * 0.1f));
+    else lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % (10 + offset / 5) - 5) * 0.05f));
 }
 
 bool Play::needCreateGrassLane() const {
