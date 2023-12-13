@@ -1,6 +1,9 @@
 #include "setting.hpp"
 
 void Setting::save() {
+    // Create data folder if not exist
+    std::filesystem::create_directory("data");
+
     // Save setting
     std::ofstream file("data/setting.dat", std::ios::binary);
 

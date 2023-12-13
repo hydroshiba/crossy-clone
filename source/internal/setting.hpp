@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <utility>
 #include <vector>
+#include <filesystem>
 
 #include "typedef.hpp"
 #include "speaker.hpp"
