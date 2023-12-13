@@ -17,7 +17,7 @@ Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
 Scene* Play::process() {
     if(isGameover) {
         lanes[player.position().y - offset]->gameoverProcess();
-        if(lanes[player.position().y - offset]->collide(player.position().x))
+        if(lanes[player.position().y - offset]->collide(&player))
             return sceneRegistry->scene(SceneID::GAMEOVER);
         else return this;
     }
@@ -36,7 +36,7 @@ Scene* Play::process() {
     }
 
     player.move(key);
-    if(lanes[player.position().y - offset]->collide(player.position().x)) {
+    if(lanes[player.position().y - offset]->collide(&player)) {
         isGameover = true;
         return this;
     }
@@ -49,7 +49,7 @@ Scene* Play::process() {
     for (int i = 0; i < lanes.size(); i++) {
         if (i == player.position().y - offset) {
             lanes[i]->process();
-            isGameover |= lanes[i]->collide(player.position().x);
+            isGameover |= lanes[i]->collide(&player);
         }
         else {
             lanes[i]->process();

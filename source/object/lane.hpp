@@ -9,6 +9,7 @@
 #include "traffic.hpp"
 #include "isometric.hpp"
 #include "texture_holder.hpp"
+#include "player.hpp"
 
 class Lane {
 private:
@@ -34,7 +35,7 @@ public:
     void shift(Vec2 offset);
 
     void addVehicle(float pos);
-    bool collide(float pos = -1.0f);
+    bool collide(Player* player);
     bool direction();
 
     int Y() const;

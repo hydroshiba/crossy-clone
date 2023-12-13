@@ -8,19 +8,16 @@ void Vehicle::move(float speed) {
     Isometric::x += speed;
 }
 
-// bool Vehicle::collide(float pos) {
-//     if (pos == -1.0f) return false;
-//     return ((this->Isometric::x <= pos) && (this->Isometric::x + 2.0f >= pos));
-// }
+bool Vehicle::collide(Player* player) {
+    float playerLeft = player->position().x - (player->collisionSize().x * 0.5f);
+    float playerRight = playerLeft + player->collisionSize().x;
 
-bool Vehicle::collide(float pos) {
-    if (pos == -1.0f) return false;
-
-    float dist = (texture->getWidth() - width * 0.5f) / (width * 0.5f);
-    float left = Isometric::x;
-    float right = Isometric::x + dist;
-
-    return (left <= pos && pos <= right);
+    float left = x;
+    float right = left + collisionSize().x;
+    
+    if(left <= playerLeft && playerLeft <= right) return true;
+    if(left <= playerRight && playerRight <= right) return true;
+    return false;
 }
 
 void Vehicle::render(Engine* engine, int offset) {

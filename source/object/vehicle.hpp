@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "isometric.hpp"
+#include "player.hpp"
 
 class Vehicle : public Isometric {
 
@@ -10,7 +11,7 @@ public:
     Vehicle(Texture const * const texture, const Vec2& size, const Vec2& pos, const Vec2& off);
 
     void move(float speed);
-    bool collide(float pos);
+    bool collide(Player* player);
     void render(Engine* engine, int offset);
 };
 

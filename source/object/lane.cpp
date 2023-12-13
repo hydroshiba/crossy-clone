@@ -92,9 +92,9 @@ void Lane::shift(Vec2 offset) {
     traffic.shift(offset);
 }
 
-bool Lane::collide(float pos) {
+bool Lane::collide(Player* player) {
     for (auto& vehicle : vehicles) {
-        if (vehicle.collide(pos)) {
+        if (vehicle.collide(player)) {
             vehicles.clear();
             std::string ambulance = "AMBULANCE_FRONT";
             Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 1)}), Vec2({0, 0}));
