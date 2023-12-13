@@ -5,6 +5,7 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     holder(holder),
     pos(pos),
     length(len),
+    grassType(rand() % 3),
     speed(speed),
     traffic(holder, gridSize, {speed > 0 ? 1.0f : float(len), float(pos)}, {0.0f, 100.0f}, isRed, trafficClock),
     clock(spawnClock / 2),
@@ -13,27 +14,19 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
 
 void Lane::render(Engine* engine, float playerLane) {
     int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 7;
+    std::string grassID = "GRASS";
 
-    for(int i = 0; i < length; ++i) {
-        if (speed != 0) {
-            blocks.push_back(Isometric(holder->get("ROAD"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
-        }
-        else {
-            int grassType = rand() % 3;
-            switch (grassType)
-            {
-                case 0:
-                    blocks.push_back(Isometric(holder->get("GRASS"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
-                    break;
-                case 1:
-                    blocks.push_back(Isometric(holder->get("GRASSFLOWER"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
-                    break;
-                case 2:
-                    blocks.push_back(Isometric(holder->get("GRASSPEBBLE"), gridSize, Vec2({float(i - 1), float(pos + offset)})));
-                    break;
-            }
+    if (speed != 0) grassID = "ROAD";
+    else {
+        switch (grassType) {
+            case 0: break;
+            case 1: grassID += "FLOWER"; break;
+            case 2: grassID += "PEBBLE"; break;
         }
     }
+
+    for(int i = 0; i < length; ++i) 
+        blocks.push_back(Isometric(holder->get(grassID), gridSize, Vec2({float(i - 1), float(pos + offset)})));
 
     for(auto& block : blocks)
         block.render(engine);

@@ -18,6 +18,7 @@ private:
 
     int pos;
     int length;
+    int grassType;
     float speed;
     int spawn;
     int clock;
