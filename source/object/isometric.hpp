@@ -28,11 +28,12 @@ public:
 	void shift(int dx, int dy) override;
 	void shift(const Vec2& df);
 
-	// Virtual gird properties
-	// Use Object::position() and Object::size() to get physical grid properties instead
+	// Size properties based on isometrical grid size
+	// Use Object::position() and Object::size() to get physical texture size properties instead
 
 	Vec2 position() const;
 	Vec2 size() const;
+	Vec2 collisionSize() const;
 };
 
 #endif

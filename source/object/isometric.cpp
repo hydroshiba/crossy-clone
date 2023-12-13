@@ -55,3 +55,9 @@ Vec2 Isometric::position() const {
 Vec2 Isometric::size() const {
 	return Vec2({width, height});
 }
+
+Vec2 Isometric::collisionSize() const {
+    float w = (texture->getWidth() - width * 0.5f) / (width * 0.5f);
+	float h = (texture->getHeight() - height * 0.5f) / (height * 0.5f);
+	return Vec2({w, h});
+}
