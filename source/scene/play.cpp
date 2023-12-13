@@ -62,7 +62,7 @@ Scene* Play::process() {
 
 void Play::render() {
     // Background fill
-    engine->fill(0, 162, 232);
+    // engine->fill(0, 162, 232);
 
     // Lane and player rendering
     int minRenderPos = player.position().y - offset - 10;
