@@ -50,7 +50,7 @@ void Lane::process() {
     if (clock >= spawn && !traffic.isRedLight()) {
         if (speed > 0) addVehicle(float(-1.0f));
         else addVehicle(float(length + 1.0f));
-        spawn = rand() % 60 + 60;
+        spawn = rand() % 60 + 15;
         clock = 0;
     }
 
@@ -122,7 +122,7 @@ int Lane::getSpawn() const {
 
 void Lane::addVehicle(float pos) {
     std::string color;
-    int rng = rand() % 3;
+    int rng = rand() % 4;
 
     switch (rng) {
         case 0:
@@ -134,13 +134,22 @@ void Lane::addVehicle(float pos) {
         case 2:
             color = "TAXI";
             break;
+        case 3:
+            color = "TRUCK";
+            break;
     }
 
     if(speed > 0) color += "_FRONT";
     else color += "_BACK";
 
-    Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, float(this->pos - 0.5)}), Vec2({0, 0}));
-    vehicles.push_back(vehicle);
+    if (rng != 3) {
+        Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, float(this->pos - 0.5)}), Vec2({0, 0}));
+        vehicles.push_back(vehicle);
+    }
+    else {
+        Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, float(this->pos - 1)}), Vec2({0, 0}));
+        vehicles.push_back(vehicle);
+    }
 }
 
 std::vector<byte> Lane::getTrafficGamestate() const {

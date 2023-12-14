@@ -4,7 +4,7 @@ Traffic::Traffic(TextureHolder* holder, const Vec2& size, const Vec2& pos, const
     holder(holder),
     Isometric(holder->get("TRAFFIC_GREEN"), size, pos),
     isRed(isRed),
-    interval(300),
+    interval(240),
     clock(clock) {}
 
 void Traffic::process() {

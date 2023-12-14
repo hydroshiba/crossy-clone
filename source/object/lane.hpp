@@ -28,7 +28,7 @@ private:
     std::vector<Isometric> blocks;
 
 public:
-    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock = 120, bool isRed = false, int trafficClock = 0);
+    Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int spawnClock = 75, bool isRed = false, int trafficClock = 0);
 
     void render(Engine* engine, float playerLane);
     void process();
