@@ -30,7 +30,7 @@ This section is for building the project from source files. To play the game dir
 - `cmake -S . -B ./build`
 - `cmake --build ./build`
   - An optional `-j` flag can be added after this command to enable the use of multithreaded compiling with arbitrary amount of cores, e.g. `cmake --build ./build -j 4`
-- The executable `crossy` will appear, run it by typing `./crossy` (or `crossy`) in your console.
+- The executable `crossy` will appear, run it by typing `./crossy` (or `wine64 crossy` on operating systems that are not Windows) in your console.
 
 ### IDEs with CMake integration
 
