@@ -33,9 +33,9 @@ Volume& operator--(Volume& volume) {
 Sprite& operator++(Sprite& sprite) {
     switch(sprite) {
     case Sprite::duck:
-        return sprite = Sprite::chicken;
-    case Sprite::chicken:
         return sprite = Sprite::cat;
+    case Sprite::chicken:
+        return sprite = Sprite::duck;
     default:
         return sprite;
     }
@@ -44,9 +44,9 @@ Sprite& operator++(Sprite& sprite) {
 Sprite& operator--(Sprite& sprite) {
     switch(sprite) {
     case Sprite::cat:
-        return sprite = Sprite::chicken;
-    case Sprite::chicken:
         return sprite = Sprite::duck;
+    case Sprite::duck:
+        return sprite = Sprite::chicken;
     default:
         return sprite;
     }

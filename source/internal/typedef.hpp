@@ -20,8 +20,8 @@ enum class Volume {
 };
 
 enum class Sprite {
-    duck,
     chicken,
+    duck,
     cat
 };
 

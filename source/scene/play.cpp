@@ -65,7 +65,6 @@ Scene* Play::process() {
         speaker->pause(background);
         speaker->stopSFX();
         speaker->play(car_crash);
-        speaker->stopSFX();
         speaker->play(ambulance);
         return this;
     }
