@@ -56,9 +56,9 @@ void Game::initialize() {
     LONG HWNDStyleEx = 0;
 
     GetWindowPlacement(window, &wpc);
-    if (HWNDStyle == 0)
+    if(HWNDStyle == 0)
         HWNDStyle = GetWindowLong(window, GWL_STYLE);
-    if (HWNDStyleEx == 0)
+    if(HWNDStyleEx == 0)
         HWNDStyleEx = GetWindowLong(window, GWL_EXSTYLE);
 
     LONG NewHWNDStyle = HWNDStyle;
@@ -66,7 +66,7 @@ void Game::initialize() {
     NewHWNDStyle &= ~WS_DLGFRAME;
     NewHWNDStyle &= ~WS_THICKFRAME;
 
-    LONG NewHWNDStyleEx =HWNDStyleEx;
+    LONG NewHWNDStyleEx = HWNDStyleEx;
     NewHWNDStyleEx &= ~WS_EX_WINDOWEDGE;
 
     SetWindowLong(window, GWL_STYLE, NewHWNDStyle | WS_POPUP);

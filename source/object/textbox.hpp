@@ -10,7 +10,7 @@ class Textbox {
     int numText;
     std::vector<Isometric*> text;
     TextureHolder* holder;
-    
+
 public:
     Textbox(TextureHolder* holder, std::string textStr, float x, float y);
     ~Textbox();

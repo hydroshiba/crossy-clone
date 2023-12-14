@@ -6,7 +6,7 @@ Sound::Sound(std::string path, bool background) : background(background) {
     file.seekg(0, std::ios::beg);
 
     buffer.resize(size);
-    if (!file.read(buffer.data(), size)) {
+    if(!file.read(buffer.data(), size)) {
         std::cout << "Error reading file!" << std::endl;
     }
 

@@ -10,7 +10,7 @@ class Menu : public Scene {
 private:
     bool isContinueEnabled;
     int defaultButton;
-    int button; // 0 = continue, 1 = start, 2 = option, 3 = leaderboard, 4 = credit, 5 = quit
+    int button;  // 0 = continue, 1 = start, 2 = option, 3 = leaderboard, 4 = credit, 5 = quit
 
     Sound button_clicked;
     Object title;

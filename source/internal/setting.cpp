@@ -19,7 +19,7 @@ void Setting::save() {
 
     // Highscores (12 + 24 bytes)
     file.write(reinterpret_cast<char*>(score), sizeof(score));
-    for (int i = 0; i < 3; i++) {
+    for(int i = 0; i < 3; i++) {
         file.write(reinterpret_cast<char*>(name[i]), sizeof(name[i]));
     }
     file.close();
@@ -35,14 +35,14 @@ void Setting::save() {
 
     // EOF address (4 bytes)
     int eofAddress = 35;
-    for (int i = 0; i < gamestate.size(); i++) {
+    for(int i = 0; i < gamestate.size(); i++) {
         eofAddress += gamestate[i].size();
     }
 
     // Address padding (32 bytes)
     int address = 35;
     for(int i = 0; i < 8; i++) {
-        if (i < gamestate.size()) {
+        if(i < gamestate.size()) {
             file.write(reinterpret_cast<char*>(&address), sizeof(address));
             address += gamestate[i].size();
         } else {
@@ -96,7 +96,7 @@ bool Setting::load() {
 
     // Read highscores
     file.read(reinterpret_cast<char*>(score), sizeof(score));
-    for (int i = 0; i < 3; i++) {
+    for(int i = 0; i < 3; i++) {
         file.read(reinterpret_cast<char*>(name[i]), sizeof(name[i]));
     }
     file.close();
@@ -118,8 +118,8 @@ bool Setting::load() {
     byte* buffer = nullptr;
     file.read(reinterpret_cast<char*>(&bottom), sizeof(bottom));
     std::streampos nextAddress = file.tellg();
-    while (nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
-        if (top == 35) break;
+    while(nextAddress != 35 && file.read(reinterpret_cast<char*>(&top), sizeof(top))) {
+        if(top == 35) break;
 
         gamestate.push_back(std::vector<byte>());
 
@@ -129,7 +129,7 @@ bool Setting::load() {
         buffer = new byte[top - bottom + 1];
         buffer[top - bottom] = '\0';
         file.read(reinterpret_cast<char*>(buffer), top - bottom);
-        for (int i = 0; i < top - bottom; i++) {
+        for(int i = 0; i < top - bottom; i++) {
             gamestate.back().push_back(buffer[i]);
         }
 
@@ -199,12 +199,12 @@ std::string Setting::spriteObject() const {
 word Setting::setScore(word score) {
     word topHighscore = 3;
     word* scorePtr = reinterpret_cast<word*>(this->score);
-    for(int i = 0; i < 3; i++){
-        if(score > *(scorePtr + i)){
+    for(int i = 0; i < 3; i++) {
+        if(score > *(scorePtr + i)) {
             topHighscore = i;
-            for(int j = 2; j > i; j--){
+            for(int j = 2; j > i; j--) {
                 *(scorePtr + j) = *(scorePtr + j - 1);
-                for(int k = 0; k < 8; k++){
+                for(int k = 0; k < 8; k++) {
                     name[j][k] = name[j - 1][k];
                 }
             }

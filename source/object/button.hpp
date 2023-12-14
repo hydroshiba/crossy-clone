@@ -6,16 +6,16 @@
 
 class Button : public Object {
 private:
-	bool selected = false;
-	Texture const * const pressed;
+    bool selected = false;
+    Texture const* const pressed;
 
 public:
-	Button(Texture const * const idle, Texture const * const pressed, int x, int y);
+    Button(Texture const* const idle, Texture const* const pressed, int x, int y);
 
-	void press();
-	void release();
-	
-	void render(Engine* engine);
+    void press();
+    void release();
+
+    void render(Engine* engine);
 };
 
 #endif

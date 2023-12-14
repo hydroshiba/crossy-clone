@@ -27,7 +27,7 @@ private:
     Sound step_grass_2;
     Sound step_road;
     Sound ambulance;
-    
+
     float percentage(int x) const;
     int random(int min, int max) const;
 

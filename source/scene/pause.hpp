@@ -6,7 +6,6 @@
 
 class Pause : public Scene {
 private:
-
     int button;
 
     Button quitButton;

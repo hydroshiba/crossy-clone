@@ -13,7 +13,7 @@ class Sound {
 private:
     WAVEHDR header;
     bool background;
-    std::vector<char> buffer;    
+    std::vector<char> buffer;
 
 public:
     Sound(std::string path, bool background = false);

@@ -14,10 +14,10 @@ private:
     Sound background;
     Sound button_clicked;
     Texture* LINE;
-    
+
     Object quit;
     Object line;
-    
+
     Textbox gameover;
     Textbox topX;
     Textbox name;

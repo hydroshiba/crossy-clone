@@ -8,18 +8,18 @@
 
 class Object {
 protected:
-	Texture const * texture;
-	int x, y;
+    Texture const* texture;
+    int x, y;
 
 public:
-	Object(Texture const * const texture);
-	Object(Texture const * const texture, int x, int y);
+    Object(Texture const* const texture);
+    Object(Texture const* const texture, int x, int y);
 
-	Vec2 position() const;
-	Vec2 size() const;
+    Vec2 position() const;
+    Vec2 size() const;
 
-	virtual void shift(int dx, int dy);
-	virtual void render(Engine* engine);
+    virtual void shift(int dx, int dy);
+    virtual void render(Engine* engine);
 };
 
 #endif

@@ -13,8 +13,8 @@
 
 class Setting {
 private:
-    byte score[12] = {};  // Saving 3 highscores as a byte array to keep endianess consistent
-    byte name[3][8] = {}; // Saving 3 names as a byte array to keep endianess consistent
+    byte score[12] = {};   // Saving 3 highscores as a byte array to keep endianess consistent
+    byte name[3][8] = {};  // Saving 3 names as a byte array to keep endianess consistent
     Volume music, sfx;
     Sprite sprite;
     std::vector<std::vector<byte>> gamestate;

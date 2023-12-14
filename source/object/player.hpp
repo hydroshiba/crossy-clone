@@ -14,7 +14,7 @@ class Player : public Isometric {
 private:
     TextureHolder* holder;
     Setting* setting;
-    int direction; // 0 = up, 1 = down, 2 = left, 3 = right
+    int direction;  // 0 = up, 1 = down, 2 = left, 3 = right
     // std::string name;
 
 public:

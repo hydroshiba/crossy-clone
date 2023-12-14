@@ -5,25 +5,25 @@ Textbox::Textbox(TextureHolder* holder, std::string textStr, float x, float y) :
 }
 
 Textbox::~Textbox() {
-    for (Isometric* i : text) {
+    for(Isometric* i : text) {
         delete i;
     }
 }
 
 Vec2 Textbox::positionChar(int idx) {
-    if(idx < 0 || idx > text.size()){
+    if(idx < 0 || idx > text.size()) {
         return {0.0f, 0.0f};
     }
-    
+
     return {x + 0.8f * holder->get("0")->getWidth() * idx, y + 0.2f * holder->get("0")->getHeight() * idx};
 }
 
 void Textbox::replaceChar(char c, int idx) {
-    if(idx > text.size()){
+    if(idx > text.size()) {
         return;
     }
     if(text[idx] != NULL) delete text[idx];
-    if(c == ' '){
+    if(c == ' ') {
         text[idx] = NULL;
         return;
     }
@@ -33,20 +33,20 @@ void Textbox::replaceChar(char c, int idx) {
 }
 
 void Textbox::setText(std::string textStr, float x, float y) {
-    //Delete old text
-    for (Isometric* i : text) {
+    // Delete old text
+    for(Isometric* i : text) {
         if(i != NULL) delete i;
     }
     text.clear();
 
-    //Create new text
+    // Create new text
     this->x = x;
     this->y = y;
     numText = 0;
 
-    for(char c : textStr){
+    for(char c : textStr) {
         c = toupper(c);
-        if(c == ' '){
+        if(c == ' ') {
             text.push_back(NULL);
         }
         if(isalnum(c))
@@ -56,7 +56,7 @@ void Textbox::setText(std::string textStr, float x, float y) {
 }
 
 void Textbox::render(Engine* engine) {
-    for (Isometric* i : text) {
+    for(Isometric* i : text) {
         if(i != NULL) i->render(engine);
     }
 }

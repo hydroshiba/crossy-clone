@@ -8,21 +8,21 @@ Texture::Texture(const std::string& path) {
         return;
     }
 
-    fin.seekg(18); // Seek to width and height
+    fin.seekg(18);  // Seek to width and height
     fin.read(reinterpret_cast<char*>(&width), sizeof(width));
     fin.read(reinterpret_cast<char*>(&height), sizeof(height));
 
-    fin.seekg(10); // Seek to pixel data offset
+    fin.seekg(10);  // Seek to pixel data offset
     uint32_t dataOffset;
     fin.read(reinterpret_cast<char*>(&dataOffset), sizeof(dataOffset));
 
-    fin.seekg(dataOffset); // Seek to pixel data
+    fin.seekg(dataOffset);  // Seek to pixel data
     data = new Color[width * height];
     fin.read(reinterpret_cast<char*>(data), width * height * sizeof(Color));
 
     fin.close();
 
-    for (int i = 0; i < height / 2; ++i) {
+    for(int i = 0; i < height / 2; ++i) {
         std::swap_ranges(data + i * width, data + (i + 1) * width, data + (height - i - 1) * width);
     }
 }
@@ -30,7 +30,7 @@ Texture::Texture(const std::string& path) {
 Texture::Texture(int ID) {
     HBITMAP bitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(ID));
     BITMAP bmp;
-    if (!bitmap) {
+    if(!bitmap) {
         std::cout << "Failed to load bitmap: " << ID << std::endl;
         exit(1);
     }

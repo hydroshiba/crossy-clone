@@ -11,29 +11,29 @@
 
 class Isometric : public Object {
 protected:
-	float x, y;
-	float width, height;
+    float x, y;
+    float width, height;
 
-	Vec2 offset;
-	Mat2 transform;
+    Vec2 offset;
+    Mat2 transform;
 
-	void project();
+    void project();
 
 public:
-	Isometric(Texture const * const texture, const Vec2& size);
-	Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos);
-	Isometric(Texture const * const texture, const Vec2& size, const Vec2& pos, const Vec2& off);
+    Isometric(Texture const* const texture, const Vec2& size);
+    Isometric(Texture const* const texture, const Vec2& size, const Vec2& pos);
+    Isometric(Texture const* const texture, const Vec2& size, const Vec2& pos, const Vec2& off);
 
-	void render(Engine* engine) override;
-	void shift(int dx, int dy) override;
-	void shift(const Vec2& df);
+    void render(Engine* engine) override;
+    void shift(int dx, int dy) override;
+    void shift(const Vec2& df);
 
-	// Size properties based on isometrical grid size
-	// Use Object::position() and Object::size() to get physical texture size properties instead
+    // Size properties based on isometrical grid size
+    // Use Object::position() and Object::size() to get physical texture size properties instead
 
-	Vec2 position() const;
-	Vec2 size() const;
-	Vec2 collisionSize() const;
+    Vec2 position() const;
+    Vec2 size() const;
+    Vec2 collisionSize() const;
 };
 
 #endif

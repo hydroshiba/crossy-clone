@@ -31,7 +31,7 @@ public:
     void fill(const Color& color);
     void fill(byte r, byte g, byte b);
 
-    void textureFill(int x, int y, Texture const * const texture);
+    void textureFill(int x, int y, Texture const* const texture);
     void textureFill(int x, int y, const Texture& texture);
 
     int getWidth() const;

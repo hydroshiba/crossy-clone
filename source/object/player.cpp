@@ -1,12 +1,11 @@
 #include "player.hpp"
 
-Player::Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting) :
-    holder(holder),
-    setting(setting),
-    direction(0),
-    Isometric(holder->get("CHICKEN_UP"), size, pos) {
-        texture = holder->get(spriteID());
-    }
+Player::Player(TextureHolder* holder, Vec2 size, Vec2 pos, Setting* setting) : holder(holder),
+                                                                               setting(setting),
+                                                                               direction(0),
+                                                                               Isometric(holder->get("CHICKEN_UP"), size, pos) {
+    texture = holder->get(spriteID());
+}
 
 void Player::move(Key key) {
     if(key == Key::UP) {
@@ -15,8 +14,7 @@ void Player::move(Key key) {
     } else if(key == Key::DOWN) {
         direction = 1;
         --Isometric::y;
-    }
-    else if(key == Key::LEFT) {
+    } else if(key == Key::LEFT) {
         direction = 2;
         --Isometric::x;
     } else if(key == Key::RIGHT) {
@@ -29,15 +27,22 @@ void Player::move(Key key) {
 
 std::string Player::spriteID() {
     std::string str;
-    
-    if(setting->spriteID() == Sprite::chicken) str = "CHICKEN";
-    else if(setting->spriteID() == Sprite::cat) str = "CAT";
-    else str = "DUCK";
 
-    if(direction == 0) str += "_UP";
-    else if(direction == 1) str += "_DOWN";
-    else if(direction == 2) str += "_LEFT";
-    else if(direction == 3) str += "_RIGHT";
+    if(setting->spriteID() == Sprite::chicken)
+        str = "CHICKEN";
+    else if(setting->spriteID() == Sprite::cat)
+        str = "CAT";
+    else
+        str = "DUCK";
+
+    if(direction == 0)
+        str += "_UP";
+    else if(direction == 1)
+        str += "_DOWN";
+    else if(direction == 2)
+        str += "_LEFT";
+    else if(direction == 3)
+        str += "_RIGHT";
 
     return str;
 }

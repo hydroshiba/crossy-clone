@@ -1,7 +1,6 @@
 #ifndef CREDIT_HPP_
 #define CREDIT_HPP_
 
-
 #include "scene.hpp"
 #include "scene_registry.hpp"
 

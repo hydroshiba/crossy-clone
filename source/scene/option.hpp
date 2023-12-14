@@ -17,6 +17,7 @@ private:
     std::vector<Object*> sfx;
     std::vector<Object*> sprites;
     std::vector<Button*> buttons;
+
 public:
     Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Option();

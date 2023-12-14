@@ -11,13 +11,13 @@
 
 class TextureHolder {
 private:
-	std::unordered_map<std::string, Texture*> map;
+    std::unordered_map<std::string, Texture*> map;
 
 public:
-	TextureHolder();
-	~TextureHolder();
+    TextureHolder();
+    ~TextureHolder();
 
-	Texture* const get(const std::string& name) const;
+    Texture* const get(const std::string& name) const;
 };
 
 #endif

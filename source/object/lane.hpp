@@ -22,7 +22,7 @@ private:
     float speed;
     int spawn;
     int clock;
-    
+
     Traffic traffic;
     std::vector<Vehicle> vehicles;
     std::vector<Isometric> blocks;
@@ -44,7 +44,7 @@ public:
     int Y() const;
     float getSpeed() const;
     int getSpawn() const;
-    
+
     std::vector<byte> getTrafficGamestate() const;
     std::vector<byte> getVehiclesGamestate() const;
 

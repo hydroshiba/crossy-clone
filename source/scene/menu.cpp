@@ -1,12 +1,12 @@
 #include "menu.hpp"
 
 Menu::Menu(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
-                                                                                                                                    defaultButton(setting->getGamestate().size() ? 0 : 1),
-                                                                                                                                    isContinueEnabled(setting->getGamestate().size() ? true : false),
-                                                                                                                                    button(defaultButton),
-                                                                                                                                    button_clicked("asset/sound/sfx/button-click-2.wav"),
-                                                                                                                                    title(holder->get("TITLE"), (engine->getWidth() - holder->get("TITLE")->getWidth()) / 5, (engine->getHeight() - holder->get("TITLE")->getHeight()) / 2),
-                                                                                                                                    duck_large(holder->get("DUCK_LARGE"), (engine->getWidth() - holder->get("DUCK_LARGE")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("DUCK_LARGE")->getHeight()) / 2){
+                                                                                                                                     defaultButton(setting->getGamestate().size() ? 0 : 1),
+                                                                                                                                     isContinueEnabled(setting->getGamestate().size() ? true : false),
+                                                                                                                                     button(defaultButton),
+                                                                                                                                     button_clicked("asset/sound/sfx/button-click-2.wav"),
+                                                                                                                                     title(holder->get("TITLE"), (engine->getWidth() - holder->get("TITLE")->getWidth()) / 5, (engine->getHeight() - holder->get("TITLE")->getHeight()) / 2),
+                                                                                                                                     duck_large(holder->get("DUCK_LARGE"), (engine->getWidth() - holder->get("DUCK_LARGE")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("DUCK_LARGE")->getHeight()) / 2) {
     buttons.push_back(new Button(holder->get("CONTINUE"), holder->get("CONTINUE_CLICKED"), (engine->getWidth() - holder->get("CONTINUE")->getWidth()) / 2, (engine->getHeight() - holder->get("CONTINUE")->getHeight()) / 2.75));
     buttons.push_back(new Button(holder->get("START"), holder->get("START_CLICKED"), (engine->getWidth() - holder->get("START")->getWidth()) / 2, isContinueEnabled ? buttons.back()->position().y + buttons.back()->size().y * 0.55 : (engine->getHeight() - holder->get("START")->getHeight()) / 2.75));
     buttons.push_back(new Button(holder->get("OPTION"), holder->get("OPTION_CLICKED"), (engine->getWidth() - holder->get("OPTION")->getWidth()) / 2, buttons.back()->position().y + buttons.back()->size().y * 0.55));
@@ -16,7 +16,7 @@ Menu::Menu(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
 }
 
 void Menu::updateButton() {
-    if(isContinueEnabled == setting->getGamestate().empty()){
+    if(isContinueEnabled == setting->getGamestate().empty()) {
         isContinueEnabled = !isContinueEnabled;
         buttons[button]->release();
         button = defaultButton = isContinueEnabled ? 0 : 1;
@@ -26,7 +26,6 @@ void Menu::updateButton() {
             buttons[i]->shift(0, y);
         }
     }
-
 }
 
 Scene* Menu::process() {
@@ -35,48 +34,48 @@ Scene* Menu::process() {
 
     if(pressedKey != Key::DEFAULT) speaker->play(button_clicked);
     switch(pressedKey) {
-    case Key::UP:
-        if(button > defaultButton) {
-            button--;
-        }
-        break;
-    case Key::DOWN:
-        if(button < 5) {
-            button++;
-        }
-        break;
-    case Key::ENTER:
-        switch(button) {
-        case 0: {
-            next = sceneRegistry->scene(SceneID::PLAY); //continue
-            Play* play = dynamic_cast<Play*>(next);
-            play->loadGamestate(setting->getGamestate());
+        case Key::UP:
+            if(button > defaultButton) {
+                button--;
+            }
             break;
-        }
-        case 1: {
-            next = sceneRegistry->scene(SceneID::PLAY);
-            setting->setGamestate({});
-            Play* play = dynamic_cast<Play*>(next);
-            play->createNewGame();
+        case Key::DOWN:
+            if(button < 5) {
+                button++;
+            }
             break;
-        }
-        case 2:
-            next = sceneRegistry->scene(SceneID::OPTION);
+        case Key::ENTER:
+            switch(button) {
+                case 0: {
+                    next = sceneRegistry->scene(SceneID::PLAY);  // continue
+                    Play* play = dynamic_cast<Play*>(next);
+                    play->loadGamestate(setting->getGamestate());
+                    break;
+                }
+                case 1: {
+                    next = sceneRegistry->scene(SceneID::PLAY);
+                    setting->setGamestate({});
+                    Play* play = dynamic_cast<Play*>(next);
+                    play->createNewGame();
+                    break;
+                }
+                case 2:
+                    next = sceneRegistry->scene(SceneID::OPTION);
+                    break;
+                case 3:
+                    next = sceneRegistry->scene(SceneID::LEADERBOARD);
+                    break;
+                case 4:
+                    next = sceneRegistry->scene(SceneID::CREDIT);
+                    break;
+                case 5:
+                    next = nullptr;
+                    break;
+            }
             break;
-        case 3:
-            next = sceneRegistry->scene(SceneID::LEADERBOARD);
-            break;
-        case 4:
-            next = sceneRegistry->scene(SceneID::CREDIT);
-            break;
-        case 5:
+        case Key::ESC:
             next = nullptr;
             break;
-        }
-        break;
-    case Key::ESC:
-        next = nullptr;
-        break;
     }
 
     buttons[button]->press();

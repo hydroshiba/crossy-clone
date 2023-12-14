@@ -6,29 +6,29 @@
 
 class Speaker {
 private:
-	WAVEFORMATEX wfx;
-	HWAVEOUT sfxDevice;
-	HWAVEOUT musicDevice;
+    WAVEFORMATEX wfx;
+    HWAVEOUT sfxDevice;
+    HWAVEOUT musicDevice;
 
-	bool sfxPause = false;
-	bool musicPause = false;
+    bool sfxPause = false;
+    bool musicPause = false;
 
-	word sfxVolume, musicVolume;
-	static void CALLBACK waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
+    word sfxVolume, musicVolume;
+    static void CALLBACK waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 
 public:
-	Speaker();
-	~Speaker();
+    Speaker();
+    ~Speaker();
 
-	void play(Sound& sound);
-	void pause(Sound& sound);
-	void stop();
-	void stopSFX();
+    void play(Sound& sound);
+    void pause(Sound& sound);
+    void stop();
+    void stopSFX();
 
-	void setSFXVolume(word volume);
-	void setMusicVolume(word volume);
+    void setSFXVolume(word volume);
+    void setMusicVolume(word volume);
 
-	friend class Setting;
+    friend class Setting;
 };
 
 #endif
