@@ -345,13 +345,13 @@ void Play::createNewGame() {
 
 float Play::percentage(int x) const {
     if(x <= 0) return 1.0f;
-    if(x == 1) return 0.95f;
+    if(x == 1) return 0.96f;
     if(x > 31) return percentage(31);
 
     float res = percentage(x / 2);
     res *= res;
 
-    if(x % 2) res *= 0.95f;
+    if(x % 2) res *= 0.96f;
     return res;
 }
 
