@@ -130,7 +130,6 @@ void Game::playsound() {
 }
 
 void Game::run() {
-    speaker->play(sound);
 
     while(current != nullptr) {
         MSG msg = {};
@@ -145,6 +144,8 @@ void Game::run() {
         uint64_t elapsed = duration_cast<nanoseconds>(now - prev).count();
 
         if(elapsed >= duration_cast<nanoseconds>(seconds(1)).count() / framerate) {
+            if (setting->volMusic() == Volume::medium || setting->volMusic() == Volume::high || setting->volMusic() == Volume::max) speaker->play(sound);
+            else speaker->stopMusic();
             render();
             process();
             prev = now;
