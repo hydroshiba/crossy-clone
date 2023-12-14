@@ -27,7 +27,7 @@ Scene* Gameover::process() {
     Scene* next = this;
     Key pressedKey = keyboard->key();
     if(isEnterName != 3){
-        gameover.setText("Enter your name", engine->getWidth() / 5, engine->getHeight() / 3 - engine->getHeight() / 8);
+        gameover.setText("Enter your name", engine->getWidth() / 4, engine->getHeight() / 3 - engine->getHeight() / 8);
         topX.setText("Top " + std::to_string(isEnterName + 1), engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 4);
         int prevIdxChar = idxChar;
         char c;
