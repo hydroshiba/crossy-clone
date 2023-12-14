@@ -2,16 +2,15 @@
 
 Gameover::Gameover(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : 
     Scene(engine, speaker, registry, setting, keyboard, holder),
-    isEnterName(false),
+    isEnterName(-1),
     idxChar(0),
-    sizeName(10),
-    score(0),
+    sizeName(8),
     LINE(new Texture("asset/texture/line60x23.bmp")),
     quit(holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT_CLICKED")->getWidth()) / 2, engine->getHeight() * 2 / 3),
     gameover(holder, "Gameover", engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6),
-    name(holder, "          ", engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6),
-    line(LINE, engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6 + 80){
-    namePlayer.resize(sizeName);
+    name(holder, "        ", engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 3 + 2 * holder->get("A")->getHeight()),
+    line(LINE, engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 3 + 3 * holder->get("A")->getHeight()),
+    topX(holder, "", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 4){
     for(int i = 0; i < sizeName; i++){
         namePlayer[i] = ' ';
     }
@@ -21,14 +20,16 @@ Gameover::~Gameover() {
 }
 
 void Gameover::setScore(word score) {
-    this->score = score;
     isEnterName = setting->setScore(score);
 }
 
 Scene* Gameover::process() {
     Scene* next = this;
     Key pressedKey = keyboard->key();
-    if(isEnterName){
+    if(isEnterName != 3){
+        gameover.setText("Enter your name", engine->getWidth() / 5, engine->getHeight() / 3 - engine->getHeight() / 8);
+        topX.setText("Top " + std::to_string(isEnterName + 1), engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 4);
+        int prevIdxChar = idxChar;
         char c;
         switch(pressedKey){
             case Key::LEFT:
@@ -66,31 +67,37 @@ Scene* Gameover::process() {
                 break;
             }
             case Key::ENTER:{
-                // setting->setName(namePlayer);
-                isEnterName = false;
+                setting->setNames(namePlayer, isEnterName);
+                isEnterName = 3;
+                idxChar = 0;
+                gameover.setText("Gameover", engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 6);    
+                name.setText("        ", engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 3 + 2 * holder->get("A")->getHeight());
+                line.shift(-idxChar * LINE->getWidth(), -idxChar * LINE->getHeight());
                 for(int i = 0; i < sizeName; i++){
                     namePlayer[i] = ' ';
                 }
+                next = sceneRegistry->scene(SceneID::MENU);
                 break;
             }
         }
+    line.shift((idxChar - prevIdxChar) * LINE->getWidth(), (idxChar - prevIdxChar) * LINE->getHeight());
     }
     else if(pressedKey == Key::ENTER || pressedKey == Key::ESC){
         next = sceneRegistry->scene(SceneID::MENU);
     }
 
-    line.shift(name.positionChar(idxChar).x - line.position().x, name.positionChar(idxChar).y - line.position().y);
     return next;
 }
 
 void Gameover::render() {
     engine->fill(0, 162, 232);
-    if(isEnterName){
+    gameover.render(engine);
+    if(isEnterName != 3){
+        topX.render(engine);
         line.render(engine);
         name.render(engine);
     }
     else{
-        gameover.render(engine);
         quit.render(engine);
     }
 }

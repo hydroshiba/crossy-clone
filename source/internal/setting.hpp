@@ -13,8 +13,8 @@
 
 class Setting {
 private:
-    byte score[12];  // Saving 3 highscores as a byte array to keep endianess consistent
-    byte name[3][8]; // Saving 3 names as a byte array to keep endianess consistent
+    byte score[12] = {};  // Saving 3 highscores as a byte array to keep endianess consistent
+    byte name[3][8] = {}; // Saving 3 names as a byte array to keep endianess consistent
     Volume music, sfx;
     Sprite sprite;
     std::vector<std::vector<byte>> gamestate;
@@ -26,14 +26,15 @@ public:
     Setting(Speaker* speaker);
     ~Setting();
 
-    word highscore(byte rank) const;
+    word highscore(word rank) const;
+    byte* namePlayer(word rank) const;
     Volume volMusic() const;
     Volume volSFX() const;
     Sprite spriteID() const;
     std::string spriteObject() const;
     std::vector<std::vector<byte>> getGamestate() const;
 
-    int setScore(word score);
+    word setScore(word score);
     void setNames(byte name[8], int rank);
     void setGamestate(std::vector<std::vector<byte>> state);
 

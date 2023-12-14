@@ -11,7 +11,7 @@ Textbox::~Textbox() {
 }
 
 Vec2 Textbox::positionChar(int idx) {
-    if(idx > text.size()){
+    if(idx < 0 || idx > text.size()){
         return {0.0f, 0.0f};
     }
     

@@ -11,6 +11,7 @@ private:
     Sound sound;
     std::vector<Object*> cups;
     Textbox score;
+    Textbox name;
 public:
     Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Leaderboard();

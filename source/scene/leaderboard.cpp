@@ -4,7 +4,8 @@ Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* regist
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
                                                                                                                                                  sound("asset/sound/sfx/long-honk.wav", 0),
-                                                                                                                                                 score(holder, "", 0, 0){
+                                                                                                                                                 score(holder, "", 0, 0),
+                                                                                                                                                 name(holder, "", 0, 0){
     cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight()) * 3 / 5));
     cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5 - 50));
     cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight()) * 3 / 5));
@@ -63,8 +64,17 @@ void Leaderboard::render() {
         ySelected = cups[cupSelected]->position().y;
         cups[cupSelected]->shift(engine->getWidth() / 5 - xSelected, engine->getHeight() / 5 - ySelected);
         cups[cupSelected]->render(engine);
-
-        score.setText(std::to_string(setting->highscore(cupSelected == 0 ? 2 : cupSelected == 1 ? 0 : 1)), engine->getWidth() / 2, engine->getHeight() / 3);
+        word rank = cupSelected == 0 ? 1 : cupSelected == 1 ? 0 : 2;
+        byte* namePlayer = setting->namePlayer(rank);
+        if(setting->highscore(rank) == 0){
+            name.setText("NA", engine->getWidth() / 2, engine->getHeight() / 3);
+        }
+        else{
+            name.setText(std::string(namePlayer, namePlayer + 8), engine->getWidth() / 2, engine->getHeight() / 3);
+        }
+        
+        score.setText(std::to_string(setting->highscore(rank)), engine->getWidth() / 2, engine->getHeight() / 3 + 2 * holder->get("A")->getHeight());
+        name.render(engine);
         score.render(engine);
         cups[cupSelected]->shift(xSelected - engine->getWidth() / 5, ySelected - engine->getHeight() / 5);
     }

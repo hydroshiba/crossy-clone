@@ -6,15 +6,18 @@
 
 class Gameover : public Scene {
 private:
-    bool isEnterName;
-    word score;
+    word isEnterName;
     int idxChar;
     const int sizeName;
-    std::string namePlayer;
+    byte namePlayer[8];
+
     Texture* LINE;
+    
     Object quit;
-    Textbox gameover;
     Object line;
+    
+    Textbox gameover;
+    Textbox topX;
     Textbox name;
 
 public:

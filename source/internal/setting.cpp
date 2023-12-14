@@ -159,8 +159,16 @@ Setting::~Setting() {
     save();
 }
 
-word Setting::highscore(byte rank) const {
-    return *(reinterpret_cast<word*>(const_cast<byte*>(score) + rank));
+word Setting::highscore(word rank) const {
+    if(rank > 2) return 0;
+    return *(reinterpret_cast<const word*>(score) + rank);
+}
+
+byte* Setting::namePlayer(word rank) const {
+    if(rank > 2) {
+        return nullptr;
+    }
+    return const_cast<byte*>(name[rank]);
 }
 
 Volume Setting::volMusic() const {
@@ -188,16 +196,21 @@ std::string Setting::spriteObject() const {
     }
 }
 
-int Setting::setScore(word score) {
-    int topHighscore = -1;
-    word* ptr = reinterpret_cast<word*>(this->score);
-
-    for(int i = 0; i < 3; ++i) {
-        if(score > *(ptr - i)) {
-            std::swap(*(ptr - i), score);
-            topHighscore++;
+word Setting::setScore(word score) {
+    word topHighscore = 3;
+    word* scorePtr = reinterpret_cast<word*>(this->score);
+    for(int i = 0; i < 3; i++){
+        if(score > *(scorePtr + i)){
+            topHighscore = i;
+            for(int j = 2; j > i; j--){
+                *(scorePtr + j) = *(scorePtr + j - 1);
+                for(int k = 0; k < 8; k++){
+                    name[j][k] = name[j - 1][k];
+                }
+            }
+            *(scorePtr + i) = score;
+            break;
         }
-        ++ptr;
     }
 
     return topHighscore;

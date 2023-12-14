@@ -18,8 +18,10 @@ Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
 Scene* Play::process() {
     if(isGameover) {
         lanes[player.position().y - offset]->gameoverProcess();
-        if(lanes[player.position().y - offset]->collide(&player))
+        if(lanes[player.position().y - offset]->collide(&player)){
+            dynamic_cast<Gameover*>(sceneRegistry->scene(SceneID::GAMEOVER))->setScore(word(score));
             return sceneRegistry->scene(SceneID::GAMEOVER);
+        }
         else return this;
     }
 
