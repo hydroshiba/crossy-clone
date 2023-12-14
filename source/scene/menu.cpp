@@ -45,7 +45,7 @@ Scene* Menu::process() {
         }
         break;
     case Key::ENTER:
-        // speaker->play(button_clicked);
+        speaker->play(button_clicked);
         switch(button) {
         case 0: {
             next = sceneRegistry->scene(SceneID::PLAY); //continue
