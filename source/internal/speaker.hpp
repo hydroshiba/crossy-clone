@@ -10,6 +10,9 @@ private:
 	HWAVEOUT sfxDevice;
 	HWAVEOUT musicDevice;
 
+	bool sfxPause = false;
+	bool musicPause = false;
+
 	word sfxVolume, musicVolume;
 	static void CALLBACK waveOutProc(HWAVEOUT hwo, UINT uMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 

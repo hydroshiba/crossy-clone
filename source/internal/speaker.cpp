@@ -31,12 +31,26 @@ void Speaker::play(Sound& sound) {
 	HWAVEOUT& device = (sound.background ? musicDevice : sfxDevice);
 	waveOutRestart(device);
 
+	if(device == musicDevice && musicPause) {
+		musicPause = false;
+		waveOutRestart(device);
+	}
+	
+	if(device == sfxDevice && sfxPause) {
+		sfxPause = false;
+		waveOutRestart(device);
+	}
+
 	waveOutPrepareHeader(device, &sound.header, sizeof(WAVEHDR));
 	waveOutWrite(device, &sound.header, sizeof(WAVEHDR));
 }
 
 void Speaker::pause(Sound& sound) {
 	HWAVEOUT& device = (sound.background ? musicDevice : sfxDevice);
+
+	if(device == musicDevice) musicPause = true;
+	else sfxPause = true;
+
 	waveOutPause(device);
 }
 
