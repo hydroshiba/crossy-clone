@@ -20,9 +20,9 @@ enum class Volume {
 };
 
 enum class Sprite {
-    chicken,
-    duck,
-    cat
+    chicken = 0,
+    duck = 1,
+    cat = 2
 };
 
 enum class Key {

@@ -2,7 +2,7 @@
 
 Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder), 
                                                                                                                                         button(0),
-                                                                                                                                        spriteId(0),
+                                                                                                                                        spriteId(int(setting->spriteID())),
                                                                                                                                         button_clicked("asset/sound/sfx/button-click-2.wav"){
     
     if(setting->volMusic() == Volume::min) musicId = 0;
