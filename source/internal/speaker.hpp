@@ -23,6 +23,7 @@ public:
 	void play(Sound& sound);
 	void pause(Sound& sound);
 	void stop();
+	void stopSFX();
 
 	void setSFXVolume(word volume);
 	void setMusicVolume(word volume);

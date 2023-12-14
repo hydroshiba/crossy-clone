@@ -72,6 +72,7 @@ void Lane::process() {
 }
 
 void Lane::playsound(Speaker* speaker, Sound& car_honk) {
+    speaker->stopSFX();
     speaker->play(car_honk);
 }
 

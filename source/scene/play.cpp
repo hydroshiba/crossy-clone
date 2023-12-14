@@ -21,7 +21,8 @@ Scene* Play::process() {
     if(isGameover) {
         lanes[player.position().y - offset]->gameoverProcess();
         if(lanes[player.position().y - offset]->collide(&player)){
-            speaker->pause(ambulance);
+            // speaker->pause(ambulance);
+            speaker->stopSFX();
             dynamic_cast<Gameover*>(sceneRegistry->scene(SceneID::GAMEOVER))->setScore(word(score));
             return sceneRegistry->scene(SceneID::GAMEOVER);
         }
@@ -44,16 +45,27 @@ Scene* Play::process() {
     player.move(key);
     if (key != Key::DEFAULT) {
         if(lanes[player.position().y - offset]->getSpeed() == 0) {
-            if(random(0, 1)) speaker->play(step_grass);
-            else speaker->play(step_grass_2);
+            if(random(0, 1)) {
+                speaker->stopSFX();
+                speaker->play(step_grass);
+            }
+            else {
+                speaker->stopSFX();
+                speaker->play(step_grass_2);
+            }
         }
-        else speaker->play(step_road);
+        else {
+            speaker->stopSFX();
+            speaker->play(step_road);
+        }
     }
 
     if (lanes[player.position().y - offset]->collide(&player)) {
         isGameover = true;
         speaker->pause(background);
+        speaker->stopSFX();
         speaker->play(car_crash);
+        speaker->stopSFX();
         speaker->play(ambulance);
         return this;
     }
