@@ -40,6 +40,7 @@ public:
     bool collide(Player* player);
     bool direction();
 
+    int random(int min, int max) const;
     int Y() const;
     float getSpeed() const;
     int getSpawn() const;
