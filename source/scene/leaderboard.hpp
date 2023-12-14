@@ -8,7 +8,7 @@ class Leaderboard : public Scene {
 private:
     bool view;
     int cupSelected, xSelected, ySelected;
-    Sound sound;
+    Sound button_clicked;
     std::vector<Object*> cups;
     Textbox score;
     Textbox name;

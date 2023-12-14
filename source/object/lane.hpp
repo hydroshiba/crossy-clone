@@ -32,6 +32,7 @@ public:
 
     void render(Engine* engine, float playerLane);
     void process();
+    void playsound(Speaker* speaker, Sound& car_honk);
     void gameoverProcess();
     void shift(Vec2 offset);
 

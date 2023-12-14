@@ -66,6 +66,11 @@ void Lane::process() {
     ++clock;
 }
 
+void Lane::playsound(Speaker* speaker, Sound& car_honk) {
+    speaker->stop();
+    speaker->play(car_honk);
+}
+
 void Lane::gameoverProcess() {
     if (vehicles.empty()) {
         std::string ambulance = "AMBULANCE_FRONT";

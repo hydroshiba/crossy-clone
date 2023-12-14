@@ -19,6 +19,11 @@ private:
 
     Player player;
     std::vector<Lane*> lanes;
+
+    Sound car_crash;
+    Sound car_honk;
+    Sound step_grass;
+    Sound step_road;
     
     void updateProcess();
     bool needCreateGrassLane() const;

@@ -3,7 +3,7 @@
 Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                                  cupSelected(1),
                                                                                                                                                  view(false),
-                                                                                                                                                 sound("asset/sound/sfx/long-honk.wav", 0),
+                                                                                                                                                 button_clicked("asset/sound/sfx/button-click-2.wav"),
                                                                                                                                                  score(holder, "", 0, 0),
                                                                                                                                                  name(holder, "", 0, 0){
     cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight()) * 3 / 5));
@@ -83,5 +83,5 @@ void Leaderboard::render() {
 }
 
 void Leaderboard::playsound() {
-    speaker->play(sound);
+    speaker->play(button_clicked);
 }
