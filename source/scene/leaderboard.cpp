@@ -13,8 +13,6 @@ Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* regist
     
     buttons.push_back(new Button(holder->get("LEFT"), holder->get("LEFT_CLICKED"), holder->get("LEFT")->getWidth(), engine->getHeight() / 2));
     buttons.push_back(new Button(holder->get("RIGHT"), holder->get("RIGHT_CLICKED"), engine->getWidth() - buttons.back()->size().x * 2, engine->getHeight() / 2));
-    buttons[0]->press();
-    buttons[1]->press();
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {
@@ -37,11 +35,13 @@ Scene* Leaderboard::process() {
     case Key::LEFT:
         if(cupSelected > 0) {
             cupSelected--;
+            if(cupSelected == 0) buttons[0]->press();
         }
         break;
     case Key::RIGHT:
         if(cupSelected < 2) {
             cupSelected++;
+            if(cupSelected == 2) buttons[1]->press();
         }
         break;
     case Key::ENTER:
@@ -61,6 +61,10 @@ Scene* Leaderboard::process() {
     std::string rank = cupSelected == 0 ? "2" : cupSelected == 1 ? "1" : "3";
     topX.setText("Top " + rank, cups[cupSelected]->position().x, cups[cupSelected]->position().y - 2 * holder->get("A")->getHeight());
 
+    if(cupSelected == 1) {
+        buttons[0]->release();
+        buttons[1]->release();
+    }
     return next;
 }
 
