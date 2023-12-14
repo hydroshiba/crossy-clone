@@ -20,11 +20,11 @@ public:
     Speaker();
     ~Speaker();
 
-	void play(Sound& sound);
-	void pause(Sound& sound);
-	void stop();
-	void stopSFX();
-	void stopMusic();
+    void play(Sound& sound);
+    void pause(Sound& sound);
+    void stop();
+    void stopSFX();
+    void stopMusic();
 
     void setSFXVolume(word volume);
     void setMusicVolume(word volume);
