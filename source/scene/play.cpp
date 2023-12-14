@@ -21,7 +21,8 @@ Scene* Play::process() {
     if(isGameover) {
         lanes[player.position().y - offset]->gameoverProcess();
         if(lanes[player.position().y - offset]->collide(&player)){
-            speaker->pause(ambulance);
+            // speaker->pause(ambulance);
+            speaker->stopSFX();
             dynamic_cast<Gameover*>(sceneRegistry->scene(SceneID::GAMEOVER))->setScore(word(score));
             return sceneRegistry->scene(SceneID::GAMEOVER);
         }
@@ -29,7 +30,7 @@ Scene* Play::process() {
     }
 
     ++frames;
-    if(frames >= 60) frames = 0;
+    if(frames >= 120) frames = 0;
 
     Key key = keyboard->key();
     if(key == Key::ESC) {
@@ -44,16 +45,27 @@ Scene* Play::process() {
     player.move(key);
     if (key != Key::DEFAULT) {
         if(lanes[player.position().y - offset]->getSpeed() == 0) {
-            if(random(0, 1)) speaker->play(step_grass);
-            else speaker->play(step_grass_2);
+            if(random(0, 1)) {
+                speaker->stopSFX();
+                speaker->play(step_grass);
+            }
+            else {
+                speaker->stopSFX();
+                speaker->play(step_grass_2);
+            }
         }
-        else speaker->play(step_road);
+        else {
+            speaker->stopSFX();
+            speaker->play(step_road);
+        }
     }
 
     if (lanes[player.position().y - offset]->collide(&player)) {
         isGameover = true;
         speaker->pause(background);
+        speaker->stopSFX();
         speaker->play(car_crash);
+        speaker->stopSFX();
         speaker->play(ambulance);
         return this;
     }
@@ -65,8 +77,8 @@ Scene* Play::process() {
 
     for (int i = 0; i < lanes.size(); i++) {
         lanes[i]->process();
-        if (lanes[i]->getSpeed() != 0 && frames == 59) lanes[i]->playsound(speaker, car_honk);
     }
+    if (lanes[player.position().y - offset]->getSpeed() != 0 && frames == random(60, 120)) lanes[player.position().y - offset]->playsound(speaker, car_honk);
 
     return this;
 }

@@ -59,6 +59,10 @@ void Speaker::stop() {
 	waveOutReset(musicDevice);
 }
 
+void Speaker::stopSFX() {
+	waveOutReset(sfxDevice);
+}
+
 void Speaker::setSFXVolume(word volume) {
 	sfxVolume = volume;
 	waveOutSetVolume(sfxDevice, sfxVolume);
