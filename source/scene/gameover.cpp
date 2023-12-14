@@ -5,6 +5,7 @@ Gameover::Gameover(Engine* engine, Speaker* speaker, SceneRegistry* registry, Se
     isEnterName(-1),
     idxChar(0),
     sizeName(8),
+    background("asset/sound/background.wav", true),
     LINE(new Texture("asset/texture/line60x23.bmp")),
     quit(holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT_CLICKED")->getWidth()) / 2, engine->getHeight() * 2 / 3),
     gameover(holder, "Gameover", engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6),
@@ -26,6 +27,10 @@ void Gameover::setScore(word score) {
 Scene* Gameover::process() {
     Scene* next = this;
     Key pressedKey = keyboard->key();
+
+    if(pressedKey == Key::ESC || pressedKey == Key::ENTER)
+        speaker->play(background);
+
     if(isEnterName != 3){
         gameover.setText("Enter your name", engine->getWidth() / 4, engine->getHeight() / 3 - engine->getHeight() / 8);
         topX.setText("Top " + std::to_string(isEnterName + 1), engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 4);
@@ -81,7 +86,7 @@ Scene* Gameover::process() {
                 break;
             }
         }
-    line.shift((idxChar - prevIdxChar) * LINE->getWidth(), (idxChar - prevIdxChar) * LINE->getHeight());
+        line.shift((idxChar - prevIdxChar) * LINE->getWidth(), (idxChar - prevIdxChar) * LINE->getHeight());
     }
     else if(pressedKey == Key::ENTER || pressedKey == Key::ESC){
         next = sceneRegistry->scene(SceneID::MENU);

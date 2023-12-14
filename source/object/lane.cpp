@@ -72,7 +72,6 @@ void Lane::process() {
 }
 
 void Lane::playsound(Speaker* speaker, Sound& car_honk) {
-    speaker->stop();
     speaker->play(car_honk);
 }
 

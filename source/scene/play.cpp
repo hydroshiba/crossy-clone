@@ -8,21 +8,20 @@ Play::Play(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* s
     offset(0),
     frames(0),
     player(holder, gridSize, {engine->getWidth() / 2.0f, engine->getHeight() - holder->get("ROAD")->getWidth() / 2.0f}, setting),
+    background("asset/sound/background.wav", true),
     car_crash("asset/sound/sfx/car-crash.wav"),
     car_honk("asset/sound/sfx/car-honk.wav"),
     step_grass("asset/sound/sfx/step-grass-1.wav"),
+    step_grass_2("asset/sound/sfx/step-grass-2.wav"),
     step_road("asset/sound/sfx/road-step.wav"),
-    isGameover(false)
-    {
-        // Load gamestate
-        // if (!setting->getGamestate().empty()) loadGamestate(setting->getGamestate());
-        // else createNewGame();
-    }
+    ambulance("asset/sound/sfx/ambulance.wav"),
+    isGameover(false) {}
 
 Scene* Play::process() {
     if(isGameover) {
         lanes[player.position().y - offset]->gameoverProcess();
         if(lanes[player.position().y - offset]->collide(&player)){
+            speaker->pause(ambulance);
             dynamic_cast<Gameover*>(sceneRegistry->scene(SceneID::GAMEOVER))->setScore(word(score));
             return sceneRegistry->scene(SceneID::GAMEOVER);
         }
@@ -43,19 +42,19 @@ Scene* Play::process() {
     }
 
     player.move(key);
-    if (key != Key::DEFAULT && lanes[player.position().y - offset]->getSpeed() == 0) {
-        speaker->stop();
-        speaker->play(step_grass);
-    }
-    else if (key != Key::DEFAULT) {
-        speaker->stop();
-        speaker->play(step_road);
+    if (key != Key::DEFAULT) {
+        if(lanes[player.position().y - offset]->getSpeed() == 0) {
+            if(random(0, 1)) speaker->play(step_grass);
+            else speaker->play(step_grass_2);
+        }
+        else speaker->play(step_road);
     }
 
     if (lanes[player.position().y - offset]->collide(&player)) {
         isGameover = true;
-        speaker->stop();
+        speaker->pause(background);
         speaker->play(car_crash);
+        speaker->play(ambulance);
         return this;
     }
 
@@ -65,21 +64,8 @@ Scene* Play::process() {
     }
 
     for (int i = 0; i < lanes.size(); i++) {
-        if (i == player.position().y - offset) {
-            lanes[i]->process();
-
-            if (lanes[i]->getSpeed() != 0 && frames == 59) lanes[i]->playsound(speaker, car_honk);
-            
-            isGameover |= lanes[i]->collide(&player);
-        }
-        else {
-            lanes[i]->process();
-        }
-    } 
-
-    if (isGameover) {
-        speaker->stop();
-        speaker->play(car_crash);
+        lanes[i]->process();
+        if (lanes[i]->getSpeed() != 0 && frames == 59) lanes[i]->playsound(speaker, car_honk);
     }
 
     return this;

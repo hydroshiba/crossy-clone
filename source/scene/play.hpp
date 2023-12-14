@@ -20,10 +20,13 @@ private:
     Player player;
     std::vector<Lane*> lanes;
 
+    Sound background;
     Sound car_crash;
     Sound car_honk;
     Sound step_grass;
+    Sound step_grass_2;
     Sound step_road;
+    Sound ambulance;
     
     float percentage(int x) const;
     int random(int min, int max) const;

@@ -11,6 +11,7 @@ private:
     const int sizeName;
     byte namePlayer[8];
 
+    Sound background;
     Texture* LINE;
     
     Object quit;

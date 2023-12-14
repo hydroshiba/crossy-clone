@@ -29,6 +29,8 @@ Speaker::~Speaker() {
 
 void Speaker::play(Sound& sound) {
 	HWAVEOUT& device = (sound.background ? musicDevice : sfxDevice);
+	waveOutRestart(device);
+
 	waveOutPrepareHeader(device, &sound.header, sizeof(WAVEHDR));
 	waveOutWrite(device, &sound.header, sizeof(WAVEHDR));
 }
