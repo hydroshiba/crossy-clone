@@ -12,6 +12,7 @@ private:
     byte namePlayer[8];
 
     Sound background;
+    Sound button_clicked;
     Texture* LINE;
     
     Object quit;

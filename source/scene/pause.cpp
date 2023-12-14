@@ -5,7 +5,8 @@ Pause::Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting*
     quitButton(holder->get("QUIT"), holder->get("QUIT_CLICKED"), (engine->getWidth() - holder->get("QUIT")->getWidth()) * 3 / 4, engine->getHeight() * 2 / 3),
     continueButton(holder->get("CONTINUE"), holder->get("CONTINUE_CLICKED"), (engine->getWidth() - holder->get("CONTINUE")->getWidth()) / 4, engine->getHeight() * 2 / 3),
     button(0),
-    pause(holder, "PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6)
+    pause(holder, "PAUSE", engine->getWidth() / 2 - engine->getWidth() / 10, engine->getHeight() / 3 - engine->getHeight() / 6),
+    button_clicked("asset/sound/sfx/button-click-2.wav")
     {
         continueButton.press();
     }
@@ -32,6 +33,7 @@ Scene* Pause::process() {
         continueButton.release();
     }
     else if (pressedKey == Key::ENTER) {
+        speaker->play(button_clicked);
         switch(button) {
             case 0:
                 // Continue Play

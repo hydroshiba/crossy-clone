@@ -33,6 +33,7 @@ Scene* Menu::process() {
     Scene* next = this;
     Key pressedKey = keyboard->key();
 
+    if(pressedKey != Key::DEFAULT) speaker->play(button_clicked);
     switch(pressedKey) {
     case Key::UP:
         if(button > defaultButton) {
@@ -45,7 +46,6 @@ Scene* Menu::process() {
         }
         break;
     case Key::ENTER:
-        speaker->play(button_clicked);
         switch(button) {
         case 0: {
             next = sceneRegistry->scene(SceneID::PLAY); //continue

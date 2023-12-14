@@ -11,7 +11,7 @@ private:
     int sfxId;
     int spriteId;
 
-    Sound background;
+    Sound button_clicked;
 
     std::vector<Object*> music;
     std::vector<Object*> sfx;
