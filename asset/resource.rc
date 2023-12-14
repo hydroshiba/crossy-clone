@@ -2,35 +2,3 @@
 
 // ICON
 ICO ICON "icon.ico"
-
-// BITMAP
-// TITLE BITMAP "texture/title.bmp"
-
-// CREDIT_ASTRAUNAUT BITMAP "texture/credit/astraunaut.bmp"
-// CREDIT_CAT BITMAP "texture/credit/cat-temporary.bmp"
-// CREDIT_FOX BITMAP "texture/credit/fox.bmp"
-// CREDIT_SEAL BITMAP "texture/credit/seal.bmp"
-
-// BUTTON_CONTINUE BITMAP "texture/button/continue.bmp"
-// BUTTON_CONTINUE_CLICKED BITMAP "texture/button/continue_clicked.bmp"
-// BUTTON_OPTION BITMAP "texture/button/option.bmp"
-// BUTTON_OPTION_CLICKED BITMAP "texture/button/option_clicked.bmp"
-// BUTTON_QUIT BITMAP "texture/button/quit.bmp"
-// BUTTON_QUIT_CLICKED BITMAP "texture/button/quit_clicked.bmp"
-// BUTTON_PLAY BITMAP "texture/button/play.bmp"
-// BUTTON_PLAY_CLICKED BITMAP "texture/button/play_clicked.bmp"
-
-// CAR_BLUE_FRONT BITMAP "texture/car/blue/front.bmp"
-// CAR_BLUE_BACK BITMAP "texture/car/blue/back.bmp"
-// CAR_ORANGE_FRONT BITMAP "texture/car/orange/front.bmp"
-// CAR_ORANGE_BACK BITMAP "texture/car/orange/back.bmp"
-// TAXI_FRONT BITMAP "texture/car/taxi/front.bmp"
-// TAXI_BACK BITMAP "texture/car/taxi/back.bmp"
-
-// GRASS_LANE BITMAP "texture/lane/grass.bmp"
-// GRASSFLOWER_LANE BITMAP "texture/lane/grassflower.bmp"
-// GRASSPEBBLE_LANE BITMAP "texture/lane/grasspebble.bmp"
-// ROAD_LANE BITMAP "texture/lane/road.bmp"
-
-// SOUND
-// SOUND_BACKGROUND WAVE "sound/background.wav"
