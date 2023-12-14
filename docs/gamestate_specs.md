@@ -1,6 +1,7 @@
 # Format of `gamestate.dat`
 
 ## Special padding: 3 bytes
+
 - These data used to check if the file contains gamestate or not
 
 0000 0000  0000 0000  0000 0000
@@ -8,6 +9,7 @@
 D    E     F    C     A    D
 
 ## Address of read pointer a: 32 bytes (= 8 address at most, each address is an integer)
+
 - These data will be stored right after the checking padding, it use for seek the read pointer for easier read data because there are some data that doesn't have a specifically size like name of player (type string) and more.
 
 - Address of score and name: 4 bytes
