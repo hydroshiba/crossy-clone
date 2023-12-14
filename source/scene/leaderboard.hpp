@@ -13,6 +13,7 @@ private:
     Textbox score;
     Textbox name;
     Textbox topX;
+    std::vector<Button*> buttons;
 public:
     Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Leaderboard();

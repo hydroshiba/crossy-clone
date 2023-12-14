@@ -10,12 +10,22 @@ Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* regist
     cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight()) * 3 / 5));
     cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5 - 50));
     cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight()) * 3 / 5));
+    
+    buttons.push_back(new Button(holder->get("LEFT"), holder->get("LEFT_CLICKED"), holder->get("LEFT")->getWidth(), engine->getHeight() / 2));
+    buttons.push_back(new Button(holder->get("RIGHT"), holder->get("RIGHT_CLICKED"), engine->getWidth() - buttons.back()->size().x * 2, engine->getHeight() / 2));
+    buttons[0]->press();
+    buttons[1]->press();
 }
                                                                                                                                                  
 Leaderboard::~Leaderboard() {
     for(auto cup : cups) {
         delete cup;
         cup = nullptr;
+    }
+
+    for(auto button : buttons) {
+        delete button;
+        button = nullptr;
     }
 }
 
@@ -71,13 +81,15 @@ void Leaderboard::render() {
         word rank = cupSelected == 0 ? 1 : cupSelected == 1 ? 0 : 2;
         byte* namePlayer = setting->namePlayer(rank);
         if(setting->highscore(rank) == 0){
-            name.setText("NA", engine->getWidth() / 2, engine->getHeight() / 3);
+            name.setText("NULL", engine->getWidth() / 2, engine->getHeight() / 3);
         }
         else{
             name.setText(std::string(namePlayer, namePlayer + 8), engine->getWidth() / 2, engine->getHeight() / 3);
         }
         
         score.setText(std::to_string(setting->highscore(rank)), engine->getWidth() / 2, engine->getHeight() / 3 + 2 * holder->get("A")->getHeight());
+        buttons[0]->render(engine);
+        buttons[1]->render(engine);
         name.render(engine);
         score.render(engine);
         cups[cupSelected]->shift(xSelected - engine->getWidth() / 5, ySelected - engine->getHeight() / 5);
