@@ -50,7 +50,7 @@ void Lane::process() {
     if (clock >= spawn && !traffic.isRedLight()) {
         if (speed > 0) addVehicle(float(-1.0f));
         else addVehicle(float(length + 1.0f));
-        spawn = rand() % 60 + 60;
+        spawn = random(60, 75);
         clock = 0;
     }
 
@@ -95,7 +95,7 @@ bool Lane::collide(Player* player) {
         if (vehicle.collide(player)) {
             vehicles.clear();
             std::string ambulance = "AMBULANCE_FRONT";
-            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos - 1)}), Vec2({0, 0}));
+            Vehicle vehicle(holder->get(ambulance), gridSize, Vec2({0.0f, float(this->pos)}), Vec2({0, gridSize.y * -0.5f}));
             vehicles.push_back(vehicle);
 
             return true;
@@ -116,13 +116,17 @@ float Lane::getSpeed() const {
     return speed;
 }
 
+int Lane::random(int min, int max) const {
+    return rand() % (max - min + 1) + min;
+}
+
 int Lane::getSpawn() const {
     return spawn;
 }
 
 void Lane::addVehicle(float pos) {
     std::string color;
-    int rng = rand() % 3;
+    int rng = rand() % 4;
 
     switch (rng) {
         case 0:
@@ -134,13 +138,22 @@ void Lane::addVehicle(float pos) {
         case 2:
             color = "TAXI";
             break;
+        case 3:
+            color = "TRUCK";
+            break;
     }
 
     if(speed > 0) color += "_FRONT";
     else color += "_BACK";
 
-    Vehicle vehicle(holder->get(color), gridSize, Vec2({pos, float(this->pos - 0.5)}), Vec2({0, 0}));
-    vehicles.push_back(vehicle);
+    if (rng != 3) {
+        Vehicle vehicle(holder->get(color), gridSize, Vec2({float(pos), float(this->pos)}), Vec2({0.0f, gridSize.y * -0.25f}));
+        vehicles.push_back(vehicle);
+    }
+    else {
+        Vehicle vehicle(holder->get(color), gridSize, Vec2({float(pos), float(this->pos)}), Vec2({0.0f, gridSize.y * -0.44f}));
+        vehicles.push_back(vehicle);
+    }
 }
 
 std::vector<byte> Lane::getTrafficGamestate() const {
