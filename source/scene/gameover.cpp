@@ -70,13 +70,14 @@ Scene* Gameover::process() {
                 setting->setNames(namePlayer, isEnterName);
                 isEnterName = 3;
                 idxChar = 0;
-                gameover.setText("Gameover", engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 6);    
+                gameover.setText("Gameover", engine->getWidth() / 2 - engine->getWidth() / 7, engine->getHeight() / 3 - engine->getHeight() / 6);    
                 name.setText("        ", engine->getWidth() / 2 - engine->getWidth() / 6, engine->getHeight() / 3 + 2 * holder->get("A")->getHeight());
                 line.shift(-idxChar * LINE->getWidth(), -idxChar * LINE->getHeight());
                 for(int i = 0; i < sizeName; i++){
                     namePlayer[i] = ' ';
                 }
                 next = sceneRegistry->scene(SceneID::MENU);
+                setting->setGamestate({});
                 break;
             }
         }
@@ -84,6 +85,7 @@ Scene* Gameover::process() {
     }
     else if(pressedKey == Key::ENTER || pressedKey == Key::ESC){
         next = sceneRegistry->scene(SceneID::MENU);
+        setting->setGamestate({});
     }
 
     return next;
