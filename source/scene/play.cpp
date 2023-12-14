@@ -186,10 +186,10 @@ void Play::loadGamestate(const std::vector<std::vector<byte>>& gamestate) {
         }
 
         if (toFloat(tmpSpeed) == 0) {
-            lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
+            lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getHeight() / holder->get("GRASS")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
         }
         else {
-            lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
+            lanes.push_back(new Lane(holder, gridSize, toInt(tmpPos), engine->getHeight() / holder->get("ROAD")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), toFloat(tmpSpeed), toInt(tmpSpawn), toBool(tmpTraffic), toInt(tmpClock)));
 
         }
     }
@@ -330,12 +330,12 @@ void Play::createNewGame() {
 
     // Create lanes
     for (int i = 0; i < 11; i++) {
-        lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
+        lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getHeight() / holder->get("GRASS")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), 0.0f));
     }
 
     for (int i = 11; i < engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 11; i++) {
-        if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
-        else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % (10 + offset / 5) - 5) * 0.05f));
+        if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getHeight() / holder->get("GRASS")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), 0.0f));
+        else lanes.push_back(new Lane(holder, gridSize, 0 - i - offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), (rand() % (10 + offset / 5) - 5) * 0.05f));
     }
 
     // Create player
@@ -372,8 +372,8 @@ void Play::updateProcess() {
 
     int numOfLanes = engine->getWidth() / holder->get("ROAD")->getWidth() + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 + 10;
 
-    if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getWidth() / holder->get("GRASS")->getWidth() * 2 + 5, 0.0f));
-    else lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getWidth() / holder->get("ROAD")->getWidth() * 2 + 5, (rand() % (10 + offset / 5) - 5) * 0.05f));
+    if (needCreateGrassLane()) lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getHeight() / holder->get("GRASS")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), 0.0f));
+    else lanes.push_back(new Lane(holder, gridSize, 0 - numOfLanes - offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 4.0f + 3.0f / (engine->getWidth() / engine->getHeight() * 1.0f), (rand() % (10 + offset / 5) - 5) * 0.05f));
 }
 
 bool Play::needCreateGrassLane() const {

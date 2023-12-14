@@ -7,13 +7,13 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     length(len),
     grassType(rand() % 3),
     speed(speed),
-    traffic(holder, gridSize, {speed > 0 ? 1.0f : float(len), float(pos)}, {0.0f, 100.0f}, isRed, trafficClock),
+    traffic(holder, gridSize, {speed > 0 ? float(len) : 1.0f, float(pos)}, {0.0f, speed > 0 ? -105.0f : -40.0f}, isRed, trafficClock),
     clock(spawnClock / 2),
     spawn(spawnClock) {
     }
 
 void Lane::render(Engine* engine, float playerLane) {
-    int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2 - 7;
+    int offset = playerLane + engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f - 7;
     std::string grassID = "GRASS";
 
     if (speed != 0) grassID = "ROAD";
@@ -31,11 +31,11 @@ void Lane::render(Engine* engine, float playerLane) {
     for(auto& block : blocks)
         block.render(engine);
 
+    if (speed != 0)
+        traffic.render(engine, offset, offset + pos - 1);
+
     for(auto& vehicle : vehicles)
         vehicle.render(engine, offset);
-
-    if (speed != 0)
-        traffic.render(engine, offset, engine->getHeight() / holder->get("ROAD")->getHeight() * 2.0f + 3 + playerLane + pos - 11);
 
     blocks.clear();
 }
@@ -47,14 +47,19 @@ void Lane::process() {
         return;
     }
 
-    if (clock >= spawn && !traffic.isRedLight()) {
+    traffic.process();
+
+    if (traffic.isRedLight()) {
+        return;
+    }
+
+    if (clock >= spawn) {
         if (speed > 0) addVehicle(float(-1.0f));
         else addVehicle(float(length + 1.0f));
         spawn = random(60, 75);
         clock = 0;
     }
 
-    traffic.process();
 
     for (auto& vehicle : vehicles) {
         vehicle.move(speed);
