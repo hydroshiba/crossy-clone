@@ -343,6 +343,22 @@ void Play::createNewGame() {
     player.shift(gridSize.x * -0.25f, gridSize.y * -0.15f);
 }
 
+float Play::percentage(int x) const {
+    if(x <= 0) return 1.0f;
+    if(x == 1) return 0.95f;
+    if(x > 31) return percentage(31);
+
+    float res = percentage(x / 2);
+    res *= res;
+
+    if(x % 2) res *= 0.95f;
+    return res;
+}
+
+int Play::random(int min, int max) const {
+    return rand() % (max - min + 1) + min;
+}
+
 void Play::updateProcess() {
     // Update score
     score++;
@@ -361,7 +377,8 @@ void Play::updateProcess() {
 }
 
 bool Play::needCreateGrassLane() const {
-    return rand() % 100 < (35 - (offset / 2 < 35 ? offset / 2 : 35));
+    int x = offset + lanes.size();
+    return random(1, 100) <= int(percentage(x) * 100);
 }
 
 Play::~Play() {

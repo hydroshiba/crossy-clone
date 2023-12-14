@@ -25,6 +25,9 @@ private:
     Sound step_grass;
     Sound step_road;
     
+    float percentage(int x) const;
+    int random(int min, int max) const;
+
     void updateProcess();
     bool needCreateGrassLane() const;
 
