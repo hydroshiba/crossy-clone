@@ -12,6 +12,7 @@ private:
     std::vector<Object*> cups;
     Textbox score;
     Textbox name;
+    Textbox topX;
 public:
     Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);
     ~Leaderboard();

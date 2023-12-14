@@ -5,7 +5,8 @@ Leaderboard::Leaderboard(Engine* engine, Speaker* speaker, SceneRegistry* regist
                                                                                                                                                  view(false),
                                                                                                                                                  button_clicked("asset/sound/sfx/button-click-2.wav"),
                                                                                                                                                  score(holder, "", 0, 0),
-                                                                                                                                                 name(holder, "", 0, 0){
+                                                                                                                                                 name(holder, "", 0, 0),
+                                                                                                                                                 topX(holder, "Top 1", engine->getHeight() / 3 , engine->getWidth() * 2 / 3){
     cups.push_back(new Object(holder->get("SILVER_CUP"), (engine->getWidth() - holder->get("SILVER_CUP")->getWidth()) / 5, (engine->getHeight() - holder->get("SILVER_CUP")->getHeight()) * 3 / 5));
     cups.push_back(new Object(holder->get("GOLD_CUP"), (engine->getWidth() - holder->get("GOLD_CUP")->getWidth()) / 2, (engine->getHeight() - holder->get("GOLD_CUP")->getHeight()) * 3 / 5 - 50));
     cups.push_back(new Object(holder->get("BRONZE_CUP"), (engine->getWidth() - holder->get("BRONZE_CUP")->getWidth()) * 4 / 5, (engine->getHeight() - holder->get("BRONZE_CUP")->getHeight()) * 3 / 5));
@@ -26,7 +27,6 @@ Scene* Leaderboard::process() {
     case Key::LEFT:
         if(cupSelected > 0) {
             cupSelected--;
-            
         }
         break;
     case Key::RIGHT:
@@ -48,6 +48,9 @@ Scene* Leaderboard::process() {
         break;
     }
     cups[cupSelected]->shift(0, -50);
+    std::string rank = cupSelected == 0 ? "2" : cupSelected == 1 ? "1" : "3";
+    topX.setText("Top " + rank, cups[cupSelected]->position().x, cups[cupSelected]->position().y - 2 * holder->get("A")->getHeight());
+
     return next;
 }
 
@@ -58,6 +61,7 @@ void Leaderboard::render() {
         for(auto cup : cups) {
             cup->render(engine);
         }
+        topX.render(engine);
     }
     else{
         xSelected = cups[cupSelected]->position().x;
