@@ -21,7 +21,7 @@ The game is about us, the character, who wants to cross roads and rivers to get 
 
 ## Building this project
 
-This section is for building the project from source files. A compiled executable of the project can be found in the [Releases](#releases) section alternatively.
+This section is for building the project from source files. To play the game directly, see [Playing the game](#playing-the-game) section instead.
 
 ### Manually
 
@@ -45,9 +45,12 @@ These IDEs can automatically configure the project from CMake files, simply clon
   - Replace `IDE name` with the name of your IDE as shown in the list, e.g. `cmake -S . -B ./build -G "Visual Studio 16 2019"` for Visual Studio 2019.
 - A project file for your IDE will be generated in the `build` folder, launch the project and build from there.
 
-## Releases
+## Playing the game
 
-To be added
+To play the game, check out the [Releases](https://github.com/hydroshiba/crossy-clone/releases) section for the latest release and download the `crossy.zip` file. Extract the contents of the zip file to a folder, the executable `crossy` should be inside.
+
+- On Windows, run the game by clicking directly on the executable.
+- Install [Wine](https://wiki.winehq.org/Download) to run the game on other operating systems. After installing Wine, run the game by typing `wine64 crossy` in your console (it is important to use `wine64` instead of `wine` since the game is a 64-bit executable).
 
 ## Acknowledgement
 
