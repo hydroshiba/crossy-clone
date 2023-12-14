@@ -7,7 +7,7 @@ Lane::Lane(TextureHolder* holder, Vec2 size, int pos, int len, float speed, int 
     length(len),
     grassType(rand() % 3),
     speed(speed),
-    traffic(holder, gridSize, {speed > 0 ? float(len) : 1.0f, float(pos)}, {0.0f, speed > 0 ? -65.0f : -105.0f}, isRed, trafficClock),
+    traffic(holder, gridSize, {speed > 0 ? float(len) : 1.0f, float(pos)}, {0.0f, speed > 0 ? -105.0f : -145.0f}, isRed, trafficClock),
     clock(spawnClock / 2),
     spawn(spawnClock) {
     }
@@ -31,11 +31,11 @@ void Lane::render(Engine* engine, float playerLane) {
     for(auto& block : blocks)
         block.render(engine);
 
-    for(auto& vehicle : vehicles)
-        vehicle.render(engine, offset);
-
     if (speed != 0)
         traffic.render(engine, offset, offset + pos - 1);
+
+    for(auto& vehicle : vehicles)
+        vehicle.render(engine, offset);
 
     blocks.clear();
 }
