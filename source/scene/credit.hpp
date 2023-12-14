@@ -13,10 +13,11 @@ private:
     Sound background;
     // Object title;
     std::vector<Object*> avatars;
+    std::vector<Button*> buttons;
 
     Textbox credit;
-    std::vector<Textbox> name;
     Textbox studentId;
+    std::vector<Textbox> name;
 
 public:
     Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);

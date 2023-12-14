@@ -15,6 +15,8 @@ Credit::Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Settin
 
     name.push_back(Textbox(holder, "", 0, 0));
     name.push_back(Textbox(holder, "", 0, 0));
+    buttons.push_back(new Button(holder->get("LEFT"), holder->get("LEFT_CLICKED"), holder->get("LEFT")->getWidth(), engine->getHeight() / 2));
+    buttons.push_back(new Button(holder->get("RIGHT"), holder->get("RIGHT_CLICKED"), engine->getWidth() - buttons.back()->size().x * 2, engine->getHeight() / 2));
 }
                                                                                                                                         
 Credit::~Credit() {
@@ -32,6 +34,7 @@ Scene* Credit::process() {
         case Key::UP:
             if(avatarSelected > 0) {
                 avatarSelected = 0;
+                buttons[0]->press();
             }
             break;
         case Key::DOWN:
@@ -42,14 +45,17 @@ Scene* Credit::process() {
         case Key::LEFT:
             if(avatarSelected > 1) {
                 avatarSelected--;
+                if(avatarSelected == 0) buttons[0]->press();
             }
             else if(view && avatarSelected == 1) {
                 avatarSelected = 0;
+                buttons[0]->press();
             }
             break;
         case Key::RIGHT:
             if(avatarSelected < 4) {
                 avatarSelected++;
+                if(avatarSelected == 4) buttons[1]->press();
             }
             break;
         case Key::ENTER:
@@ -63,6 +69,12 @@ Scene* Credit::process() {
                 next = sceneRegistry->scene(SceneID::MENU);
             }
             break;
+    }
+    if(avatarSelected != 0) {
+        buttons[0]->release();
+    }
+    if(avatarSelected != 4) {
+        buttons[1]->release();
     }
     avatars[avatarSelected]->shift(0, - 50);
     return next;
@@ -109,6 +121,8 @@ void Credit::render() {
         if(avatarSelected == 0) ySelected -= 50;
         avatars[avatarSelected]->shift(avatars[0]->position().x / 3 - xSelected, avatars[0]->position().y - ySelected);
         avatars[avatarSelected]->render(engine);
+        buttons[0]->render(engine);
+        buttons[1]->render(engine);
         for(auto& name_ : name) {
             name_.render(engine);
         }
