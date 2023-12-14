@@ -14,10 +14,10 @@ The game is about us, the character, who wants to cross roads and rivers to get 
 
 ## Requirements
 
-- A Windows environment, preferably Windows 10 and above.
+- ~~A Windows environment~~ This project can now be built and executed on other operating systems. To execute on operating systems other than Windows, install [Wine](https://wiki.winehq.org/Download) and use it to run the executable.
 - For building project from source:
-  - [C++17 compliant](https://en.cppreference.com/w/cpp/compiler_support/17) compiler
-  - [CMake 3.20](https://cmake.org/download/) or newer
+  - [C++17 compliant](https://en.cppreference.com/w/cpp/compiler_support/17) compiler ([MinGW](https://www.mingw-w64.org/downloads/) must be used for operating systems that are not Windows).
+  - [CMake 3.20](https://cmake.org/download/) or newer.
 
 ## Building this project
 
