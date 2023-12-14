@@ -3,7 +3,7 @@
 Option::Option(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder), 
                                                                                                                                         button(0),
                                                                                                                                         spriteId(0),
-                                                                                                                                        background("asset/sound/background.wav"){
+                                                                                                                                        button_clicked("asset/sound/sfx/button-click-2.wav"){
     
     if(setting->volMusic() == Volume::min) musicId = 0;
     else if(setting->volMusic() == Volume::low) musicId = 1;
@@ -77,7 +77,7 @@ Scene* Option::process() {
             buttons[4]->press();
             break;
     }
-
+    if(pressedKey != Key::DEFAULT) speaker->play(button_clicked);
     switch(pressedKey) {
     case Key::UP:
         if(button > 0) {

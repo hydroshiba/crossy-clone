@@ -3,7 +3,7 @@
 Credit::Credit(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder) : Scene(engine, speaker, registry, setting, keyboard, holder),
                                                                                                                                         view(false),
                                                                                                                                         avatarSelected(0),
-                                                                                                                                        background("asset/sound/background.wav"),
+                                                                                                                                        button_clicked("asset/sound/sfx/button-click-2.wav"),
                                                                                                                                         credit(holder, "credit", engine->getWidth() / 2 - engine->getWidth() / 9.5, engine->getHeight() / 3 - engine->getHeight() / 4),
                                                                                                                                         studentId(holder, "", 0, 0){
     avatars.push_back(new Object(holder->get("CREDIT_TEACHER"), (engine->getWidth() - holder->get("CREDIT_TEACHER")->getWidth()) / 2, engine->getHeight() / 4));
@@ -30,6 +30,8 @@ Scene* Credit::process() {
 
     Key pressedKey = keyboard->key();
 
+    if(pressedKey != Key::DEFAULT) speaker->play(button_clicked);
+    
     switch(pressedKey) {
         case Key::UP:
             if(avatarSelected > 0) {

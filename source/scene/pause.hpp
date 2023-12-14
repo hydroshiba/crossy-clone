@@ -13,6 +13,7 @@ private:
     Button continueButton;
 
     Textbox pause;
+    Sound button_clicked;
 
 public:
     Pause(Engine* engine, Speaker* speaker, SceneRegistry* registry, Setting* setting, Keyboard* keyboard, TextureHolder* holder);

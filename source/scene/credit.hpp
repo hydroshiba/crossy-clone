@@ -10,7 +10,8 @@ private:
     bool view;
     int avatarSelected, xSelected, ySelected;
 
-    Sound background;
+    Sound button_clicked;
+
     // Object title;
     std::vector<Object*> avatars;
     std::vector<Button*> buttons;

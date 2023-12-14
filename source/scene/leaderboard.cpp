@@ -31,6 +31,8 @@ Scene* Leaderboard::process() {
     Scene* next = this;
     Key pressedKey = keyboard->key();
 
+    if(pressedKey != Key::DEFAULT) speaker->play(button_clicked);
+
     switch(pressedKey) {
     case Key::LEFT:
         if(cupSelected > 0) {
@@ -45,7 +47,6 @@ Scene* Leaderboard::process() {
         }
         break;
     case Key::ENTER:
-        playsound();
         view = true;
         break;
     case Key::ESC:
@@ -103,5 +104,5 @@ void Leaderboard::render() {
 }
 
 void Leaderboard::playsound() {
-    speaker->play(button_clicked);
+
 }
