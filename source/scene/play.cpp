@@ -29,7 +29,7 @@ Scene* Play::process() {
     }
 
     ++frames;
-    if(frames >= 60) frames = 0;
+    if(frames >= 120) frames = 0;
 
     Key key = keyboard->key();
     if(key == Key::ESC) {
@@ -65,8 +65,8 @@ Scene* Play::process() {
 
     for (int i = 0; i < lanes.size(); i++) {
         lanes[i]->process();
-        if (lanes[i]->getSpeed() != 0 && frames == 59) lanes[i]->playsound(speaker, car_honk);
     }
+    if (lanes[player.position().y - offset]->getSpeed() != 0 && frames == random(60, 120)) lanes[player.position().y - offset]->playsound(speaker, car_honk);
 
     return this;
 }
