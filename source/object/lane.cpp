@@ -31,11 +31,11 @@ void Lane::render(Engine* engine, float playerLane) {
     for(auto& block : blocks)
         block.render(engine);
 
-    if (speed != 0)
-        traffic.render(engine, offset, offset + pos - 1);
-
     for(auto& vehicle : vehicles)
         vehicle.render(engine, offset);
+
+    if (speed != 0)
+        traffic.render(engine, offset, offset + pos - 1);
 
     blocks.clear();
 }
