@@ -51,7 +51,7 @@ The game is about us, the character, who wants to cross roads and rivers to get 
 
 ## Gameplay
 
-A game demo video can be watched here on [Youtube](https://www.youtube.com/watch?v=f4wmMlpRWjQ).
+A game demo video can be watched here on [\underline{Youtube}](https://www.youtube.com/watch?v=f4wmMlpRWjQ).
 
 ### Menu
 
