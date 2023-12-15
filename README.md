@@ -52,6 +52,10 @@ To play the game, check out the [Releases](https://github.com/hydroshiba/crossy-
 - On Windows, run the game by clicking directly on the executable.
 - Install [Wine](https://wiki.winehq.org/Download) to run the game on other operating systems. After installing Wine, run the game by typing `wine64 crossy` in your console (it is important to use `wine64` instead of `wine` since the game is a 64-bit executable).
 
-## Acknowledgement
+## Documentation
+
+Read [here](documentation.pdf) for the documentation of the project.
+
+## Acknowledgements
 
 We would like to thank our lecturer, Mr. Truong Toan Thinh, for providing us the opportunity, as well as the guidance and valuable materials we needed to complete this project.
